@@ -19,9 +19,4 @@ public class Member extends HttpServlet {
         req.setAttribute("memberDTO", memberDTO);
         req.getRequestDispatcher("/WEB-INF/member.jsp").forward(req, resp);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
 }

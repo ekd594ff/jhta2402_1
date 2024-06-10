@@ -6,6 +6,4 @@
     <select id="getMember" resultType="com.desk8432.project.dto.MemberDTO" parameterType="string">
         select * from jhta01_member where username = #{username}
     </select>
-    <select id="idduplicatecheck"
-    <insert id=""></insert>
 </mapper>
