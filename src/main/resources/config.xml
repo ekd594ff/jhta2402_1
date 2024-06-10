@@ -15,4 +15,7 @@
             </dataSource>
         </environment>
     </environments>
+    <mappers>
+        <mapper resource="member.xml"/>
+    </mappers>
 </configuration>
