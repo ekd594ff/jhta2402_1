@@ -39,4 +39,13 @@ public class MemberDAO {
         sqlSession.close();
         return result > 0;
     }
+
+    public boolean insertMember(MemberDTO insertMemberDTO) {
+        int result = 0 ;
+        SqlSession sqlsession = MybatisConnectionFactory.getSqlSession();
+        result = sqlsession.insert("insertMember",insertMemberDTO);
+        System.out.println("result = " + result);
+        sqlsession.close();
+        return result > 0;
+    }
 }
