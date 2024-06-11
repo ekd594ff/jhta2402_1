@@ -21,7 +21,7 @@ public class RegexEmail extends HttpServlet {
         String REGEXP_LIGHT_USER_EMAIL = "^[a-zA-Z0-9]+@[0-9a-zA-Z]+\\.[a-z]+$";  // 언더바(_), 하이픈(-) 제외
         String email = "asdsad@sada.com";
 
-        Boolean isCheckEmail = Pattern.matches(REGEXP_LIGHT_USER_EMAIL,email);
+        Boolean isCheckEmail = Pattern.matches(REGEXP_LIGHT_USER_EMAIL, email);
 
         Gson gson = new Gson();
         Map<String, Boolean> resultMap = new HashMap<>();

@@ -18,13 +18,6 @@ public class TestDAO extends HttpServlet {
         String testUsername = "KSB02";
         String testNickname = "KSB";
         String testEmail = "test02@test.com";
-        boolean duplicateUsername = memberDAO.duplicateUsername(testUsername);
-        boolean duplicateNickname = memberDAO.duplicateNickname(testNickname);
-        boolean duplicateEmail = memberDAO.duplicateEmail(testEmail);
-
-        System.out.println("duplicateEmail = " + duplicateEmail);
-        System.out.println("duplicateNickname = " + duplicateNickname);
-        System.out.println("duplicateUsername = " + duplicateUsername);
 
         MemberDTO insertMemberDTO =
                 MemberDTO.builder()

@@ -12,34 +12,6 @@ public class MemberDAO {
         sqlSession.close();
         return memberDTO;
     }
-
-    public boolean duplicateUsername(String testID) {
-        int result = 0;
-        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.selectOne("duplicateUsername", testID);
-        System.out.println("username result = " + result);
-        sqlSession.close();
-        return result > 0;
-    }
-
-    public boolean duplicateNickname(String testID) {
-        int result = 0;
-        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.selectOne("duplicateNickname", testID);
-        System.out.println("nickname result = " + result);
-        sqlSession.close();
-        return result > 0;
-    }
-
-    public boolean duplicateEmail(String testID) {
-        int result = 0;
-        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.selectOne("duplicateEmail", testID);
-        System.out.println("email result = " + result);
-        sqlSession.close();
-        return result > 0;
-    }
-
     public boolean insertMember(MemberDTO insertMemberDTO) {
         int result = 0 ;
         SqlSession sqlsession = MybatisConnectionFactory.getSqlSession();
