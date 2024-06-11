@@ -6,4 +6,13 @@
     <select id="getMember" resultType="com.desk8432.project.dto.MemberDTO" parameterType="string">
         select * from jhta01_member where username = #{username}
     </select>
+    <select id="duplicateUsername" resultType="int" parameterType="string">
+        select count(*) from jhta01_member where username = #{username}
+    </select>
+    <select id="duplicateEmail" resultType="int" parameterType="string">
+        select count(*) from jhta01_member where email = #{username}
+    </select>
+    <select id="duplicateNickname" resultType="int" parameterType="string">
+        select count(*) from jhta01_member where nickname = #{username}
+    </select>
 </mapper>
