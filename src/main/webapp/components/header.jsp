@@ -1,3 +1,5 @@
-<header>
-    <h1>${"hello"}</h1>
+<header class="header">
+    <div class="header-container">
+        <img src="https://thispersondoesnotexist.com/" class="avatar" alt="avatar">
+    </div>
 </header>
