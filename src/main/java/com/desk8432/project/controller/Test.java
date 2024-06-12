@@ -29,8 +29,5 @@ public class Test extends HttpServlet {
                         .imageUrl("")
                         .build();
         MemberDAO memberDAO1 = new MemberDAO();
-
-        boolean isInsert =memberDAO1.insertMember(insertMemberDTO);
-        System.out.println("isInsert = " + isInsert);
     }
 }

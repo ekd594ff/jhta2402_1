@@ -20,7 +20,7 @@ public class Dispatcher {
         System.out.println(testDTO.getData());
     }
 
-    public static String getBody(HttpServletRequest request) throws IOException {
+    public String getBody(HttpServletRequest request) throws IOException {
         String body = null;
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
