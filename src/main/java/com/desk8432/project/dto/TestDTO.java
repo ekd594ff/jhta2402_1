@@ -10,5 +10,4 @@ import lombok.*;
 @Builder
 public class TestDTO {
     private String data;
-    private int value;
 }

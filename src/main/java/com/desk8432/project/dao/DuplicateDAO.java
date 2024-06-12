@@ -11,7 +11,6 @@ public class DuplicateDAO {
         sqlSession.close();
         return result > 0;
     }
-
     public boolean duplicateNickname(String testID) {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();

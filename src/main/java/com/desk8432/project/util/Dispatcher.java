@@ -1,43 +1,26 @@
-package com.desk8432.project.controller;
+package com.desk8432.project.util;
 
 import com.desk8432.project.dto.TestDTO;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.*;
 
-@WebServlet("/duplicate/*")
-public class Dispatcher extends HttpServlet {
+public class Dispatcher {
     private static final long serialVersionUID = 1L;
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        process(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        process(req, resp);
-    }
 
     protected void process(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String jsonString = getBody(req);
         Gson gson = new Gson();
         TestDTO testDTO = gson.fromJson(jsonString, TestDTO.class);
-
         System.out.println(testDTO.getData());
     }
 
     public static String getBody(HttpServletRequest request) throws IOException {
-
         String body = null;
         StringBuilder stringBuilder = new StringBuilder();
         BufferedReader bufferedReader = null;
@@ -63,7 +46,6 @@ public class Dispatcher extends HttpServlet {
                 }
             }
         }
-
         body = stringBuilder.toString();
         return body;
     }
