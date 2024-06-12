@@ -31,6 +31,7 @@ public class DuplicateDAO {
     }
 
     public boolean duplicateAll(DuplicateDTO duplicateDTO) { //모두 중복이지 않으면 true
+
         return !duplicateUsername(duplicateDTO) &&
                 !duplicateNickname(duplicateDTO) &&
                 !duplicateEmail(duplicateDTO);
