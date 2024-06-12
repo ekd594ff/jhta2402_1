@@ -6,16 +6,4 @@
     <select id="getMember" resultType="MemberDTO" parameterType="string">
         select * from jhta01_member where username = #{username}
     </select>
-    <insert id="insertMember" parameterType="MemberDTO">
-        INSERT INTO JHTA01_MEMBER values(
-        MEMBER_SEQ.nextval,
-        #{username},
-        #{nickname},
-        #{email},
-        #{password},
-        #{imageUrl},
-        #{introduction},
-        sysdate,
-        sysdate)
-    </insert>
 </mapper>

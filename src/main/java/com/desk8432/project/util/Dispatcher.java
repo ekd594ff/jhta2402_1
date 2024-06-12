@@ -1,6 +1,5 @@
 package com.desk8432.project.util;
 
-import com.desk8432.project.dto.TestDTO;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 
@@ -11,15 +10,6 @@ import java.io.*;
 
 public class Dispatcher {
     private static final long serialVersionUID = 1L;
-
-    protected void process(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        String jsonString = getBody(req);
-        Gson gson = new Gson();
-        TestDTO testDTO = gson.fromJson(jsonString, TestDTO.class);
-        System.out.println(testDTO.getData());
-    }
-
     public String getBody(HttpServletRequest request) throws IOException {
         String body = null;
         StringBuilder stringBuilder = new StringBuilder();

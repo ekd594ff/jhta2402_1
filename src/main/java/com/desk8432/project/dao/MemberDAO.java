@@ -12,5 +12,4 @@ public class MemberDAO {
         sqlSession.close();
         return memberDTO;
     }
-
 }
