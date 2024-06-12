@@ -28,7 +28,6 @@ public class InsertDAO {
 
         if (duplicateDAO.duplicateAll(duplicateDTO)&&
                 regex.regexAll(username, password, email, nickname)) {
-
             SqlSession sqlsession = MybatisConnectionFactory.getSqlSession();
             result = sqlsession.insert("insertMember", insertdto);
             sqlsession.close();
