@@ -6,6 +6,8 @@
     <properties resource="db.properties"></properties>
     <typeAliases>
         <typeAlias type="com.desk8432.project.dto.MemberDTO" alias="MemberDTO" />
+        <typeAlias type="com.desk8432.project.dto.DuplicateDTO" alias="DuplicateDTO" />
+        <typeAlias type="com.desk8432.project.dto.InsertDTO" alias="InsertDTO" />
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -21,5 +23,6 @@
     <mappers>
         <mapper resource="member.xml"/>
         <mapper resource="duplicate.xml"/>
+        <mapper resource="insert.xml" />
     </mappers>
 </configuration>

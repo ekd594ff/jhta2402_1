@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.desk8432.project">
+    <insert id="insertMember" parameterType="InsertDTO">
+        INSERT INTO JHTA01_MEMBER values(
+        MEMBER_SEQ.nextval,
+        #{username},
+        #{nickname},
+        #{email},
+        #{password},
+        #{imageUrl},
+        #{introduction},
+        sysdate,
+        sysdate)
+    </insert>
+</mapper>
