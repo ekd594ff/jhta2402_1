@@ -3,16 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.desk8432.project">
-    <select id="getMember" resultType="com.desk8432.project.dto.MemberDTO" parameterType="string">
+    <select id="getMember" resultType="MemberDTO" parameterType="string">
         select * from jhta01_member where username = #{username}
     </select>
-    <select id="duplicateUsername" resultType="int" parameterType="string">
-        select count(*) from jhta01_member where username = #{username}
-    </select>
-    <select id="duplicateEmail" resultType="int" parameterType="string">
-        select count(*) from jhta01_member where email = #{username}
-    </select>
-    <select id="duplicateNickname" resultType="int" parameterType="string">
-        select count(*) from jhta01_member where nickname = #{username}
-    </select>
+    <insert id="insertMember" parameterType="MemberDTO">
+        INSERT INTO JHTA01_MEMBER values(
+        MEMBER_SEQ.nextval,
+        #{username},
+        #{nickname},
+        #{email},
+        #{password},
+        #{imageUrl},
+        #{introduction},
+        sysdate,
+        sysdate)
+    </insert>
 </mapper>
