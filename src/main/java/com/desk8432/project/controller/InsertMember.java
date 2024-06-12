@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -29,6 +30,11 @@ public class InsertMember extends HttpServlet {
         String jsonString = dispatcher.getBody(req);
         Gson gson = new Gson();
         InsertDTO insertDTO = gson.fromJson(jsonString, InsertDTO.class);
+
+        String salt = BCrypt.gensalt();
+        String hashPW = BCrypt.hashpw(insertDTO.getPassword(), salt);
+        insertDTO.setPassword(hashPW);
+
         InsertDAO insertDAO = new InsertDAO();
         insertDTO.setImageUrl("test.jpg"); // imageUrl test용
         if (insertDAO.insertMember(insertDTO)) {
