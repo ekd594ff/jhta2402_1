@@ -2,6 +2,7 @@ package com.desk8432.project.controller;
 
 import com.desk8432.project.dao.MemberDAO;
 import com.desk8432.project.dto.MemberDTO;
+import com.desk8432.project.util.Dispatcher;
 import com.desk8432.project.utils.ScriptWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -22,30 +23,8 @@ public class InsertMember extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
-
-//        String salt = BCrypt.gensalt();
-//        password = BCrypt.hashpw(password, salt);
-//
-//        MemberDTO memberDTO = MemberDTO.builder()
-//                .username(req.getParameter("username"))
-//                .password(req.getParameter("password"))
-//                .nickname(req.getParameter("nickname"))
-//                .email(req.getParameter("email"))
-//                .imageUrl(req.getParameter("imageUrl"))
-//                .introduction(req.getParameter("introduction"))
-//                .build();
-
-
-
-//        MemberDAO memberDAO = new MemberDAO();
-//        boolean result = memberDAO.insertMember(memberDTO);
-//        if(result = true){
-//            ScriptWriter.alertAndNext(resp,"회원가입되었습니다.","/index/index");
-//        } else {
-//            ScriptWriter.alertAndBack(resp,"알 수 없는 오류가 발생되었습니다. 잠시후 다시 시도해 주세요.");
-//        }
+        Dispatcher dispatcher = new Dispatcher();
+        String jsonString = dispatcher.getBody(req);
+        System.out.println(jsonString);
     }
 }
