@@ -28,6 +28,7 @@ public class InsertMember extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Dispatcher dispatcher = new Dispatcher();
         String jsonString = dispatcher.getBody(req);
+
         Gson gson = new Gson();
         InsertDTO insertDTO = gson.fromJson(jsonString, InsertDTO.class);
 
