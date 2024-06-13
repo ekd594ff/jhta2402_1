@@ -16,6 +16,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/insert")
 public class InsertMember extends HttpServlet {
@@ -38,12 +41,23 @@ public class InsertMember extends HttpServlet {
 
         InsertDAO insertDAO = new InsertDAO();
         insertDTO.setImageUrl("test.jpg"); // imageUrl test용
+
+        Gson outGson = new Gson();
+        Map<String,String> resultMap = new HashMap<>();
         if (insertDAO.insertMember(insertDTO)) {
             System.out.println("success");
+            resultMap.put("message", "ok");
 //            ScriptWriter.alertAndNext(resp, "회원가입되었습니다.", "/index/index");
         } else {
             System.out.println("fail");
+            resp.setStatus(400);
+            resultMap.put("message", "fail");
 //            ScriptWriter.alertAndBack(resp,"알 수 없는 오류가 발생되었습니다.");
         }
+
+        String resultJson = outGson.toJson(resultMap);
+        resp.setContentType("application/json; charset=utf-8");
+        PrintWriter out = resp.getWriter();
+        out.println(resultJson);
     }
 }

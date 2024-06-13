@@ -8,14 +8,14 @@ public class DuplicateDAO {
     public boolean duplicateUsername(DuplicateDTO duplicateDTO) { // 중복이면 true
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.selectOne("duplicateUsername", duplicateDTO.getUsername());
+        result = sqlSession.selectOne("duplicateUsername", duplicateDTO);
         sqlSession.close();
         return result > 0;
     }
     public boolean duplicateNickname(DuplicateDTO duplicateDTO) { //중복이면 ture
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.selectOne("duplicateNickname", duplicateDTO.getNickname());
+        result = sqlSession.selectOne("duplicateNickname", duplicateDTO);
         System.out.println("nickname result = " + result);
         sqlSession.close();
         return result > 0;
@@ -24,7 +24,7 @@ public class DuplicateDAO {
     public boolean duplicateEmail(DuplicateDTO duplicateDTO) { //중복이면 true
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.selectOne("duplicateEmail", duplicateDTO.getEmail());
+        result = sqlSession.selectOne("duplicateEmail",duplicateDTO);
         System.out.println("email result = " + result);
         sqlSession.close();
         return result > 0;
