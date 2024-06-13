@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateImageDTO {
+public class UpdateImageUrlDTO {
     private String username;
     private String imageUrl;
 }

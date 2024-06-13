@@ -10,7 +10,7 @@
         UPDATED_AT = SYSDATE
         WHERE username = #{username};
     </update>
-    <update id="updateImage" parameterType="UpdateImageDTO">
+    <update id="updateImageUrl" parameterType="UpdateImageUrlDTO">
         UPDATE JHTA01_MEMBER
         SET
         image_url = #{imageUrl}
@@ -20,21 +20,21 @@
     <update id="updateIntroduction" parameterType="UpdateIntroductionDTO">
         UPDATE JHTA01_MEMBER
         SET
-        EMAIL = #{email}
+        INTRODUCTION = #{introduction}
         UPDATED_AT = SYSDATE
         WHERE username = #{username};
     </update>
     <update id="updateNickname" parameterType="UpdateNicknameDTO">
         UPDATE JHTA01_MEMBER
         SET
-        EMAIL = #{email}
+        NICKNAME = #{nickname}
         UPDATED_AT = SYSDATE
         WHERE username = #{username};
     </update>
     <update id="updatePassword" parameterType="UpdatePasswordDTO">
         UPDATE JHTA01_MEMBER
         SET
-        EMAIL = #{email}
+        PASSWORD = #{password}
         UPDATED_AT = SYSDATE
         WHERE username = #{username};
     </update>
