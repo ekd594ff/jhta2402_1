@@ -5,14 +5,14 @@ import com.desk8432.project.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
 
 public class DuplicateDAO {
-    public boolean duplicateUsername(DuplicateDTO duplicateDTO) {
+    public boolean duplicateUsername(DuplicateDTO duplicateDTO) { // 중복이면 true
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.selectOne("duplicateUsername", duplicateDTO.getUsername());
         sqlSession.close();
         return result > 0;
     }
-    public boolean duplicateNickname(DuplicateDTO duplicateDTO) {
+    public boolean duplicateNickname(DuplicateDTO duplicateDTO) { //중복이면 ture
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.selectOne("duplicateNickname", duplicateDTO.getNickname());

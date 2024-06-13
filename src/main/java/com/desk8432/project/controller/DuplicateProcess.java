@@ -26,7 +26,6 @@ public class DuplicateProcess extends HttpServlet {
         String jsonString = dispatcher.getBody(req);
         Gson inGson = new Gson();
         DuplicateDTO duplicateDTO = inGson.fromJson(jsonString, DuplicateDTO.class);
-
         DuplicateDAO duplicateDAO = new DuplicateDAO();
 
         switch (pathInfo) {
@@ -43,6 +42,7 @@ public class DuplicateProcess extends HttpServlet {
                 isDuplication = duplicateDAO.duplicateNickname(duplicateDTO);
                 break;
         }
+
         Gson outGson = new Gson();
         Map<String,Boolean> resultMap = new HashMap<>();
         resultMap.put("isDuplication", isDuplication);
