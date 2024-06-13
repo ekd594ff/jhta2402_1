@@ -17,6 +17,7 @@ import java.util.Map;
 
 @WebServlet("/duplicate/*")
 public class DuplicateProcess extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String pathInfo = req.getPathInfo().substring(1);
@@ -43,6 +44,7 @@ public class DuplicateProcess extends HttpServlet {
                 isDuplication = duplicateDAO.duplicateNickname(duplicateDTO);
                 break;
         }
+
         Gson outGson = new Gson();
         Map<String,Boolean> resultMap = new HashMap<>();
         resultMap.put("isDuplication", isDuplication);

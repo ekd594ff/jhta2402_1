@@ -1,9 +1,28 @@
+@import "variables.css";
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.signup-container * {
+    font-family: "Pretendard-Regular";
+}
+
 .signup-container {
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    --color-invalid: #f44336;
+    --color-valid: #66bb6a;
+    --color-warning: #ffa726;
+    --color-primary: #0d6efd;
+    --color-default: #909090;
+    --border-rdius: 4px;
 }
 
 .signup-form {
@@ -12,15 +31,67 @@
     flex-direction: column;
     padding: 16px;
     box-sizing: border-box;
-    gap: 8px;
+    gap: 6px;
 }
 
 .signup-input-group {
     display: flex;
     flex-direction: column;
+    font-size: 14px;
+    color: var(--color-default);
+    gap: 4px;
+}
+
+.signup-input-group > input {
+    border: 0;
+    border-bottom: 1px solid var(--color-default);
+    font-size: 16px;
+    padding: 4px;
+}
+
+.signup-input-group > input:focus {
+    outline: none;
+}
+
+.signup-input-group > .input-msg {
+    font-size: 14px;
+}
+
+.signup-input-group.valid > input {
+    border-bottom: 1px solid var(--color-valid);
+}
+
+.signup-input-group.valid > .input-msg {
+    color: var(--color-valid);
+}
+
+.signup-input-group.invalid > input {
+    border-bottom: 1px solid var(--color-invalid);
+}
+
+.signup-input-group.invalid > .input-msg {
+    color: var(--color-invalid);
 }
 
 .signup-submit-btn {
-    background-color: darkcyan;
+    background-color: var(--color-primary);
     color: white;
+    border-radius: var(--border-rdius);
+    font-size: 14px;
+    border: 0;
+    padding: 8px;
+
 }
+
+textarea.signup-input {
+    border: 1px solid var(--color-default);
+    padding: 4px;
+    resize: none;
+    border-radius: var(--border-rdius);
+
+}
+
+textarea.signup-input:focus {
+    outline: none;
+}
+
