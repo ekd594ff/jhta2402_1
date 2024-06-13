@@ -21,7 +21,6 @@ public class Regex {
         return
                 Pattern.matches(REGEXP_USER_PW_TYPE1, password) &&
                 Pattern.matches(REGEXP_USER_ID, username) &&
-                Pattern.matches(REGEXP_NICK_NAME, nickname) &&
                 Pattern.matches(REGEXP_LIGHT_USER_EMAIL, email);
     }
 }
