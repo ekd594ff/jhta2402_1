@@ -33,15 +33,17 @@ public class DeleteMember extends HttpServlet {
         deleteMemberDTO.setUsername(username);
 
         LoginDAO loginDAO = new LoginDAO();
+        String hashPW = loginDAO.getPassword(username);
         // Bcrypt로 암호화된 String  암호화된비밀번호.salt
         // 만들어진 salt를 가져오기
-        String hashPW = loginDAO.getPassword(username);
         //json으로 받고 DTO에 입력
+        String resultJson ="";
         if (hashPW != null) {
             Boolean checkLogin = BCrypt.checkpw(deleteMemberDTO.getPassword(), hashPW);
 
             if (checkLogin) {
-                String resultJson = deleteMember(resp, deleteMemberDTO);
+                deleteMemberDTO.setPassword(hashPW);
+                resultJson = deleteMember(resp, deleteMemberDTO);
             } else {
                 CookieManager.deleteCookie(resp, "rememberID");
                 System.out.println("no user check false");
@@ -53,7 +55,7 @@ public class DeleteMember extends HttpServlet {
 
         resp.setContentType("application/json; charset=utf-8");
         PrintWriter out = resp.getWriter();
-        out.println();
+        out.println(resultJson);
     }
 
     private String deleteMember(HttpServletResponse resp, DeleteMemberDTO deleteMemberDTO) throws IOException {

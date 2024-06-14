@@ -8,10 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 public class LoginDAO {
 
     public LoginMemberDTO loginMember(LoginDTO loginDTO) {
-
         SqlSession sqlsession = MybatisConnectionFactory.getSqlSession();
         LoginMemberDTO resultDto = sqlsession.selectOne("loginMember", loginDTO);
-
         return resultDto;
     }
 
