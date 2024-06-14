@@ -14,9 +14,9 @@ import java.io.IOException;
 public class Member extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        MemberDAO memberDAO = new MemberDAO();
-        MemberDTO memberDTO = memberDAO.getMember();
-        req.setAttribute("memberDTO", memberDTO);
-        req.getRequestDispatcher("/WEB-INF/member.jsp").forward(req, resp);
+//        MemberDAO memberDAO = new MemberDAO();
+//        MemberDTO memberDTO = memberDAO.getMember();
+//        req.setAttribute("memberDTO", memberDTO);
+//        req.getRequestDispatcher("/WEB-INF/member.jsp").forward(req, resp);
     }
 }
