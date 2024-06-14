@@ -74,7 +74,6 @@ public class UpdateImageUrl extends HttpServlet {
         // 별도의 이미지 저장 장소 없이 메인 서버에 저장
         try {
             Files.createDirectories(Paths.get(imgFolderPath));
-
             image.write(uploadUrl);
             Thumbnails.of(uploadUrl).size(100, 100).toFile(uploadUrl);
         } catch (IOException e) {
