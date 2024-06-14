@@ -5,6 +5,7 @@ import com.desk8432.project.dao.MemberDAO;
 import com.desk8432.project.dto.DeleteMemberDTO;
 import com.desk8432.project.dto.InsertDTO;
 import com.desk8432.project.dto.MemberDTO;
+import com.desk8432.project.util.CookieManager;
 import com.desk8432.project.util.Dispatcher;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -25,9 +26,15 @@ public class DeleteMember extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Dispatcher dispatcher = new Dispatcher();
         String jsonString = dispatcher.getBody(req);
-
         Gson gson = new Gson();
         DeleteMemberDTO deleteMemberDTO = gson.fromJson(jsonString, DeleteMemberDTO.class);
+
+        String username = CookieManager.readCookie(req, "username");
+        deleteMemberDTO.setUsername(username);
+
+
+
+
         //json으로 받고 DTO에 입력
 
 //        MemberDAO memberDAO = new MemberDAO();

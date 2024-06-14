@@ -31,6 +31,7 @@ public class InsertMember extends HttpServlet {
         Dispatcher dispatcher = new Dispatcher();
         String jsonString = dispatcher.getBody(req);
 
+        System.out.println("jsonString = " + jsonString);
         Gson gson = new Gson();
         InsertDTO insertDTO = gson.fromJson(jsonString, InsertDTO.class);
 
@@ -39,15 +40,14 @@ public class InsertMember extends HttpServlet {
         insertDTO.setPassword(hashPW);
 
         InsertDAO insertDAO = new InsertDAO();
-        insertDTO.setImageUrl("test.jpg"); // imageUrl test용
 
+        System.out.println(insertDTO.toString());
         Gson outGson = new Gson();
         Map<String,String> resultMap = new HashMap<>(); // map
 
-        //asdasdasd
         Gson outGson01 = new Gson();
         Map<String,String> resultMap01 = new HashMap<>(); // map
-        //asdasdasdasd
+
         if (insertDAO.insertMember(insertDTO)) {
             System.out.println("success");
             resultMap.put("message", "ok");

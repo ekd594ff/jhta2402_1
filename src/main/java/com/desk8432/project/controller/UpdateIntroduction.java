@@ -2,6 +2,7 @@ package com.desk8432.project.controller;
 
 import com.desk8432.project.dao.UpdateDAO;
 import com.desk8432.project.dto.UpdateIntroductionDTO;
+import com.desk8432.project.util.CookieManager;
 import com.desk8432.project.util.Dispatcher;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -25,6 +26,10 @@ public class UpdateIntroduction extends HttpServlet {
         Gson gson = new Gson();
         UpdateIntroductionDTO updateIntroductionDTO = gson.fromJson(jsonString, UpdateIntroductionDTO.class);
         UpdateDAO updateDAO = new UpdateDAO();
+
+        String username = CookieManager.readCookie(req, "username");
+        updateIntroductionDTO.setUsername(username);
+
         Gson outGson = new Gson();
         Map<String,String> resultMap = new HashMap<>();
         if (updateDAO.updateIntroduction(updateIntroductionDTO)) {

@@ -10,7 +10,7 @@
         #{nickname},
         #{email},
         #{password},
-        #{imageUrl},
+        '',
         #{introduction},
         sysdate,
         sysdate,

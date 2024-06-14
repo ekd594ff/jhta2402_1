@@ -4,6 +4,7 @@ package com.desk8432.project.controller;
 import com.desk8432.project.dao.UpdateDAO;
 import com.desk8432.project.dto.InsertDTO;
 import com.desk8432.project.dto.UpdateEmailDTO;
+import com.desk8432.project.util.CookieManager;
 import com.desk8432.project.util.Dispatcher;
 import com.desk8432.project.utils.ScriptWriter;
 import com.google.gson.Gson;
@@ -28,8 +29,10 @@ public class UpdateEmail extends HttpServlet {
         Gson gson = new Gson();
         UpdateEmailDTO updateEmailDTO = gson.fromJson(jsonString, UpdateEmailDTO.class);
 
-
         UpdateDAO updateDAO = new UpdateDAO();
+        String username = CookieManager.readCookie(req, "username");
+        updateEmailDTO.setUsername(username);
+
 
         Gson outGson = new Gson();
         Map<String,String> resultMap = new HashMap<>();
