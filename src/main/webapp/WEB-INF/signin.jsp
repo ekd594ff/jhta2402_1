@@ -55,7 +55,7 @@
                 body : JSON.stringify(data)
             }).then((result) => result.json())
                 .then(data => {
-                console.log(data);
+                window.location.href = "/";
             })
         } else {
             window.alert("비밀번호와 계정을 입력해 주세요");

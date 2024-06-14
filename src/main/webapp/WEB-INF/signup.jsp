@@ -76,7 +76,12 @@
             },
             method: "POST",
             body: JSON.stringify(data)
-        }).then((result) => result.json());
+        })
+            .then(result => result.json())
+            .then(data => {
+               window.alert("회원가입이 완료되었습니다");
+               window.location.href = "/";
+            });
     }
 
     function genMsg(className) {
