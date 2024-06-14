@@ -33,8 +33,6 @@ public class DeleteMember extends HttpServlet {
         deleteMemberDTO.setUsername(username);
 
 
-
-
         //json으로 받고 DTO에 입력
 
 //        MemberDAO memberDAO = new MemberDAO();
