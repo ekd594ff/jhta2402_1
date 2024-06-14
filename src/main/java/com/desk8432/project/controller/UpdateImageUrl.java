@@ -1,7 +1,6 @@
 package com.desk8432.project.controller;
 
-import com.desk8432.project.dao.UpdateEmailDAO;
-import com.desk8432.project.dao.UpdateImageUrlDAO;
+import com.desk8432.project.dao.UpdateDAO;
 import com.desk8432.project.dto.UpdateEmailDTO;
 import com.desk8432.project.dto.UpdateImageUrlDTO;
 import com.desk8432.project.util.Dispatcher;
@@ -26,12 +25,12 @@ public class UpdateImageUrl extends HttpServlet {
 
         Gson gson = new Gson();
         UpdateImageUrlDTO updateImageUrlDTO = gson.fromJson(jsonString, UpdateImageUrlDTO.class);
-        UpdateImageUrlDAO updateImageUrlDAO = new UpdateImageUrlDAO();
+        UpdateDAO updateDAO = new UpdateDAO();
 
         Gson outGson = new Gson();
         Map<String,String> resultMap = new HashMap<>();
 
-        if (updateImageUrlDAO.updateImageUrl(updateImageUrlDTO)) {
+        if (updateDAO.updateImageUrl(updateImageUrlDTO)) {
             System.out.println("success");
             System.out.println("success");
             resultMap.put("message", "ok");

@@ -1,9 +1,6 @@
 package com.desk8432.project.controller;
 
-import com.desk8432.project.dao.UpdateEmailDAO;
-import com.desk8432.project.dao.UpdateImageUrlDAO;
-import com.desk8432.project.dao.UpdateIntroductionDAO;
-import com.desk8432.project.dto.UpdateEmailDTO;
+import com.desk8432.project.dao.UpdateDAO;
 import com.desk8432.project.dto.UpdateIntroductionDTO;
 import com.desk8432.project.util.Dispatcher;
 import com.google.gson.Gson;
@@ -27,11 +24,10 @@ public class UpdateIntroduction extends HttpServlet {
 
         Gson gson = new Gson();
         UpdateIntroductionDTO updateIntroductionDTO = gson.fromJson(jsonString, UpdateIntroductionDTO.class);
-        UpdateIntroductionDAO updateIntroductionDAO = new UpdateIntroductionDAO();
-
+        UpdateDAO updateDAO = new UpdateDAO();
         Gson outGson = new Gson();
         Map<String,String> resultMap = new HashMap<>();
-        if (updateIntroductionDAO.updateIntroduction(updateIntroductionDTO)) {
+        if (updateDAO.updateIntroduction(updateIntroductionDTO)) {
             System.out.println("success");
             resultMap.put("message", "ok");
 //            ScriptWriter.alertAndNext(resp,"이메일 변경이 완료되었습니다","/index/index");
