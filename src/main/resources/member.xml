@@ -3,11 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.desk8432.project">
-<<<<<<< HEAD
-    <select id="getMember" resultType="MemberDTO" parameterType="MemberDTO">
-=======
     <select id="getMember" resultType="MyPageDTO" parameterType="MyPageDTO">
->>>>>>> 4f1733fb43fe43d34e4a1b5df0af5dede5b51c5a
         select * from jhta01_member where username = #{username}
     </select>
 </mapper>
