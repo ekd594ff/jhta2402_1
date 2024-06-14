@@ -14,6 +14,8 @@
         <typeAlias type="com.desk8432.project.dto.UpdateNicknameDTO" alias="UpdateNicknameDTO" />
         <typeAlias type="com.desk8432.project.dto.UpdatePasswordDTO" alias="UpdatePasswordDTO" />
         <typeAlias type="com.desk8432.project.dto.MyPageDTO" alias="MyPageDTO" />
+        <typeAlias type="com.desk8432.project.dto.LoginDTO" alias="LoginDTO" />
+        <typeAlias type="com.desk8432.project.dto.LoginMemberDTO" alias="LoginMemberDTO" />
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -31,5 +33,6 @@
         <mapper resource="duplicate.xml"/>
         <mapper resource="insert.xml" />
         <mapper resource="update.xml" />
+        <mapper resource="login.xml" />
     </mappers>
 </configuration>
