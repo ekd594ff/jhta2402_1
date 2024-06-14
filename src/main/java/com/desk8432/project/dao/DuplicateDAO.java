@@ -9,6 +9,7 @@ public class DuplicateDAO {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.selectOne("duplicateUsername", duplicateDTO);
+        System.out.println("username result = " + result);
         sqlSession.close();
         return result > 0;
     }

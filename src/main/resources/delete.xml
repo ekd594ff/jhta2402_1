@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.desk8432.project">
+    <update id="deleteMember" parameterType="DeleteMemberDTO">
+        UPDATE JHTA01_MEMBER
+        SET
+        IS_DELETE = 'Y',
+        UPDATED_AT = SYSDATE
+        WHERE username = #{username}
+        and password = #{password}
+    </update>
+</mapper>
