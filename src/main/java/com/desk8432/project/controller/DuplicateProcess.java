@@ -27,7 +27,6 @@ public class DuplicateProcess extends HttpServlet {
         String jsonString = dispatcher.getBody(req);
         Gson inGson = new Gson();
         DuplicateDTO duplicateDTO = inGson.fromJson(jsonString, DuplicateDTO.class);
-
         DuplicateDAO duplicateDAO = new DuplicateDAO();
 
         switch (pathInfo) {
