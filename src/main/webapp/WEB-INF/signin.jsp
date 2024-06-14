@@ -12,13 +12,13 @@
         <h1>SIGN IN</h1>
         <label class="signin-input-group username">
             계정
-            <input type="text" class="signin-input" placeholder="아이디 영문 숫자 조합 6 ~ 10자리">
+            <input type="text" class="signin-input">
         </label>
         <label class="signin-input-group password">
             비밀번호
-            <input type="password" class="signin-input" placeholder="대소문자, 숫자, 특수문자 포함 10자이상">
+            <input type="password" class="signin-input">
         </label>
-        <button class="signin-submit-btn">확인</button>
+        <button class="signin-submit-btn" onclick="onClickSubmit()">확인</button>
     </form>
     <div class="bg">
         <div class="panel">
@@ -26,5 +26,41 @@
         </div>
     </div>
 </div>
+<script>
+    const signInForm = document.querySelector(".signin-form");
+    const usernameInput = document.querySelector(".signin-input-group.username > input");
+    const passwordInput = document.querySelector(".signin-input-group.password > input");
+
+    signInForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+    });
+
+    function onClickSubmit(event) {
+        const usernameValue = usernameInput.value;
+        const passwordValue = passwordInput.value;
+
+        if(usernameValue &&
+            passwordValue &&
+            usernameValue.trim() &&
+            passwordValue.trim()) {
+            const data = {
+                username : usernameValue,
+                password : passwordValue
+            }
+            fetch("/login", {
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                method : "POST",
+                body : JSON.stringify(data)
+            }).then((result) => result.json())
+                .then(data => {
+                console.log(data);
+            })
+        } else {
+            window.alert("비밀번호와 계정을 입력해 주세요");
+        }
+    }
+</script>
 </body>
 </html>
