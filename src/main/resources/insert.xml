@@ -10,10 +10,10 @@
         #{nickname},
         #{email},
         #{password},
-        #{imageUrl},
+        '',
         #{introduction},
         sysdate,
-        sysdate)
+        sysdate,
+        'N')
     </insert>
-
 </mapper>

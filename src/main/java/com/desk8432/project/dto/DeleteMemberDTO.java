@@ -1,9 +1,7 @@
 package com.desk8432.project.dto;
 
+
 import lombok.*;
-
-import java.time.LocalDate;
-
 
 @Getter
 @Setter
@@ -11,10 +9,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InsertDTO {
+public class DeleteMemberDTO {
     private String username;
-    private String nickname;
-    private String email;
     private String password;
-    private String introduction;
 }

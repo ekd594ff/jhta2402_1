@@ -42,9 +42,7 @@ public class MemberImage extends HttpServlet {
         } else {
             returnMap.put("imgUrl", uploadUrl);
         }
-
         resp.getWriter().println(gson.toJson(returnMap));
-
     }
 
     // 폴더경로/유저이름_날짜.확장자
@@ -72,7 +70,6 @@ public class MemberImage extends HttpServlet {
             System.out.println(e.getMessage());
             return null;
         }
-
         return returnUrl;
     }
 }

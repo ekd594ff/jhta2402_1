@@ -1,14 +1,14 @@
 package com.desk8432.project.controller;
 
-import com.desk8432.project.dao.InsertDAO;
+import com.desk8432.project.dao.DeleteMemberDAO;
 import com.desk8432.project.dao.MemberDAO;
+import com.desk8432.project.dto.DeleteMemberDTO;
 import com.desk8432.project.dto.InsertDTO;
 import com.desk8432.project.dto.MemberDTO;
+import com.desk8432.project.util.CookieManager;
 import com.desk8432.project.util.Dispatcher;
-import com.desk8432.project.utils.ScriptWriter;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,35 +20,42 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/insert")
-public class InsertMember extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/insert.jsp").forward(req,resp);
-    }
+@WebServlet("/member/delete")
+public class DeleteMember extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Dispatcher dispatcher = new Dispatcher();
         String jsonString = dispatcher.getBody(req);
-
-        System.out.println("jsonString = " + jsonString);
         Gson gson = new Gson();
-        InsertDTO insertDTO = gson.fromJson(jsonString, InsertDTO.class);
+        DeleteMemberDTO deleteMemberDTO = gson.fromJson(jsonString, DeleteMemberDTO.class);
 
-        String salt = BCrypt.gensalt();
-        String hashPW = BCrypt.hashpw(insertDTO.getPassword(), salt);
-        insertDTO.setPassword(hashPW);
+        String username = CookieManager.readCookie(req, "username");
+        deleteMemberDTO.setUsername(username);
 
-        InsertDAO insertDAO = new InsertDAO();
 
-        System.out.println(insertDTO.toString());
+
+
+        //json으로 받고 DTO에 입력
+
+//        MemberDAO memberDAO = new MemberDAO();
+//        MemberDTO loginMemberDTO = memberDAO.loginMember(deleteMemberDTO.getUsername()); //아이디와 같은 비밀번호 아이디 dto 값 얻기
+//        if (loginMemberDTO != null) {
+//            String encodedPassword =loginMemberDTO.getPassword();
+//            if (BCrypt.checkpw(deleteMemberDTO.getPassword(), loginMemberDTO.getPassword())) {
+//                // 비밀번호 맞음
+//            } else {
+//                //비밀번호 틀림
+//            }
+//        }
+
+        DeleteMemberDAO deleteMemberDAO = new DeleteMemberDAO();
+
         Gson outGson = new Gson();
-        Map<String,String> resultMap = new HashMap<>(); // map
+        Map<String,String> resultMap = new HashMap<>();
+        System.out.println(deleteMemberDTO.getPassword());
+        System.out.println(deleteMemberDTO.getUsername());
 
-        Gson outGson01 = new Gson();
-        Map<String,String> resultMap01 = new HashMap<>(); // map
-
-        if (insertDAO.insertMember(insertDTO)) {
+        if (deleteMemberDAO.deleteMember(deleteMemberDTO)) {
             System.out.println("success");
             resultMap.put("message", "ok");
 //            ScriptWriter.alertAndNext(resp, "회원가입되었습니다.", "/index/index");
@@ -64,5 +71,6 @@ public class InsertMember extends HttpServlet {
         resp.setContentType("application/json; charset=utf-8");
         PrintWriter out = resp.getWriter();
         out.println(resultJson);
+
     }
 }
