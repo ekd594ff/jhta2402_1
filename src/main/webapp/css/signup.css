@@ -24,6 +24,7 @@
 
 .signup-container > .bg {
     flex-grow: 1;
+    background-color: darkcyan;
 }
 
 .signup-container > .bg > img {
