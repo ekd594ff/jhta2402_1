@@ -1,7 +1,7 @@
 package com.desk8432.project.controller;
 
 
-import com.desk8432.project.dao.UpdateEmailDAO;
+import com.desk8432.project.dao.UpdateDAO;
 import com.desk8432.project.dto.InsertDTO;
 import com.desk8432.project.dto.UpdateEmailDTO;
 import com.desk8432.project.util.Dispatcher;
@@ -29,11 +29,11 @@ public class UpdateEmail extends HttpServlet {
         UpdateEmailDTO updateEmailDTO = gson.fromJson(jsonString, UpdateEmailDTO.class);
 
 
-        UpdateEmailDAO updateEmailDAO = new UpdateEmailDAO();
+        UpdateDAO updateDAO = new UpdateDAO();
 
         Gson outGson = new Gson();
         Map<String,String> resultMap = new HashMap<>();
-        if (updateEmailDAO.updateEmail(updateEmailDTO)) {
+        if (updateDAO.updateEmail(updateEmailDTO)) {
             System.out.println("success");
             resultMap.put("message", "ok");
 //            ScriptWriter.alertAndNext(resp,"이메일 변경이 완료되었습니다","/index/index");
