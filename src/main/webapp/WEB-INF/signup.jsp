@@ -8,9 +8,6 @@
 </head>
 <body>
 <div class="signup-container">
-    <div class="bg">
-
-    </div>
     <form class="signup-form">
         <h1>SIGN UP</h1>
         <label class="signup-input-group username">
@@ -45,6 +42,7 @@
         </label>
         <button class="signup-submit-btn">확인</button>
     </form>
+    <div class="bg"></div>
 </div>
 <script>
     const signupForm = document.querySelector(".signup-form");

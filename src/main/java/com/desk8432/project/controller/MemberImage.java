@@ -44,7 +44,6 @@ public class MemberImage extends HttpServlet {
         }
 
         resp.getWriter().println(gson.toJson(returnMap));
-
     }
 
     // 폴더경로/유저이름_날짜.확장자
