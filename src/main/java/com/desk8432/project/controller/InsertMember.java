@@ -40,7 +40,10 @@ public class InsertMember extends HttpServlet {
 
         InsertDAO insertDAO = new InsertDAO();
         insertDTO.setImageUrl("test.jpg"); // imageUrl test용
-      
+
+        Gson outGson = new Gson();
+        Map<String,String> resultMap = new HashMap<>(); // map
+
         if (insertDAO.insertMember(insertDTO)) {
             System.out.println("success");
             resultMap.put("message", "ok");
