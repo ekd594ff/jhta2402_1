@@ -59,10 +59,8 @@ public class LoginController extends HttpServlet {
 
                 CookieManager.createCookie(resp, "username", username, 60 * 60 * 24 * 7);
 
-//                resp.setStatus(200);
-//                resultMap.put("message", "ok");
-
-                resp.sendRedirect("/");
+                resp.setStatus(200);
+                resultMap.put("message", "ok");
             } else {
                 CookieManager.deleteCookie(resp, "rememberID");
                 resp.setStatus(400);
