@@ -1,34 +1,34 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container">
-    <h2>회원정보</h2>
-    <tr>
-        <th>USERNAME</th>
+    <h1>회원정보</h1>
+    <div class="username">
+        <th>USERNAME</th><br>
         <td>${infoMemberDTO.username}</td>
-    </tr>
-    <tr>
-        <th>NICKNAME</th>
+    </div>
+    <div class="nickname">
+        <th>NICKNAME</th><br>
         <td>${infoMemberDTO.nickname}</td>
-    </tr>
-    <tr>
-        <th>EMAIL</th>
+    </div>
+    <div class="email">
+        <th>EMAIL</th><br>
         <td>${infoMemberDTO.email}</td>
-    </tr>
-    <tr>
-        <th>IMAGEURL</th>
+    </div>
+    <div class="imageUrl">
+        <th>IMAGEURL</th><br>
         <td>${infoMemberDTO.imageUrl}</td>
-    </tr>
-    <tr>
-        <th>INTRODUCTION</th>
+    </div>
+    <div class="introduction">
+        <th>INTRODUCTION</th><br>
         <td>${infoMemberDTO.imageUrl}</td>
-    </tr>
-    <tr>
-        <th>CREATEDAT</th>
+    </div>
+    <div class="createdAt">
+        <th>CREATEDAT</th><br>
         <td>${infoMemberDTO.createdAt}</td>
-    </tr>
-    <tr>
-        <th>UPDATEDAT</th>
+    </div>
+    <div class="updatedAt">
+        <th>UPDATEDAT</th><br>
         <td>${infoMemberDTO.updatedAt}</td>
-    </tr>
+    </div>
 </div>
 
