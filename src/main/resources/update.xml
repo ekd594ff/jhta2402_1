@@ -6,36 +6,36 @@
     <update id="updateEmail" parameterType="UpdateEmailDTO">
         UPDATE JHTA01_MEMBER
         SET
-        EMAIL = #{email}
+        EMAIL = #{email},
         UPDATED_AT = SYSDATE
-        WHERE username = #{username};
+        WHERE username = #{username}
     </update>
     <update id="updateImageUrl" parameterType="UpdateImageUrlDTO">
         UPDATE JHTA01_MEMBER
         SET
-        image_url = #{imageUrl}
+        image_url = #{imageUrl},
         UPDATED_AT = SYSDATE
-        WHERE username = #{username};
+        WHERE username = #{username}
     </update>
     <update id="updateIntroduction" parameterType="UpdateIntroductionDTO">
         UPDATE JHTA01_MEMBER
         SET
-        INTRODUCTION = #{introduction}
+        INTRODUCTION = #{introduction},
         UPDATED_AT = SYSDATE
-        WHERE username = #{username};
+        WHERE username = #{username}
     </update>
     <update id="updateNickname" parameterType="UpdateNicknameDTO">
         UPDATE JHTA01_MEMBER
         SET
-        NICKNAME = #{nickname}
+        NICKNAME = #{nickname},
         UPDATED_AT = SYSDATE
-        WHERE username = #{username};
+        WHERE username = #{username}
     </update>
     <update id="updatePassword" parameterType="UpdatePasswordDTO">
         UPDATE JHTA01_MEMBER
         SET
-        PASSWORD = #{password}
+        PASSWORD = #{password},
         UPDATED_AT = SYSDATE
-        WHERE username = #{username};
+        WHERE username = #{username}
     </update>
 </mapper>
