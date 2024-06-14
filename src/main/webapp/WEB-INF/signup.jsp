@@ -3,12 +3,16 @@
 <head>
     <title>Sign up</title>
     <link rel="stylesheet" href="css/global.css"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <script src="js/util.js"></script>
 </head>
 <body>
 <div class="signup-container">
-    <h1></h1>
+    <div class="bg">
+
+    </div>
     <form class="signup-form">
+        <h1>SIGN UP</h1>
         <label class="signup-input-group username">
             계정
             <input type="text" class="signup-input" placeholder="아이디 영문 숫자 조합 6 ~ 10자리">
@@ -74,11 +78,7 @@
             },
             method: "POST",
             body: JSON.stringify(data)
-        }).then((result) => {
-            return result.json();
-        }).then((data) => {
-            console.log(data);
-        })
+        }).then((result) => result.json());
     }
 
     function genMsg(className) {
@@ -141,10 +141,10 @@
 
             return fetch(URL, {
                 headers: {
-                    "Content-Type" : "application/json"
+                    "Content-Type": "application/json"
                 },
-                method : "POST",
-                body : JSON.stringify(body)
+                method: "POST",
+                body: JSON.stringify(body)
             })
                 .then((result) => result.json())
         } else {
@@ -163,17 +163,19 @@
                 //This string is valid for the regular expression only, not for duplication
                 const data = await duplicateCheck(className, value, inputMsgLabel);
 
-                if(!data) {
+                if (!data) {
                     inputGroup.classList.add("valid");
                     inputGroup.classList.remove("invalid");
                     inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
                     return;
                 }
 
-                if(!data.isDuplication) {
+                if (!data.isDuplication) {
+                    inputGroup.classList.remove("invalid");
                     inputGroup.classList.add("valid");
                     inputMsgLabel.textContent = msg["valid"];
                 } else {
+                    inputGroup.classList.remove("valid");
                     inputGroup.classList.add("invalid");
                     inputMsgLabel.textContent = "중복된 " + enToKr(className) + "입니다";
                 }

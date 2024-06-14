@@ -37,12 +37,14 @@ public class InsertMember extends HttpServlet {
 
         InsertDAO insertDAO = new InsertDAO();
         insertDTO.setImageUrl("test.jpg"); // imageUrl test용
+
         if (insertDAO.insertMember(insertDTO)) {
             System.out.println("success");
 //            ScriptWriter.alertAndNext(resp, "회원가입되었습니다.", "/index/index");
         } else {
             System.out.println("fail");
 //            ScriptWriter.alertAndBack(resp,"알 수 없는 오류가 발생되었습니다.");
+            resp.setStatus(400);
         }
     }
 }
