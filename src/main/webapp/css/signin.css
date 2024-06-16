@@ -7,6 +7,10 @@
     font-style: normal;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 .signin-container * {
     font-family: "Pretendard-Regular";;
 }
@@ -14,12 +18,18 @@
 .signin-container {
     height: 100vh;
     display: flex;
+    position: relative;
     --color-invalid: #f44336;
     --color-valid: #66bb6a;
     --color-warning: #ffa726;
     --color-primary: #0d6efd;
     --color-default: #909090;
     --border-rdius: 4px;
+    --panel-size: 700px;
+}
+
+.signin-container h1 {
+    font-size: 40px !important;
 }
 
 .signin-form {
@@ -32,10 +42,29 @@
     height: 100%;
     justify-content: center;
     margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: #fff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .signin-form > h1 {
     font-weight: bold;
+    color: #000;
+}
+
+.signin-form > .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 32px;
+    padding: 8px 0;
+}
+
+.signin-form > .logo > img {
+    display: block;
 }
 
 .signin-input-group {
@@ -67,15 +96,17 @@
 }
 
 .signin-container > .bg {
-    flex-grow: 1;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding-right: 300px;
 }
 
 .signin-container > .bg > .panel {
-    width : 600px;
-    height : 600px;
+    width : var(--panel-size);
+    height :  var(--panel-size);
     overflow : hidden;
     display : flex;
     align-items : center;
@@ -86,6 +117,17 @@
     width : 100%;
     height : 100%;
     object-fit : cover;
+    display: block;
+}
+
+.signin-container .signup-btn {
+    background-color: transparent;
+    color: var(--color-primary);
+    border-radius: var(--border-rdius);
+    font-size: 14px;
+    box-sizing: border-box;
+    border: 1px solid var(--color-primary);
+    padding: 8px;
 }
 
 .panel {
@@ -114,4 +156,35 @@
     }
 }
 
+
+@media (max-width: 600px) {
+    .signin-container {
+        justify-content: center;
+    }
+    .signin-form {
+        position: relative;
+        box-shadow: none;
+    }
+    .signin-container > .bg {
+        display: none;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .signin-container {
+        justify-content: center;
+    }
+    .signin-form {
+        position: relative;
+        box-shadow: none;
+    }
+    .signin-container > .bg {
+        display: none;
+    }
+}
+
+/* 큰 디바이스 (데스크탑) */
+@media (min-width: 1025px) {
+
+}
 

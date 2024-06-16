@@ -9,14 +9,13 @@
     align-items: center;
 }
 
-.header > .header-container {
+.header-container {
     width: 100%;
 }
 
-.header img.avatar {
+.header .avatar {
     width: var(--avatar-diameter);
     height: var(--avatar-diameter);
     border-radius: 50%;
-    display: block !important;
     margin: 0;
 }
