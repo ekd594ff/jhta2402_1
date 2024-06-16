@@ -36,5 +36,6 @@
         <mapper resource="update.xml" />
         <mapper resource="delete.xml" />
         <mapper resource="login.xml" />
+        <mapper resource="file.xml" />
     </mappers>
 </configuration>

@@ -1,18 +1,23 @@
 package com.desk8432.project.controller;
 
 import com.desk8432.project.dao.UpdateDAO;
-import com.desk8432.project.dto.UpdateEmailDTO;
 import com.desk8432.project.dto.UpdateImageUrlDTO;
 import com.desk8432.project.util.CookieManager;
-import com.desk8432.project.util.Dispatcher;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import net.coobird.thumbnailator.Thumbnails;
+
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,18 +29,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet("/update/imageUrl")
-public class UpdateImageUrl extends HttpServlet {
+@MultipartConfig
+public class UpdateImageUrl03 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Dispatcher dispatcher = new Dispatcher();
-        String jsonString = dispatcher.getBody(req);
+        String username = CookieManager.readCookie(req, "username");
+        Part image = req.getPart("image");
+//        String username = req.getParameter("username");
 
-        Gson gson = new Gson();
-        UpdateImageUrlDTO updateImageUrlDTO = gson.fromJson(jsonString, UpdateImageUrlDTO.class);
+
         UpdateDAO updateDAO = new UpdateDAO();
 
-        String username = CookieManager.readCookie(req, "username");
-        updateImageUrlDTO.setUsername(username);
+        UpdateImageUrlDTO updateImageUrlDTO = getImageDTO(image,username);
+
+        updateDAO.updateImageUrl(updateImageUrlDTO); // db에 이미지 경로 저장
+        updateDAO.updateFile(updateImageUrlDTO); // db에 이미지 경로 저장 insert/update
+        uploadImage(image,updateImageUrlDTO.getLocation(), updateImageUrlDTO.getFileName()); //이미지 메인서버에 저장
 
         Gson outGson = new Gson();
         Map<String,String> resultMap = new HashMap<>();
@@ -56,21 +65,42 @@ public class UpdateImageUrl extends HttpServlet {
         out.println(resultJson);
     }
 
-    //폴더 경로/유저이름_날짜.확장자 이미지
-    private String uploadImage(Part image, String username) {
-        String imgFolder = "/image";
-        String imgFolderPath = getServletConfig().getServletContext().getRealPath(imgFolder);
+    private UpdateImageUrlDTO getImageDTO(Part image, String username) {
+        String formatMonth = LocalDateTime.now().format(
+                DateTimeFormatter.ofPattern("yyyyMM")
+        );
+        String formatDay = LocalDateTime.now().format(
+                DateTimeFormatter.ofPattern("dd")
+        );
+        String imgFolder = "/image" +"/"+ formatMonth + "/" + formatDay;
 
+        String imgFolderPath = getServletConfig().getServletContext().getRealPath(imgFolder);
+        System.out.println("imgFolderPath = " + imgFolderPath);
         String formatNow = LocalDateTime.now().format(
-                DateTimeFormatter.ofPattern("yyyyMMdd_hhmmss")
+                DateTimeFormatter.ofPattern("hhmmss")
         );
 
+        System.out.println("formatMonth = " + formatMonth);
         String fileName = image.getSubmittedFileName();
         String extension = fileName.substring(fileName.lastIndexOf("."));
 
         String uploadUrl = imgFolderPath + "/" + username + "_" + formatNow + extension;
         String returnUrl = imgFolder + "/" + username + "_" + formatNow + extension;
+//        String filename = username + "_" + formatNow + extension;
 
+        UpdateImageUrlDTO updateImageUrlDTO
+                = UpdateImageUrlDTO.builder()
+                .username(username)
+                .originalName(fileName)
+                .location(imgFolderPath)
+                .imageUrl(returnUrl)
+                .fileName(uploadUrl)
+                .build();
+        return updateImageUrlDTO;
+    }
+
+    //폴더 경로/유저이름_날짜.확장자 이미지
+    private void uploadImage(Part image, String imgFolderPath, String uploadUrl) {
         // 별도의 이미지 저장 장소 없이 메인 서버에 저장
         try {
             Files.createDirectories(Paths.get(imgFolderPath));
@@ -78,8 +108,7 @@ public class UpdateImageUrl extends HttpServlet {
             Thumbnails.of(uploadUrl).size(100, 100).toFile(uploadUrl);
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            return null;
         }
-        return returnUrl;
+        System.out.println("success");
     }
 }

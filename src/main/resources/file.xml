@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.desk8432.project">
+    <insert id="insertFIle" parameterType="UpdateImageUrlDTO">
+        INSERT INTO JHTA01_FILE values(
+        FILE_SEQ.nextval,
+        #{username},
+        #{originalName},
+        #{fileName},
+        #{location},
+        sysdate
+        )
+    </insert>
+    <update id="updateFile" parameterType="UpdateImageUrlDTO">
+        UPDATE JHTA01_File
+        SET
+        originalname = #{originalName},
+        filename = #{fileName},
+        location = #{location},
+        created_at = SYSDATE
+        WHERE username = #{username}
+    </update>
+</mapper>

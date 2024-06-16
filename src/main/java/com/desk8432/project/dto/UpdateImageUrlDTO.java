@@ -9,7 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UpdateImageUrlDTO {
-
     private String username;
     private String imageUrl;
+    private String originalName;
+    private String fileName;
+    private String location;
 }
