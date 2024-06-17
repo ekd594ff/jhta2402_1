@@ -1,10 +1,9 @@
 package com.desk8432.project.controller;
 
 import com.desk8432.project.dao.DeleteMemberDAO;
+import com.desk8432.project.dao.LoginDAO;
 import com.desk8432.project.dao.MemberDAO;
-import com.desk8432.project.dto.DeleteMemberDTO;
-import com.desk8432.project.dto.InsertDTO;
-import com.desk8432.project.dto.MemberDTO;
+import com.desk8432.project.dto.*;
 import com.desk8432.project.util.CookieManager;
 import com.desk8432.project.util.Dispatcher;
 import com.google.gson.Gson;
@@ -13,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -32,22 +32,33 @@ public class DeleteMember extends HttpServlet {
         String username = CookieManager.readCookie(req, "username");
         deleteMemberDTO.setUsername(username);
 
-
-
-
+        LoginDAO loginDAO = new LoginDAO();
+        String hashPW = loginDAO.getPassword(username);
+        // Bcrypt로 암호화된 String  암호화된비밀번호.salt
+        // 만들어진 salt를 가져오기
         //json으로 받고 DTO에 입력
+        String resultJson ="";
+        if (hashPW != null) {
+            Boolean checkLogin = BCrypt.checkpw(deleteMemberDTO.getPassword(), hashPW);
 
-//        MemberDAO memberDAO = new MemberDAO();
-//        MemberDTO loginMemberDTO = memberDAO.loginMember(deleteMemberDTO.getUsername()); //아이디와 같은 비밀번호 아이디 dto 값 얻기
-//        if (loginMemberDTO != null) {
-//            String encodedPassword =loginMemberDTO.getPassword();
-//            if (BCrypt.checkpw(deleteMemberDTO.getPassword(), loginMemberDTO.getPassword())) {
-//                // 비밀번호 맞음
-//            } else {
-//                //비밀번호 틀림
-//            }
-//        }
+            if (checkLogin) {
+                deleteMemberDTO.setPassword(hashPW);
+                resultJson = deleteMember(resp, deleteMemberDTO);
+            } else {
+                CookieManager.deleteCookie(resp, "rememberID");
+                System.out.println("no user check false");
+            }
+        } else {
+            CookieManager.deleteCookie(resp, "rememberID");
+            System.out.println("no user hash false");
+        }
 
+        resp.setContentType("application/json; charset=utf-8");
+        PrintWriter out = resp.getWriter();
+        out.println(resultJson);
+    }
+
+    private String deleteMember(HttpServletResponse resp, DeleteMemberDTO deleteMemberDTO) throws IOException {
         DeleteMemberDAO deleteMemberDAO = new DeleteMemberDAO();
 
         Gson outGson = new Gson();
@@ -64,13 +75,9 @@ public class DeleteMember extends HttpServlet {
             resp.setStatus(400);
             resultMap.put("message", "fail");
 //            ScriptWriter.alertAndBack(resp,"알 수 없는 오류가 발생되었습니다.");
-            resp.setStatus(400);
         }
 
         String resultJson = outGson.toJson(resultMap);
-        resp.setContentType("application/json; charset=utf-8");
-        PrintWriter out = resp.getWriter();
-        out.println(resultJson);
-
+        return resultJson;
     }
 }

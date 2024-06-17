@@ -57,7 +57,6 @@ public class InsertMember extends HttpServlet {
             resp.setStatus(400);
             resultMap.put("message", "fail");
 //            ScriptWriter.alertAndBack(resp,"알 수 없는 오류가 발생되었습니다.");
-            resp.setStatus(400);
         }
 
         String resultJson = outGson.toJson(resultMap);

@@ -1,6 +1,7 @@
 @import url("header.css");
 @import url("signup.css");
 @import url("signin.css");
+@import url("footer.css");
 
 body, html {
     padding: 0;

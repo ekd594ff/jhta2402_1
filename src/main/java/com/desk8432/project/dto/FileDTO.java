@@ -1,5 +1,6 @@
 package com.desk8432.project.dto;
 
+
 import lombok.*;
 
 @Getter
@@ -8,9 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateImageUrlDTO {
+public class FileDTO {
     private String username;
-    private String imageUrl;
     private String originalName;
     private String fileName;
     private String location;
