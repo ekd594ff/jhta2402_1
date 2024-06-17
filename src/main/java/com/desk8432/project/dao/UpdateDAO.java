@@ -41,11 +41,26 @@ public class UpdateDAO {
         return  result > 0;
     }
 
+    public boolean isFile(UpdateImageUrlDTO updateImageUrlDTO) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.selectOne("isFile", updateImageUrlDTO);
+        sqlSession.close();
+        return result > 0;
+    }
+
     //사진 url 설정
     public boolean updateFile(UpdateImageUrlDTO updateImageUrlDTO) {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
-        result = sqlSession.update("insertFIle", updateImageUrlDTO);
+        result = sqlSession.update("updateFile", updateImageUrlDTO);
+        sqlSession.close();
+        return result > 0;
+    }
+    public boolean insertFile(UpdateImageUrlDTO updateImageUrlDTO) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.insert("insertFIle", updateImageUrlDTO);
         sqlSession.close();
         return result > 0;
     }

@@ -16,8 +16,6 @@ import net.coobird.thumbnailator.Thumbnails;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,26 +35,56 @@ public class UpdateImageUrl03 extends HttpServlet {
         Part image = req.getPart("image");
 //        String username = req.getParameter("username");
 
-
         UpdateDAO updateDAO = new UpdateDAO();
+
+        Gson outGson = new Gson();
+        Map<String,String> resultMap = new HashMap<>(); //결과값 반환
 
         UpdateImageUrlDTO updateImageUrlDTO = getImageDTO(image,username);
 
-        updateDAO.updateImageUrl(updateImageUrlDTO); // db에 이미지 경로 저장
-        updateDAO.updateFile(updateImageUrlDTO); // db에 이미지 경로 저장 insert/update
-        uploadImage(image,updateImageUrlDTO.getLocation(), updateImageUrlDTO.getFileName()); //이미지 메인서버에 저장
-
-        Gson outGson = new Gson();
-        Map<String,String> resultMap = new HashMap<>();
-
-        if (updateDAO.updateImageUrl(updateImageUrlDTO)) {System.out.println("success");
-            resultMap.put("message", "ok");
-//            ScriptWriter.alertAndNext(resp,"이미지 변경이 완료되었습니다","/index/index");
-        } else {
-            System.out.println("fail");
-            resp.setStatus(400);
-            resultMap.put("message", "fail");
-//            ScriptWriter.alertAndBack(resp,"이미지 변경이 실패되었습니다");
+        CompletableFuture<Void> memberImageUrlUpdateFutrue = CompletableFuture.runAsync(() ->{
+            if (updateDAO.updateImageUrl(updateImageUrlDTO)) {
+                //member db에 이미지 경로 수정
+                resultMap.put("url","ok");
+            }
+        });
+        CompletableFuture<Void> uploadImageFuture = CompletableFuture.runAsync(() ->{
+            uploadImage(image,updateImageUrlDTO.getLocation(), updateImageUrlDTO.getFileName()); //이미지 메인서버에 저장
+        });
+        CompletableFuture<Boolean> isFileImageFutrue = CompletableFuture.supplyAsync(() -> {
+            // 비동기 작업
+            return updateDAO.isFile(updateImageUrlDTO); // Boolean 값 반환
+        });
+        isFileImageFutrue.thenApply(result -> {
+            if (result) {
+                boolean isUpdateFile = updateDAO.updateFile(updateImageUrlDTO);
+                if (isUpdateFile) {
+                    resultMap.put("isUpdateFile", "ok");
+                } else {
+                    resp.setStatus(400);
+                    resultMap.put("isUpdateFile", "fail");
+                }
+                return isUpdateFile;
+            } else {
+                boolean isInsertFile = updateDAO.insertFile(updateImageUrlDTO);
+                if (isInsertFile) {
+                    resultMap.put("isInsertFile", "ok");
+                } else {
+                    resp.setStatus(400);
+                    resultMap.put("isInsertFile", "fail");
+                }
+                return isInsertFile;
+            }
+            // thenApply()는 새로운 값을 반환해야 합니다.
+        });
+        try {
+            memberImageUrlUpdateFutrue.get();
+            uploadImageFuture.get();
+            isFileImageFutrue.get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
         }
 
         String resultJson = outGson.toJson(resultMap);
