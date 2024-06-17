@@ -37,6 +37,7 @@ public class UpdateDAO {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         result = sqlSession.update("updateImageUrl", updateImageUrlDTO);
+        System.out.println("result = " + result);
         sqlSession.close();
         return  result > 0;
     }

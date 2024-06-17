@@ -1,5 +1,6 @@
 :root {
     --header-height : 64px;
     --avatar-diameter: 48px;
-    --profile-img-diameter: 200px;
+    --profile-img-diameter: 250px;
+    --profile-form-width: 960px;
 }
