@@ -5,7 +5,7 @@
 <mapper namespace="org.desk8432.project">
     <insert id="insertMember" parameterType="InsertDTO">
         INSERT INTO JHTA01_MEMBER values(
-        MEMBER_SEQ.nextval,
+        nextval('MEMBER_SEQ'),
         #{username},
         #{nickname},
         #{email},

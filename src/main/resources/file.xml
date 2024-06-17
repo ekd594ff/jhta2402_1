@@ -8,7 +8,7 @@
     </select>
     <insert id="insertFIle" parameterType="UpdateImageUrlDTO">
         INSERT INTO JHTA01_FILE values(
-        FILE_SEQ.nextval,
+        nextval('FILE_SEQ'),
         #{username},
         #{originalName},
         #{fileName},
