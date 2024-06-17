@@ -2,7 +2,7 @@
     <div class="header-container" style="display: flex;justify-content: space-between;padding: 0 16px">
         <div class="left">
             <a href="/">
-                <img src="public/imgs/jalendar.svg" height="36px"/>
+                <img src="${pageContext.request.contextPath}/public/imgs/jalendar.svg" height="36px"/>
             </a>
         </div>
         <div class="right">

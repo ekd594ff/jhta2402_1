@@ -1,34 +1,25 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="container">
-    <h1>회원정보</h1>
-    <div class="username">
-        <th>USERNAME</th><br>
-        <td>${infoMemberDTO.username}</td>
-    </div>
-    <div class="nickname">
-        <th>NICKNAME</th><br>
-        <td>${infoMemberDTO.nickname}</td>
-    </div>
-    <div class="email">
-        <th>EMAIL</th><br>
-        <td>${infoMemberDTO.email}</td>
-    </div>
-    <div class="imageUrl">
-        <th>IMAGEURL</th><br>
-        <td>${infoMemberDTO.imageUrl}</td>
-    </div>
-    <div class="introduction">
-        <th>INTRODUCTION</th><br>
-        <td>${infoMemberDTO.imageUrl}</td>
-    </div>
-    <div class="createdAt">
-        <th>CREATEDAT</th><br>
-        <td>${infoMemberDTO.createdAt}</td>
-    </div>
-    <div class="updatedAt">
-        <th>UPDATEDAT</th><br>
-        <td>${infoMemberDTO.updatedAt}</td>
-    </div>
+<html>
+<head>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
+    <title>${infoMemberDTO.nickname}</title>
+</head>
+<body>
+<jsp:include page="../components/header.jsp"/>
+<div class="mypage-container">
+    <form class="mypage-form">
+        <div class="profile-image-wrapper">
+        </div>
+    </form>
 </div>
+<jsp:include page="../components/footer.jsp"/>
+<script>
+    const mypageForm = document.querySelector(".mypage-form");
+    mypageForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+    });
+</script>
+</body>
+</html>
 

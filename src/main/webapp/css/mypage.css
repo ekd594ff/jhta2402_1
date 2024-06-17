@@ -1,0 +1,14 @@
+@import "variables.css";
+
+.mypage-container {
+
+}
+
+.mypage-container > .mypage-form {
+
+}
+
+.mypage-form > .profile-image-wrapper {
+    width: var(--profile-img-diameter);
+    height: var(--profile-img-diameter);
+}
