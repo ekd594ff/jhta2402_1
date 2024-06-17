@@ -1,14 +1,91 @@
 @import "variables.css";
 
 .mypage-container {
-
+    display: flex;
+    justify-content: center;
 }
 
 .mypage-container > .mypage-form {
-
+    padding: 0;
+    margin: 0;
+    width: var(--profile-form-width);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
-.mypage-form > .profile-image-wrapper {
+.mypage-form  .profile-img-wrapper {
+    background-color: #909090;
+    border-radius: 50%;
     width: var(--profile-img-diameter);
     height: var(--profile-img-diameter);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-img-container {
+    position: relative;
+}
+
+.profile-img-wrapper > * {
+    cursor: pointer;
+}
+
+.profile-img-wrapper > svg {
+    width: calc(var(--profile-img-diameter) * 0.8);
+    height: calc(var(--profile-img-diameter) * 0.8);
+}
+
+.profile-img-wrapper.active > svg {
+    display: none;
+}
+
+.profile-img-wrapper > img#profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.profile-img-wrapper.active > img#profile-img {
+    display: block;
+}
+
+input#profile-img-input {
+    display: none;
+}
+
+label[for="profile-img-input"] {
+    display: none;
+    position: absolute;
+}
+
+label[for="profile-img-input"] > svg {
+    fill: #505050;
+}
+
+.profile-img-wrapper:hover > label[for="profile-img-input"] {
+    display: block;
+}
+
+button.profile-img-submit {
+    display: flex;
+    background-color: #0d6efd;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50%;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    right: calc(var(--profile-img-diameter)*0.1);
+    bottom: calc(var(--profile-img-diameter)*0.1);
 }
