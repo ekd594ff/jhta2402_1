@@ -8,9 +8,6 @@
 </head>
 <body>
 <div class="signup-container">
-    <div class="bg">
-
-    </div>
     <form class="signup-form">
         <h1>SIGN UP</h1>
         <label class="signup-input-group username">
@@ -45,6 +42,7 @@
         </label>
         <button class="signup-submit-btn">확인</button>
     </form>
+    <div class="bg"></div>
 </div>
 <script>
     const signupForm = document.querySelector(".signup-form");
@@ -78,7 +76,12 @@
             },
             method: "POST",
             body: JSON.stringify(data)
-        }).then((result) => result.json());
+        })
+            .then(result => result.json())
+            .then(data => {
+               window.alert("회원가입이 완료되었습니다");
+               window.location.href = "/";
+            });
     }
 
     function genMsg(className) {

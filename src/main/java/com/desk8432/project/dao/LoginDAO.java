@@ -10,6 +10,7 @@ public class LoginDAO {
     public LoginMemberDTO loginMember(LoginDTO loginDTO) {
         SqlSession sqlsession = MybatisConnectionFactory.getSqlSession();
         LoginMemberDTO resultDto = sqlsession.selectOne("loginMember", loginDTO);
+        sqlsession.close();
         return resultDto;
     }
 
@@ -17,6 +18,7 @@ public class LoginDAO {
 
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
         String hashPW = sqlSession.selectOne("getPassword", username);
+        sqlSession.close();
 
         return hashPW;
     }
