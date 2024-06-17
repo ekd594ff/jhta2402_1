@@ -62,7 +62,7 @@
 
     document.querySelector("button.profile-img-submit").addEventListener("click", (event) => {
             const formData = new FormData();
-            const file = localStorage.getItem("profileImg");
+            const file = document.querySelector('input#profile-img-input').files[0];
             if(!file) {
                 window.alert("파일을 업로드 해 주세요");
                 return;

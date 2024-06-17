@@ -5,19 +5,19 @@
 <configuration>
     <properties resource="db.properties"></properties>
     <typeAliases>
-        <typeAlias type="com.desk8432.project.dto.MemberDTO" alias="MemberDTO" />
-        <typeAlias type="com.desk8432.project.dto.DuplicateDTO" alias="DuplicateDTO" />
-        <typeAlias type="com.desk8432.project.dto.InsertDTO" alias="InsertDTO" />
-        <typeAlias type="com.desk8432.project.dto.UpdateEmailDTO" alias="UpdateEmailDTO" />
-        <typeAlias type="com.desk8432.project.dto.UpdateImageUrlDTO" alias="UpdateImageUrlDTO" />
-        <typeAlias type="com.desk8432.project.dto.UpdateIntroductionDTO" alias="UpdateIntroductionDTO" />
-        <typeAlias type="com.desk8432.project.dto.UpdateNicknameDTO" alias="UpdateNicknameDTO" />
-        <typeAlias type="com.desk8432.project.dto.UpdatePasswordDTO" alias="UpdatePasswordDTO" />
-        <typeAlias type="com.desk8432.project.dto.MyPageDTO" alias="MyPageDTO" />
-        <typeAlias type="com.desk8432.project.dto.DeleteMemberDTO" alias="DeleteMemberDTO" />
-        <typeAlias type="com.desk8432.project.dto.LoginDTO" alias="LoginDTO" />
-        <typeAlias type="com.desk8432.project.dto.LoginMemberDTO" alias="LoginMemberDTO" />
-        <typeAlias type="com.desk8432.project.dto.UpdateScheduleDTO" alias="UpdateScheduleDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.MemberDTO" alias="MemberDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.DuplicateDTO" alias="DuplicateDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.InsertDTO" alias="InsertDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdateEmailDTO" alias="UpdateEmailDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdateImageUrlDTO" alias="UpdateImageUrlDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdateIntroductionDTO" alias="UpdateIntroductionDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdateNicknameDTO" alias="UpdateNicknameDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdatePasswordDTO" alias="UpdatePasswordDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.MyPageDTO" alias="MyPageDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.DeleteMemberDTO" alias="DeleteMemberDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.LoginDTO" alias="LoginDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.LoginMemberDTO" alias="LoginMemberDTO" />
+        <typeAlias type="com.desk8432.project.dto.schedule.UpdateScheduleDTO" alias="UpdateScheduleDTO" />
     </typeAliases>
     <environments default="development">
         <environment id="development">

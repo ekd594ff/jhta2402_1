@@ -1,6 +1,6 @@
 package com.desk8432.project.controller;
 
-import com.desk8432.project.dao.UpdateScheduleDAO;
+import com.desk8432.project.dao.schedule.UpdateScheduleDAO;
 import com.desk8432.project.dto.UpdateIntroductionDTO;
 import com.desk8432.project.dto.UpdateScheduleDTO;
 import com.desk8432.project.util.Dispatcher;
@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet("/schedule/update")
 public class UpdateSchedule extends HttpServlet {
