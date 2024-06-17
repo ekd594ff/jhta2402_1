@@ -33,6 +33,7 @@ public class UpdateImageUrl03 extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = CookieManager.readCookie(req, "username");
         Part image = req.getPart("image");
+
 //        String username = req.getParameter("username");
 
         UpdateDAO updateDAO = new UpdateDAO();
