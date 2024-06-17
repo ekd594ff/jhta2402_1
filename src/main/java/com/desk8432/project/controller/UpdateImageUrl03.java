@@ -16,8 +16,6 @@ import net.coobird.thumbnailator.Thumbnails;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,20 +42,20 @@ public class UpdateImageUrl03 extends HttpServlet {
 
         UpdateImageUrlDTO updateImageUrlDTO = getImageDTO(image,username);
 
-        CompletableFuture<Void> future01 = CompletableFuture.runAsync(() ->{
+        CompletableFuture<Void> memberImageUrlUpdateFutrue = CompletableFuture.runAsync(() ->{
             if (updateDAO.updateImageUrl(updateImageUrlDTO)) {
                 //member db에 이미지 경로 수정
                 resultMap.put("url","ok");
             }
         });
-        CompletableFuture<Void> future02 = CompletableFuture.runAsync(() ->{
+        CompletableFuture<Void> uploadImageFuture = CompletableFuture.runAsync(() ->{
             uploadImage(image,updateImageUrlDTO.getLocation(), updateImageUrlDTO.getFileName()); //이미지 메인서버에 저장
         });
-        CompletableFuture<Boolean> future03 = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<Boolean> isFileImageFutrue = CompletableFuture.supplyAsync(() -> {
             // 비동기 작업
             return updateDAO.isFile(updateImageUrlDTO); // Boolean 값 반환
         });
-        future03.thenApply(result -> {
+        isFileImageFutrue.thenApply(result -> {
             if (result) {
                 boolean isUpdateFile = updateDAO.updateFile(updateImageUrlDTO);
                 if (isUpdateFile) {
@@ -80,9 +78,9 @@ public class UpdateImageUrl03 extends HttpServlet {
             // thenApply()는 새로운 값을 반환해야 합니다.
         });
         try {
-            future01.get();
-            future02.get();
-            future03.get();
+            memberImageUrlUpdateFutrue.get();
+            uploadImageFuture.get();
+            isFileImageFutrue.get();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } catch (ExecutionException e) {
