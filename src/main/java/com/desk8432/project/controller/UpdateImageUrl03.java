@@ -35,7 +35,6 @@ public class UpdateImageUrl03 extends HttpServlet {
         Part image = req.getPart("image");
 
 //        String username = req.getParameter("username");
-
         UpdateDAO updateDAO = new UpdateDAO();
 
         Gson outGson = new Gson();
