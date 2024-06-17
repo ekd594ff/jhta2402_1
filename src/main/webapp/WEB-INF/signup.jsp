@@ -103,10 +103,18 @@
             method: "POST",
             body: JSON.stringify(data)
         })
-            .then(result => result.json())
+            .then(result => {
+                if(!result.ok) {
+                    throw new Error();
+                }
+                return result.json();
+            })
             .then(data => {
                window.alert("회원가입이 완료되었습니다");
                window.location.href = "/";
+            })
+            .catch(err => {
+               window.alert("회원가입 실패했습니다")
             });
     }
 
