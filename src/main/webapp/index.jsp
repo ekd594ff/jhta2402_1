@@ -3,7 +3,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="css/global.css">
-    <title>JSP - Hello World</title>
+    <link rel="icon" href="public/favicon/favicon.ico" type="image/x-icon">
+    <title>Jalendar</title>
 </head>
 <body>
     <jsp:include page="components/header.jsp"/>
