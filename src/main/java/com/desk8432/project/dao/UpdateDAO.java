@@ -40,7 +40,16 @@ public class UpdateDAO {
         sqlSession.close();
         return  result > 0;
     }
+
     //사진 url 설정
+    public boolean updateFile(UpdateImageUrlDTO updateImageUrlDTO) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.update("insertFIle", updateImageUrlDTO);
+        sqlSession.close();
+        return result > 0;
+    }
+
     public boolean updateIntroduction(UpdateIntroductionDTO updateIntroductionDTO) {
         int result = 0;
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();

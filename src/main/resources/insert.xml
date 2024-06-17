@@ -16,4 +16,5 @@
         sysdate,
         'N')
     </insert>
+
 </mapper>
