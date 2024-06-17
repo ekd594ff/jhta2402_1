@@ -60,9 +60,18 @@
                 },
                 method: "POST",
                 body: JSON.stringify(data)
-            }).then((result) => result.json())
+            })
+                .then((result) => {
+                    if(!result.ok) {
+                        throw new Error("");
+                    }
+                    return result.json();
+                })
                 .then(data => {
                     window.location.href = "/";
+                })
+                .catch(err => {
+                    window.alert("로그인에 실패했습니다");
                 })
         } else {
             window.alert("비밀번호와 계정을 입력해 주세요");
