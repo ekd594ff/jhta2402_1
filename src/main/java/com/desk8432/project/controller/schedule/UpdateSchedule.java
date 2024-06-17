@@ -1,4 +1,4 @@
-package com.desk8432.project.controller;
+package com.desk8432.project.controller.schedule;
 
 import com.desk8432.project.dao.schedule.UpdateScheduleDAO;
 import com.desk8432.project.dto.UpdateIntroductionDTO;
