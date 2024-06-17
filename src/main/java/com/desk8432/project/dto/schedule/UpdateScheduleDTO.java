@@ -1,4 +1,4 @@
-package com.desk8432.project.dto;
+package com.desk8432.project.dto.schedule;
 
 public class UpdateScheduleDTO {
     private int id;

@@ -1,6 +1,6 @@
 package com.desk8432.project.dao.schedule;
 
-import com.desk8432.project.dto.UpdateScheduleDTO;
+import com.desk8432.project.dto.schedule.UpdateScheduleDTO;
 import com.desk8432.project.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
 

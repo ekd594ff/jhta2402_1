@@ -2,7 +2,7 @@ package com.desk8432.project.controller.schedule;
 
 import com.desk8432.project.dao.schedule.UpdateScheduleDAO;
 import com.desk8432.project.dto.UpdateIntroductionDTO;
-import com.desk8432.project.dto.UpdateScheduleDTO;
+import com.desk8432.project.dto.schedule.UpdateScheduleDTO;
 import com.desk8432.project.util.Dispatcher;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
