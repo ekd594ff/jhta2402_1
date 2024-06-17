@@ -1,12 +1,14 @@
 package com.desk8432.project.filter;
 
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+@WebFilter({"/mypage/*"})
 public class MyPageFilter implements Filter {
 
     @Override
@@ -14,11 +16,10 @@ public class MyPageFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-
-        if (readCookie(httpRequest, "authCookie") != null) {
+        if (readCookie(httpRequest, "username") != null) {
             chain.doFilter(request, response);
         } else {
-            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.jsp");
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/signin");
         }
     }
 

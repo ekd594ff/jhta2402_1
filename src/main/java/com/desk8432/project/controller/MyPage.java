@@ -2,6 +2,7 @@ package com.desk8432.project.controller;
 
 import com.desk8432.project.dao.MyPageDAO;
 import com.desk8432.project.dto.MyPageDTO;
+import com.desk8432.project.util.CookieManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;
@@ -16,7 +17,14 @@ public class MyPage extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        //String username = request.getParameter("username");
+        String username = CookieManager.readCookie(request,"username");
+        System.out.println("username==="+username);
+        MyPageDAO mypageDAO = new MyPageDAO();
+        MyPageDTO mypageDTO = new MyPageDTO();
+        mypageDTO.setUsername(username);
+        MyPageDTO infoMemberDTO = mypageDAO.loginMember(mypageDTO);
+        request.setAttribute("infoMemberDTO",infoMemberDTO);
         request.getRequestDispatcher("/WEB-INF/mypage.jsp")
                 .forward(request,response);
     }
