@@ -7,35 +7,35 @@
         UPDATE JHTA01_MEMBER
         SET
         EMAIL = #{email},
-        UPDATED_AT = SYSDATE
+        UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
     </update>
     <update id="updateImageUrl" parameterType="UpdateImageUrlDTO">
         UPDATE JHTA01_MEMBER
         SET
         image_url = #{imageUrl},
-        UPDATED_AT = SYSDATE
+        UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
     </update>
     <update id="updateIntroduction" parameterType="UpdateIntroductionDTO">
         UPDATE JHTA01_MEMBER
         SET
         INTRODUCTION = #{introduction},
-        UPDATED_AT = SYSDATE
+        UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
     </update>
     <update id="updateNickname" parameterType="UpdateNicknameDTO">
         UPDATE JHTA01_MEMBER
         SET
         NICKNAME = #{nickname},
-        UPDATED_AT = SYSDATE
+        UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
     </update>
     <update id="updatePassword" parameterType="UpdatePasswordDTO">
         UPDATE JHTA01_MEMBER
         SET
         PASSWORD = #{password},
-        UPDATED_AT = SYSDATE
+        UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
     </update>
 </mapper>

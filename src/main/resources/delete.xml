@@ -7,7 +7,7 @@
         UPDATE JHTA01_MEMBER
         SET
         IS_DELETE = 'Y',
-        UPDATED_AT = SYSDATE
+        UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
         and password = #{password}
     </update>
