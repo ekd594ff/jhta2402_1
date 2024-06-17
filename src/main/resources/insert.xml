@@ -12,9 +12,10 @@
         #{password},
         '',
         #{introduction},
-        sysdate,
-        sysdate,
-        'N')
+        'N'
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+        )
     </insert>
 
 </mapper>

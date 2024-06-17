@@ -13,7 +13,7 @@
         #{originalName},
         #{fileName},
         #{location},
-        sysdate
+        CURRENT_TIMESTAMP
         )
     </insert>
     <update id="updateFile" parameterType="UpdateImageUrlDTO">
@@ -22,7 +22,7 @@
         originalname = #{originalName},
         filename = #{fileName},
         location = #{location},
-        created_at = SYSDATE
+        created_at = CURRENT_TIMESTAMP
         WHERE username = #{username}
     </update>
 </mapper>
