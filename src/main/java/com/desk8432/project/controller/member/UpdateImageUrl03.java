@@ -133,7 +133,7 @@ public class UpdateImageUrl03 extends HttpServlet {
         try {
             Files.createDirectories(Paths.get(imgFolderPath));
             image.write(uploadUrl);
-            Thumbnails.of(uploadUrl).size(100, 100).toFile(uploadUrl);
+            Thumbnails.of(uploadUrl).size(250, 250).toFile(uploadUrl);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
