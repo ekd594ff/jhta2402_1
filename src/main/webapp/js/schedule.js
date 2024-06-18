@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         selectable: true,
 
         events: {
-            url: '/calendar/list',
+            url: '/schedule/list',
             method: 'POST',
             failure: function () {
                 alert('there was an error while fetching events!');
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
 
-            fetch('/calendar/create', {
+            fetch('/schedule/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 endDate: inputEndDate.val()
             };
 
-            fetch('/calendar/update', {
+            fetch('/schedule/update', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
