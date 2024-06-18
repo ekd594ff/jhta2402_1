@@ -1,8 +1,7 @@
 package com.desk8432.project.controller.schedule;
 
 import com.desk8432.project.dao.schedule.UpdateScheduleDAO;
-import com.desk8432.project.dto.member.UpdateIntroductionDTO;
-import com.desk8432.project.dto.schedule.UpdateScheduleDTO;
+import com.desk8432.project.dto.schedule.ScheduleDTO;
 import com.desk8432.project.util.Dispatcher;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -24,18 +23,18 @@ public class UpdateSchedule extends HttpServlet {
         String jsonString = dispatcher.getBody(req);
         System.out.println("jsonString = " + jsonString);
         Gson gson = new Gson();
-        UpdateScheduleDTO updateScheduleDTO = gson.fromJson(jsonString, UpdateScheduleDTO.class);
-        System.out.println("updateScheduleDTO = " + updateScheduleDTO.toString());
+        ScheduleDTO scheduleDTO = gson.fromJson(jsonString, ScheduleDTO.class);
+        System.out.println("updateScheduleDTO = " + scheduleDTO.toString());
 
         UpdateScheduleDAO updateScheduleDAO = new UpdateScheduleDAO();
-        updateScheduleDTO.setGroupname(updateScheduleDAO.getGroupNameDTO(updateScheduleDTO)); //groupname을 가진 DTO
+        scheduleDTO.setGroupname(updateScheduleDAO.getGroupNameDTO(scheduleDTO)); //groupname을 가진 DTO
         UpdateScheduleDAO updateScheduleDAO1 = new UpdateScheduleDAO();
 
         Gson outGson = new Gson();
         resp.setContentType("application/json");
-        if (updateScheduleDAO1.updateSchedule(updateScheduleDTO)) {
+        if (updateScheduleDAO1.updateSchedule(scheduleDTO)) {
             System.out.println("success");
-            resp.getWriter().print(outGson.toJson(updateScheduleDTO));
+            resp.getWriter().print(outGson.toJson(scheduleDTO));
             resp.setStatus(200);
 //            ScriptWriter.alertAndNext(resp,"스케줄 변경이 완료되었습니다","/index/index");
         } else {
