@@ -3,6 +3,9 @@ package com.desk8432.project.dto.schedule;
 
 import lombok.*;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
@@ -11,11 +14,11 @@ import lombok.*;
 @Builder
 public class UpdateScheduleDTO {
     private int id;
-    private int group_id;
+    private int groupID;
     private String editor;
     private String title;
     private String content;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
     private String groupname;
 }
