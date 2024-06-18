@@ -38,4 +38,7 @@
         updated_at = CURRENT_TIMESTAMP
         where id = #{id}
     </update>
+    <select id="getEditorName" parameterType="int" resultType="String" >
+        select editor from jhta01_schedule js where id = #{id}
+    </select>
 </mapper>
