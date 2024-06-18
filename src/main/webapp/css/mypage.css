@@ -3,16 +3,24 @@
 .mypage-container {
     display: flex;
     justify-content: center;
+    --color-invalid: #f44336;
+    --color-valid: #66bb6a;
+    --color-warning: #ffa726;
+    --color-primary: #0d6efd;
+    --color-default: #909090;
+    --border-radius: 4px;
+    --panel-size: 700px;
 }
 
 .mypage-container > .mypage-form {
-    padding: 0;
+    padding: 16px 0;
     margin: 0;
     width: var(--profile-form-width);
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    gap: 16px;
 }
 
 .mypage-form  .profile-img-wrapper {
@@ -72,20 +80,34 @@ label[for="profile-img-input"] > svg {
     display: block;
 }
 
-button.profile-img-submit {
+.profile-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.profile-info-list > li.item {
     display: flex;
-    background-color: #0d6efd;
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px;
+}
+
+.profile-info-list > li.item * {
     font-size: 16px;
-    font-weight: bold;
-    border-radius: 50%;
+}
+
+.profile-info-list > li.item > div {
+    display: flex;
+    align-items: center;
+}
+
+.profile-info-list > li.item .submit {
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--border-radius);
+    font-size: 14px;
     border: 0;
-    color: #fff;
-    cursor: pointer;
-    right: calc(var(--profile-img-diameter)*0.1);
-    bottom: calc(var(--profile-img-diameter)*0.1);
+    padding: 8px;
 }
