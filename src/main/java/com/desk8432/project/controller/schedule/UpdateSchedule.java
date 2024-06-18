@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/schedule/update")
 public class UpdateSchedule extends HttpServlet {
@@ -19,17 +22,32 @@ public class UpdateSchedule extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Dispatcher dispatcher = new Dispatcher();
         String jsonString = dispatcher.getBody(req);
-
+        System.out.println("jsonString = " + jsonString);
         Gson gson = new Gson();
         UpdateScheduleDTO updateScheduleDTO = gson.fromJson(jsonString, UpdateScheduleDTO.class);
+        System.out.println("updateScheduleDTO = " + updateScheduleDTO.toString());
+
         UpdateScheduleDAO updateScheduleDAO = new UpdateScheduleDAO();
-
-        UpdateScheduleDTO updateScheduleDTO1 = updateScheduleDAO.getGroupName(updateScheduleDTO); //groupname을 가진 DTO
-
+        updateScheduleDTO.setGroupname(updateScheduleDAO.getGroupNameDTO(updateScheduleDTO)); //groupname을 가진 DTO
+        UpdateScheduleDAO updateScheduleDAO1 = new UpdateScheduleDAO();
 
         Gson outGson = new Gson();
         resp.setContentType("application/json");
-        resp.getWriter().print(outGson.toJson(updateScheduleDTO1));
-        resp.setStatus(200);
+        if (updateScheduleDAO1.updateSchedule(updateScheduleDTO)) {
+            System.out.println("success");
+            resp.getWriter().print(outGson.toJson(updateScheduleDTO));
+            resp.setStatus(200);
+//            ScriptWriter.alertAndNext(resp,"스케줄 변경이 완료되었습니다","/index/index");
+        } else {
+            System.out.println("fail");
+            Map<String,String> resultMap = new HashMap<>();
+            resultMap.put("message","fail");
+            String resultJson = outGson.toJson(resultMap);
+            resp.setContentType("application/json; charset=utf-8");
+            PrintWriter out = resp.getWriter();
+            out.println(resultJson);
+            resp.setStatus(400);
+//            ScriptWriter.alertAndBack(resp,"스케줄 변경이 실패되었습니다");
+        }
     }
 }
