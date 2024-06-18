@@ -17,7 +17,8 @@
         <typeAlias type="com.desk8432.project.dto.member.DeleteMemberDTO" alias="DeleteMemberDTO" />
         <typeAlias type="com.desk8432.project.dto.member.LoginDTO" alias="LoginDTO" />
         <typeAlias type="com.desk8432.project.dto.member.LoginMemberDTO" alias="LoginMemberDTO" />
-        <typeAlias type="com.desk8432.project.dto.schedule.UpdateScheduleDTO" alias="UpdateScheduleDTO" />
+        <typeAlias type="com.desk8432.project.dto.schedule.ScheduleDTO" alias="ScheduleDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.GroupDTO" alias="GroupDTO" />
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -39,5 +40,6 @@
         <mapper resource="login.xml" />
         <mapper resource="file.xml" />
         <mapper resource="schedule.xml" />
+        <mapper resource="group.xml" />
     </mappers>
 </configuration>
