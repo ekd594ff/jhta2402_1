@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="css/global.css">
     <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
     <title>${infoMemberDTO.nickname}</title>
 </head>
@@ -23,9 +23,18 @@
                     </svg>
                 </label>
             </div>
-            <button class="profile-img-submit">✓</button>
             <input class="file-input" id="profile-img-input" type="file" onchange="onChangeFileInput(event)"/>
         </div>
+        <ul class="profile-info-list">
+            <li class="item">
+                <div class="left">
+                    <span class="name">프로필 사진 변경</span>
+                </div>
+                <div class="right">
+                    <button class="profile-img-submit submit">프로필 변경</button>
+                </div>
+            </li>
+        </ul>
     </form>
 </div>
 <jsp:include page="../components/footer.jsp"/>
@@ -60,22 +69,23 @@
         }
     }
 
-    document.querySelector("button.profile-img-submit").addEventListener("click", (event) => {
-            const formData = new FormData();
-            const file = document.querySelector('input#profile-img-input').files[0];
-            if(!file) {
-                window.alert("파일을 업로드 해 주세요");
-                return;
+    document.querySelector(".item .profile-img-submit").addEventListener("click", (event) => {
+        const formData = new FormData();
+        const file = document.querySelector('input#profile-img-input').files[0];
+        if (!file) {
+            window.alert("파일을 업로드 해 주세요");
+            return;
+        }
+        formData.append("image", file);
+        fetch("/update/imageUrl", {
+            method: "POST",
+            body: formData,
+        }).then((result) => {
+            if(result.ok) {
+                window.alert("프로필 사진이 변경되었습니다");
             }
-            formData.append("image", file);
-            fetch("/update/imageUrl", {
-                method : "POST",
-                body: formData,
-            }).then((result) => {
-                return result.json();
-            }).then((data) => {
-                console.log(data);
-            });
+            return result.json();
+        });
     });
 </script>
 </body>
