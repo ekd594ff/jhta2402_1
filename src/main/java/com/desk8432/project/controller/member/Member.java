@@ -36,7 +36,7 @@ public class Member extends HttpServlet {
             dataJsonMap.put("nickname", memberInfo.getNickname());
             dataJsonMap.put("email", memberInfo.getEmail());
             dataJsonMap.put("introduction", memberInfo.getIntroduction());
-            dataJsonMap.put("profileImgUrl",memberInfo.getImageUrl());
+            dataJsonMap.put("profileImgUrl",memberInfo.getImage_url());
             dataJsonMap.put("createdAt", memberInfo.getCreated_at().toString());
             jsonMap.put("data", dataJsonMap);
 
