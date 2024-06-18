@@ -74,20 +74,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         $(this).css('background', 'none');
 
                         hiddenGroupIdArray.splice(hiddenGroupIdArray.indexOf(id), 1);
-                        console.log(hiddenGroupIdArray);
-
-                        calendar.removeAllEvents();
-                        calendar.refetchEvents();
                     } else {
                         $(this).addClass('hidden');
                         $(this).css('background-color', 'gray');
 
                         hiddenGroupIdArray.push(id);
-                        console.log(hiddenGroupIdArray);
-
-                        calendar.removeAllEvents();
-                        calendar.refetchEvents();
                     }
+
+                    calendar.removeAllEvents();
+                    calendar.refetchEvents();
                 });
             }
 
@@ -97,8 +92,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 id: eventData.id,
                 groupId: eventData.id,
                 title: eventData.title,
-                start: eventData.startDate,
-                end: eventData.endDate,
+                start: stringToDate(eventData.startDate),
+                end: stringToDate(eventData.endDate),
                 extendedProps: {
                     groupId: id,
                     content: eventData.content
