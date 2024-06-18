@@ -10,6 +10,7 @@ const inputGroup = $('#input-group');
 const buttonEventAdd = $('#button-event-add');
 
 const divGroup = $('#div-group');
+const divInputGroup = $('#div-input-group');
 
 let username;
 
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             url: '/schedule/list',
             method: 'POST',
             failure: function () {
-                alert('there was an error while fetching events!');
+                alert('문제가 발생했습니다. 다시 시도해 주세요.');
             },
         },
         eventSourceSuccess: function (content, response) {
@@ -166,13 +167,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(res => {
-                    console.log(res);
                 })
                 .catch(error => {
-                    console.log(error);
                     error.json().then(err => {
                         info.revert();
-                        alert(err.status);
+                        alert('문제가 발생했습니다. 다시 시도해 주세요.');
                     });
                 });
         }
@@ -184,8 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
     buttonEventAdd.on('click', function () {
 
         if (modalTitle.text() === '일정 추가') {
-            tempId++;
-            console.log(tempId);
+            divInputGroup.toggle();
 
             const event = {
                 groupID: inputGroup.val(),
@@ -212,15 +210,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => {
                     calendar.removeAllEvents();
                     calendar.refetchEvents();
-                    alert(res.status);
+                    alert('생성되었습니다.');
                 })
                 .catch(error => {
                     error.json().then(err => {
                         event.revert();
-                        alert(err.status);
+                        alert('문제가 발생했습니다. 다시 시도해 주세요.');
                     });
                 });
         } else if (modalTitle.text() === '일정 변경') {
+            divInputGroup.hide();
+
             const event = {
                 id: inputEventId.val(),
                 groupID: inputGroup.val(),
@@ -246,11 +246,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => {
                     calendar.removeAllEvents();
                     calendar.refetchEvents();
-                    alert(res.status);
+                    alert('수정되었습니다.');
                 })
                 .catch(error => {
                     error.json().then(err => {
-                        alert(err.status);
+                        alert('문제가 발생했습니다. 다시 시도해 주세요.');
                     });
                 });
         }

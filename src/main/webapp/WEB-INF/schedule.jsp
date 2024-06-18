@@ -68,11 +68,11 @@
                 </div>
                 <div class="row m-3">
                     <label class="col-4" for="input-content">내용</label>
-                    <input class="col-8" type="text" id="input-content" name="input-content">
+                    <textarea class="col-8" cols="4" id="input-content" name="input-content"></textarea>
                 </div>
-                <div class="row m-3">
+                <div class="row m-3" id="div-input-group">
                     <label class="col-4" for="input-group">그룹</label>
-                    <select class="col-8" type="text" id="input-group" name="input-group">
+                    <select class="col-8" id="input-group" name="input-group">
                     </select>
                 </div>
             </div>
