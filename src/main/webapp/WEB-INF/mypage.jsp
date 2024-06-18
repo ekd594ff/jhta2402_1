@@ -38,10 +38,38 @@
     </form>
 </div>
 <jsp:include page="../components/footer.jsp"/>
+<script src="js/common.js"></script>
 <script>
-    localStorage.removeItem("profileImg");
+    function storeProfileImgSrc(data) {
+        const { profileImgUrl } = data;
+        localStorage.setItem("profile-img-url", profileImgUrl);
+    }
+
+    function setProfileImageFormSrcDefault() {
+        const src = localStorage.getItem("profile-img-url");
+        if(src) {
+            const profileFormImgEl = document.querySelector("#profile-img");
+            const profileImgWrapperEl = document.querySelector(`.profile-img-wrapper`);
+            profileFormImgEl.setAttribute("src", src);
+            profileImgWrapperEl.classList.add("active");
+        }
+    }
+
+    fetch("/memberinfo", {
+        method: "GET"
+    })
+        .then((result) => result.json())
+        .then((resp) => {
+            const {data} = resp;
+            if (data) {
+                updateHeaderProfileImage(data);
+                storeProfileImgSrc(data);
+                setProfileImageFormSrcDefault();
+            }
+        });
 
     const mypageForm = document.querySelector(".mypage-form");
+
     mypageForm.addEventListener("submit", (event) => {
         event.preventDefault();
     });
@@ -51,10 +79,8 @@
         if (!file) {
             window.alert("파일을 업로드 해 주세요");
             const profileImgWrapperEl = document.querySelector(`.profile-img-wrapper`);
-            const profileImgEl = document.querySelector(`img#profile-img`);
             profileImgWrapperEl.classList.remove("active");
-            profileImgEl.setAttribute("src", "");
-            localStorage.removeItem("profileImg");
+            setProfileImageFormSrcDefault();
             return;
         }
         const fileReader = new FileReader();
@@ -65,7 +91,6 @@
             const profileImgWrapperEl = document.querySelector(`.profile-img-wrapper`);
             profileImgWrapperEl.classList.add("active");
             profileImgEl.setAttribute("src", imgSrc);
-            localStorage.setItem("profileImg", file);
         }
     }
 
