@@ -23,6 +23,9 @@
             const {data} = resp;
             if (data) {
                 updateHeaderProfileImage(data);
+                setHeaderDropdownMenu(true);
+            } else {
+                setHeaderDropdownMenu(false);
             }
         });
 </script>

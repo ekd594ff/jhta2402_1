@@ -21,11 +21,9 @@ public class Member extends HttpServlet {
         String username = CookieManager.readCookie(req, "username");
         Gson gson = new Gson();
         Map<String, Object> jsonMap = new HashMap<>();
-        if(username == null) {
-            jsonMap.put("msg","");
-            resp.setStatus(204);
-            resp.setContentType("application/json");
-            resp.getWriter().print(gson.toJson(jsonMap));
+        if(username.isBlank()) {
+            jsonMap.put("msg","no cookie");
+            resp.setStatus(200);
         } else {
             MemberInfoDAO memberInfoDAO = new MemberInfoDAO();
             MyPageDTO memberInfo = memberInfoDAO.getMemberInfo(username);
@@ -39,10 +37,9 @@ public class Member extends HttpServlet {
             dataJsonMap.put("profileImgUrl",memberInfo.getImage_url());
             dataJsonMap.put("createdAt", memberInfo.getCreated_at().toString());
             jsonMap.put("data", dataJsonMap);
-
             resp.setStatus(200);
-            resp.setContentType("application/json");
-            resp.getWriter().print(gson.toJson(jsonMap));
         }
+        resp.setContentType("application/json");
+        resp.getWriter().print(gson.toJson(jsonMap));
     }
 }

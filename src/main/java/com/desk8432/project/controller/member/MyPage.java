@@ -18,13 +18,13 @@ public class MyPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //String username = request.getParameter("username");
-        String username = CookieManager.readCookie(request,"username");
-        System.out.println("username==="+username);
-        MyPageDAO mypageDAO = new MyPageDAO();
-        MyPageDTO mypageDTO = new MyPageDTO();
-        mypageDTO.setUsername(username);
-        MyPageDTO infoMemberDTO = mypageDAO.loginMember(mypageDTO);
-        request.setAttribute("infoMemberDTO",infoMemberDTO);
+//        String username = CookieManager.readCookie(request,"username");
+//        System.out.println("username==="+username);
+//        MyPageDAO mypageDAO = new MyPageDAO();
+//        MyPageDTO mypageDTO = new MyPageDTO();
+//        mypageDTO.setUsername(username);
+//        MyPageDTO infoMemberDTO = mypageDAO.loginMember(mypageDTO);
+//        request.setAttribute("infoMemberDTO",infoMemberDTO);
         request.getRequestDispatcher("/WEB-INF/mypage.jsp")
                 .forward(request,response);
     }

@@ -34,10 +34,20 @@
                     <button class="profile-img-submit submit">프로필 변경</button>
                 </div>
             </li>
+            <li class="item">
+                <div class="top">
+                    <input type="text"/>
+                    <button class="profile-img-submit submit">닉네임 변경</button>
+                </div>
+                <div class="bottom">
+                    <label class="message"></label>
+                </div>
+            </li>
         </ul>
     </form>
 </div>
 <jsp:include page="../components/footer.jsp"/>
+<script src="js/util.js"></script>
 <script src="js/common.js"></script>
 <script>
     function storeProfileImgSrc(data) {
@@ -65,6 +75,9 @@
                 updateHeaderProfileImage(data);
                 storeProfileImgSrc(data);
                 setProfileImageFormSrcDefault();
+                setHeaderDropdownMenu(true);
+            } else {
+                setHeaderDropdownMenu(false);
             }
         });
 
