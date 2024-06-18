@@ -34,6 +34,7 @@
     }
 </style>
 <body>
+<jsp:include page="../components/header.jsp"/>
 
 <div id="div-group" class="d-flex flex-wrap gap-2 justify-content-center py-2"></div>
 
@@ -83,5 +84,6 @@
 
 <script src="../js/schedule.js"></script>
 
+<jsp:include page="../components/footer.jsp"/>
 </body>
 </html>
