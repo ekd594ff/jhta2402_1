@@ -46,6 +46,12 @@ public class ListSchedule extends HttpServlet {
             }
         }
 
+        for (ScheduleDTO scheduleDTO : scheduleDTOList) {
+            if (scheduleDTO.getGroupname() == null) {
+                scheduleDTO.setGroupname("");
+            }
+        }
+
         Gson outGson = new Gson();
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("username", username);

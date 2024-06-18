@@ -17,14 +17,16 @@
         where js.id = #{id}
     </select>
     <select id="getScheduleList" resultType="ScheduleDTO" parameterType="String">
-        select js.id, jf.group_id as groupID,
+        select js.id, js.group_id as groupID,
         jg."name" as groupname, js.editor,js.title,
         js."content",js.start_date as startDate,
         js.end_date as endDate
         from jhta01_schedule js
-        inner join jhta01_follow jf on jf.group_id = js.group_id
-        inner join jhta01_group jg on jf.group_id = jg.id
-        where username = #{username}
+        left join jhta01_group jg
+        on js.group_id = jg.id
+        where js.group_id =
+        (select group_id from jhta01_follow where username = #{username})
+        or js.group_id isnull
     </select>
     <update id="updateSchedule" parameterType="ScheduleDTO" >
         update jhta01_schedule
