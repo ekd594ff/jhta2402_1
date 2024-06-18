@@ -36,8 +36,12 @@
             </li>
             <li class="item">
                 <div class="top">
-                    <input type="text"/>
-                    <button class="profile-img-submit submit">닉네임 변경</button>
+                    <label>
+                        닉네임
+                        <input type="text"/>
+                    </label>
+                    <button class="profile-img-submit">
+                    </button>
                 </div>
                 <div class="bottom">
                     <label class="message"></label>
