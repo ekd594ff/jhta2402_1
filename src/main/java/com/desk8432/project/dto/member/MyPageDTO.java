@@ -16,6 +16,6 @@ public class MyPageDTO {
     private String email;
     private String imageUrl;
     private String introduction;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private LocalDate created_at;
+    private LocalDate updated_at;
 }
