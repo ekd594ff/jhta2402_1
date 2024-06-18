@@ -4,10 +4,19 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.desk8432.project">
     <select id="getGroupName" resultType="UpdateScheduleDTO" parameterType="UpdateScheduleDTO">
-        select js.group_id,js.editor,js.title,
+        select js.id ,js.group_id,js.editor,js.title,
         js."content",js.start_date as startDate,js.end_date as endDate ,jg."name" as groupname
         from JHTA01_SCHEDULE js
         inner join jhta01_group jg on js.group_id = jg.id
-        where js.id = #{id};
+        where js.id = #{id}
     </select>
+    <update id="updateSchedule" parameterType="UpdateScheduleDTO" >
+        set
+        title = #{title},
+        "content" = #{content},
+        start_date = #{startDate},
+        end_date = #{endDate],
+        updated_at = CURRENT_TIMESTAMP
+        where id = #{id}
+    </update>
 </mapper>

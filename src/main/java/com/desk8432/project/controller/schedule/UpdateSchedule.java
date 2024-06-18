@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/schedule/update")
 public class UpdateSchedule extends HttpServlet {
@@ -19,13 +21,14 @@ public class UpdateSchedule extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Dispatcher dispatcher = new Dispatcher();
         String jsonString = dispatcher.getBody(req);
-
+        System.out.println("jsonString = " + jsonString);
         Gson gson = new Gson();
         UpdateScheduleDTO updateScheduleDTO = gson.fromJson(jsonString, UpdateScheduleDTO.class);
+        System.out.println("updateScheduleDTO = " + updateScheduleDTO.toString());
+
         UpdateScheduleDAO updateScheduleDAO = new UpdateScheduleDAO();
-
         UpdateScheduleDTO updateScheduleDTO1 = updateScheduleDAO.getGroupName(updateScheduleDTO); //groupname을 가진 DTO
-
+        System.out.println(updateScheduleDTO1.toString());
 
         Gson outGson = new Gson();
         resp.setContentType("application/json");

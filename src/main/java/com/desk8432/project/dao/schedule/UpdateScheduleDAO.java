@@ -12,4 +12,12 @@ public class UpdateScheduleDAO {
         sqlSession.close();
         return updateScheduleDTO1;
     }
+
+    public boolean updateSchedule(UpdateScheduleDTO updateScheduleDTO) {
+        int result = 0;
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        result = sqlSession.update("updateSchedule", updateScheduleDTO);
+        sqlSession.close();
+        return result > 0;
+    }
 }
