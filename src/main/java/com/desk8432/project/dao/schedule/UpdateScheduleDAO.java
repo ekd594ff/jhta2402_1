@@ -20,4 +20,12 @@ public class UpdateScheduleDAO {
         sqlSession.close();
         return result > 0;
     }
+
+    public String getEditorName(int id) {
+        String editor = "";
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        editor = sqlSession.selectOne("getEditorName", id);
+        sqlSession.close();
+        return editor;
+    }
 }
