@@ -6,6 +6,7 @@ import com.desk8432.project.dto.group.GroupDTO;
 import com.desk8432.project.dto.schedule.ScheduleDTO;
 import com.desk8432.project.util.CookieManager;
 import com.google.gson.Gson;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,8 +20,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@WebServlet("/schedule/list")
 public class ListSchedule extends HttpServlet {
+  
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/schedule.jsp").forward(req,resp);
+    }
+  
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = CookieManager.readCookie(req, "username");
