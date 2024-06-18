@@ -88,4 +88,13 @@
 
 <jsp:include page="../components/footer.jsp"/>
 </body>
+<script>
+    fetch("/schedule/list",{
+        method:"POST"
+    }).then((result) => {
+        return result.json();
+    }).then((data) => {
+        console.log(data);
+    });
+</script>
 </html>
