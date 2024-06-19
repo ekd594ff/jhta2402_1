@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
     <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
     <title>${infoMemberDTO.nickname}</title>
 </head>
@@ -81,8 +81,8 @@
     </form>
 </div>
 <jsp:include page="../components/footer.jsp"/>
-<script src="js/util.js"></script>
-<script src="js/common.js"></script>
+<script src="${pageContext.request.contextPath}/js/util.js"></script>
+<script src="${pageContext.request.contextPath}/js/common.js"></script>
 <script>
     function genOnChangeInput(className) {
         const item = document.querySelector('.item.' + className);

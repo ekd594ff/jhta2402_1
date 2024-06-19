@@ -2,8 +2,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="icon" href="public/favicon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
+    <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
     <title>Jalendar</title>
 </head>
 <body>

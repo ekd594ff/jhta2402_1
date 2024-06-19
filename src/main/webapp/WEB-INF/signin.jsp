@@ -2,10 +2,10 @@
 <html>
 <head>
     <title>Sign in</title>
-    <link rel="stylesheet" href="css/global.css"/>
-    <link rel="icon" href="public/favicon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css"/>
+    <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/util.js"></script>
+    <script src="${pageContext.request.contextPath}/js/util.js"></script>
 </head>
 <body>
 <div class="signin-container">
@@ -29,7 +29,7 @@
     </form>
     <div class="bg">
         <div class="panel">
-            <img src="public/imgs/1.png" alt="panel"/>
+            <img src="${pageContext.request.contextPath}/public/imgs/1.png" alt="panel"/>
         </div>
     </div>
 </div>
