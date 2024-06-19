@@ -13,8 +13,8 @@ const divInputGroup = $('#div-input-group');
 
 let username;
 
-const colorArray = ['yellow', 'blue', 'green', 'purple', 'orange', 'red', 'skyblue', 'gray'];
-const textColorArray = ['black', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
+const colorArray = ['#1a8fe3', 'blue', 'green', 'purple', 'orange', 'red', 'skyblue', 'gray'];
+const textColorArray = ['#ffffff', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
 
 let followGroupInfo = [];
 let followGroupIdArray = [];
@@ -22,6 +22,7 @@ let followGroupIdArray = [];
 let inputGroupIdArray = [];
 let hiddenGroupIdArray = [];
 
+let activePopover = null;
 
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
@@ -29,13 +30,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         themeSystem: 'bootstrap5',
-        locale: 'ko',
+        locale: 'en',
         headerToolbar: {
-            left: 'today',
-            center: 'title',
-            right: 'prev,next',
+            left: 'title,prev,next',
+            center: '',
+            right: '',
         },
-
         dayMaxEvents: true,
         editable: false,
         selectable: true,
@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         $(this).css({
                             'background-color' : colorArray[colorIndex]
                         });
-
                         hiddenGroupIdArray.splice(hiddenGroupIdArray.indexOf(id), 1);
                     } else {
                         $(this).addClass('hidden');
@@ -155,20 +154,22 @@ document.addEventListener('DOMContentLoaded', function () {
         eventClick: function (info) {
             if (username !== info.event.extendedProps.editor) return;
 
-            divInputGroup.hide();
+            const { el } = info;
 
-            setModal(
-                '일정 변경',
-                '변경',
-                info.event.id,
-                info.event.extendedProps.groupId,
-                stringToDate(info.event.start),
-                stringToDate(info.event.end),
-                info.event.title,
-                info.event.extendedProps.content
-            );
-
-            modalEventAdd.modal('toggle');
+            // divInputGroup.hide();
+            //
+            // setModal(
+            //     '일정 변경',
+            //     '변경',
+            //     info.event.id,
+            //     info.event.extendedProps.groupId,
+            //     stringToDate(info.event.start),
+            //     stringToDate(info.event.end),
+            //     info.event.title,
+            //     info.event.extendedProps.content
+            // );
+            //
+            // modalEventAdd.modal('toggle');
         },
 
         eventChange: function (info) {
