@@ -79,3 +79,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
 document.addEventListener("click", (event) => {
     shutdownDropdownMenu();
 });
+
+fetch("/memberinfo", {
+    method: "GET"
+})
+    .then((result) => result.json())
+    .then((resp) => {
+        const {data} = resp;
+        if (data) {
+            updateHeaderProfileImage(data);
+            setHeaderDropdownMenu(true);
+        } else {
+            setHeaderDropdownMenu(false);
+        }
+    });
