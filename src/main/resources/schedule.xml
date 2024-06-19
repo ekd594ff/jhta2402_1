@@ -24,7 +24,7 @@
         from jhta01_schedule js
         left join jhta01_group jg
         on js.group_id = jg.id
-        where js.group_id =
+        where js.group_id in
         (select group_id from jhta01_follow where username = #{username})
         or js.group_id isnull
     </select>

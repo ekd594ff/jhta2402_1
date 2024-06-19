@@ -58,23 +58,23 @@ document.addEventListener('DOMContentLoaded', function () {
             let colorIndex;
             let editable = eventData.editor === username;
 
+            let groupname;
+
+            if (id === 0) {
+                groupname = '개인 일정';
+            } else {
+                let followIndex = followGroupInfo.findIndex(function (group) {
+                    return group.id === id;
+                });
+                groupname = followGroupInfo[followIndex].groupname;
+            }
+
             if (editable && !inputGroupIdArray.includes(id)) {
                 inputGroupIdArray.push(id);
-                inputGroup.append("<option value=\"" + id + "\">" + id + "</option>");
+                inputGroup.append("<option value=\"" + id + "\">" + groupname + "</option>");
             }
 
             if (!followGroupIdArray.includes(id)) {
-                let groupname;
-
-                if (id === 0) {
-                    groupname = '개인 일정';
-                } else {
-                    let followIndex = followGroupInfo.findIndex(function (group) {
-                        return group.id === id;
-                    });
-                    groupname = followGroupInfo[followIndex].groupname;
-                }
-
                 let colorIndex = (followGroupIdArray.length) % colorArray.length;
                 followGroupIdArray.push(id);
 
