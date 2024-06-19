@@ -1,0 +1,16 @@
+@import "variables.css";
+
+main.myschedule {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 16px;
+}
+
+.myschedule > .myschedule-container {
+    width: 100%;
+    max-width: 900px;
+    box-sizing: border-box;
+    height: 100%;
+}

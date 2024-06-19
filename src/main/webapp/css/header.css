@@ -1,0 +1,56 @@
+@import "variables.css";
+
+.header {
+    width: 100%;
+    height: var(--header-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-container {
+    width: 100%;
+}
+
+.header .avatar {
+    width: var(--avatar-diameter);
+    height: var(--avatar-diameter);
+    border-radius: 50%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.header .avatar.active > svg {
+    display: none;
+}
+
+.header .avatar.active > .avatar-img {
+    display: block;
+}
+
+.header .avatar > .avatar-img {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header .header-dropdown {
+    position: absolute;
+    top: calc(var(--header-height) + 8px);
+    right: calc(var(--header-dropdown-menu-width) * 0.3 * -1);
+    width: var(--header-dropdown-menu-width);
+}
+
+.header .dropdown-menu > .disabled {
+    display: none;
+}
+
+.header .dropdown-menu li {
+    user-select: none;
+    cursor: pointer;
+}

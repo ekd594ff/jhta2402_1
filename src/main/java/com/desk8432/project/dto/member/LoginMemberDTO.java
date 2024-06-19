@@ -1,4 +1,4 @@
-package com.desk8432.project.dto;
+package com.desk8432.project.dto.member;
 
 import lombok.*;
 
@@ -10,12 +10,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberDTO {
-    private long id;
+public class LoginMemberDTO {
+
     private String username;
     private String nickname;
     private String email;
-    private String password;
     private String imageUrl;
     private String introduction;
     private LocalDate createdAt;

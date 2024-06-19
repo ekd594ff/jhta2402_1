@@ -4,6 +4,23 @@
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <properties resource="db.properties"></properties>
+    <typeAliases>
+        <typeAlias type="com.desk8432.project.dto.member.MemberDTO" alias="MemberDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.DuplicateDTO" alias="DuplicateDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.InsertDTO" alias="InsertDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdateEmailDTO" alias="UpdateEmailDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdateImageUrlDTO" alias="UpdateImageUrlDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdateIntroductionDTO" alias="UpdateIntroductionDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdateNicknameDTO" alias="UpdateNicknameDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.UpdatePasswordDTO" alias="UpdatePasswordDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.MyPageDTO" alias="MyPageDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.DeleteMemberDTO" alias="DeleteMemberDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.LoginDTO" alias="LoginDTO" />
+        <typeAlias type="com.desk8432.project.dto.member.LoginMemberDTO" alias="LoginMemberDTO" />
+        <typeAlias type="com.desk8432.project.dto.schedule.ScheduleDTO" alias="ScheduleDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.GroupDTO" alias="GroupDTO" />
+<!--        <typeAlias type="com.desk8432.project.dto.schedule.CreateScheduleDTO" alias="CreateScheduleDTO" />-->
+    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -17,5 +34,13 @@
     </environments>
     <mappers>
         <mapper resource="member.xml"/>
+        <mapper resource="duplicate.xml"/>
+        <mapper resource="insert.xml" />
+        <mapper resource="update.xml" />
+        <mapper resource="delete.xml" />
+        <mapper resource="login.xml" />
+        <mapper resource="file.xml" />
+        <mapper resource="schedule.xml" />
+        <mapper resource="group.xml" />
     </mappers>
 </configuration>

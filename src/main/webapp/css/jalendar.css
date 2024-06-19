@@ -1,0 +1,33 @@
+@import "variables.css";
+
+.jalendar a {
+    text-decoration: none;
+}
+
+.jalendar .fc-daygrid-day-top {
+    flex-direction: row !important;
+}
+
+.jalendar .fc-col-header {
+    border-right: 0;
+}
+
+.jalendar th[role=presentation] {
+    border: 0;
+}
+
+.jalendar .fc-col-header * {
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+}
+
+.jalendar .fc-scrollgrid.fc-scrollgrid-liquid {
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0;
+}
+
+.jalendar th.fc-col-header-cell.fc-day.fc-day-sun {
+    border-left: 0;
+}

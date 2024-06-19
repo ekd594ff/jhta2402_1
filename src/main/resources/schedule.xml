@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.desk8432.project">
+<!--    <select id="getGroupName" resultType="UpdateScheduleDTO" parameterType="UpdateScheduleDTO">-->
+<!--        select js.id ,js.group_id as groupID,js.editor,js.title,-->
+<!--        js."content",js.start_date as startDate,js.end_date as endDate ,jg."name" as groupname-->
+<!--        from JHTA01_SCHEDULE js-->
+<!--        inner join jhta01_group jg on js.group_id = jg.id-->
+<!--        where js.id = #{id}-->
+<!--    </select>-->
+    <select id="getGroupName" resultType="String" parameterType="int">
+        select jg."name" as groupname
+        from jhta01_schedule js
+        inner join jhta01_group jg on js.group_id = jg.id
+        where js.id = #{id}
+    </select>
+    <select id="getScheduleList" resultType="ScheduleDTO" parameterType="String">
+        select js.id, js.group_id as groupID,
+        jg."name" as groupname, js.editor,js.title,
+        js."content",js.start_date as startDate,
+        js.end_date as endDate
+        from jhta01_schedule js
+        left join jhta01_group jg
+        on js.group_id = jg.id
+        where js.group_id in
+        (select group_id from jhta01_follow where username = #{username})
+        or js.group_id isnull
+    </select>
+    <update id="updateSchedule" parameterType="ScheduleDTO" >
+        update jhta01_schedule
+        set
+        title = #{title},
+        "content" = #{content},
+        start_date = #{startDate},
+        end_date = #{endDate},
+        updated_at = CURRENT_TIMESTAMP
+        where id = #{id}
+    </update>
+    <select id="getEditorName" parameterType="int" resultType="String" >
+        select editor from jhta01_schedule js where id = #{id}
+    </select>
+    <insert id="createSchedule" parameterType="ScheduleDTO" >
+        insert into jhta01_schedule values(
+        nextval('SCHEDULE_SEQ'),
+        null,
+        #{editor},
+        #{title},
+        #{content},
+        #{startDate},
+        #{endDate},
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+        )
+    </insert>
+    <insert id="createGroupSchedule" parameterType="ScheduleDTO" >
+        insert into jhta01_schedule values(
+        nextval('SCHEDULE_SEQ'),
+        #{groupID},
+        #{editor},
+        #{title},
+        #{content},
+        #{startDate},
+        #{endDate},
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+        )
+    </insert>
+    <delete id="deleteSchedule" parameterType="ScheduleDTO" >
+        delete from jhta01_schedule where id = #{id} and editor = #{editor}
+    </delete>
+</mapper>
