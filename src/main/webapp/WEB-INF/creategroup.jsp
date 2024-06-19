@@ -8,7 +8,7 @@
 <body>
 <jsp:include page="../components/header.jsp"/>
 <div class="mypage-container">
-    <form class="mypage-form">
+    <form class="mypage-form" method="post" action="../creategroup">
         <div class="profile-img-container">
             <div class="profile-img-wrapper">
                 <svg focusable="false"

@@ -16,4 +16,9 @@ public class createGroup extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/creategroup.jsp")
                 .forward(request,response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
+    }
 }
