@@ -23,24 +23,18 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.js"></script>
 </head>
 <style>
-    body {
-        margin: 40px 10px;
-        padding: 0;
-        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-        font-size: 14px;
-    }
-
-    #calendar {
-        max-width: 1100px;
-        margin: 0 auto;
+    .blind {
+        display: none;
     }
 </style>
 <body>
 <jsp:include page="../components/header.jsp"/>
 
-<div id="div-group" class="d-flex flex-wrap gap-2 justify-content-center py-4"></div>
+<main class="container-xl">
+    <div id="div-group" class="d-flex flex-wrap gap-2 justify-content-center my-4"></div>
 
-<div id='calendar'></div>
+    <div id='calendar'></div>
+</main>
 
 <!-- Modal -->
 <div class="modal fade" id="modal-add-event" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -84,17 +78,8 @@
     </div>
 </div>
 
-<script src="../js/schedule.js"></script>
+<script src="../js/schedule.js" defer></script>
 
 <jsp:include page="../components/footer.jsp"/>
 </body>
-<script>
-    fetch("/schedule/list",{
-        method:"POST"
-    }).then((result) => {
-        return result.json();
-    }).then((data) => {
-        console.log(data);
-    });
-</script>
 </html>
