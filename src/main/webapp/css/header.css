@@ -49,3 +49,8 @@
 .header .dropdown-menu > .disabled {
     display: none;
 }
+
+.header .dropdown-menu li {
+    user-select: none;
+    cursor: pointer;
+}

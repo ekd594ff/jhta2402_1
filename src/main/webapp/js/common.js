@@ -71,7 +71,6 @@ function shutdownDropdownMenu() {
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", (event) => {
     addAvatarHeaderDropdownToggleButtonHandler();
     addDropdownItemDropdownOffHandler();

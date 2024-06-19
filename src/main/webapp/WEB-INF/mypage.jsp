@@ -34,13 +34,47 @@
                     <button class="profile-img-submit submit">프로필 변경</button>
                 </div>
             </li>
-            <li class="item">
+            <li class="item nickname">
                 <div class="top">
-                    <input type="text"/>
-                    <button class="profile-img-submit submit">닉네임 변경</button>
+                    <label>
+                        닉네임
+                        <input type="text"/>
+                    </label>
+                    <button class="edit-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                        </svg>
+                    </button>
                 </div>
                 <div class="bottom">
-                    <label class="message"></label>
+                    <label class="message">　</label>
+                </div>
+            </li>
+            <li class="item email">
+                <div class="top">
+                    <label>
+                        이메일
+                        <input type="text" class="email"/>
+                    </label>
+                    <button class="edit-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="bottom">
+                    <label class="message">　</label>
+                </div>
+            </li>
+            <li class="item introduction">
+                <div class="top">
+                    <label>
+                        자기소개
+                        <textarea class="introduction" rows="4"></textarea>
+                    </label>
+                </div>
+                <div class="bottom">
+                    <button class="submit">소개 변경</button>
                 </div>
             </li>
         </ul>
@@ -50,19 +84,114 @@
 <script src="js/util.js"></script>
 <script src="js/common.js"></script>
 <script>
+    function genOnChangeInput(className) {
+        const item = document.querySelector('.item.' + className);
+        const inputMsgLabel = item.querySelector('label.message');
+        const msg = genMsg(className);
+        const regexChecker = debouncer(async (value) => {
+            const valid = regexCheck(className, value);
+            if (valid) {
+                //This string is valid for the regular expression only, not for duplication
+                const data = await duplicateCheck(className, value, inputMsgLabel);
+                if (!data) {
+                    item.classList.add("valid");
+                    item.classList.remove("invalid");
+                    inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
+                    return;
+                }
+                if (!data.isDuplication) {
+                    item.classList.remove("invalid");
+                    item.classList.add("valid");
+                    inputMsgLabel.textContent = msg["valid"];
+                } else {
+                    item.classList.remove("valid");
+                    item.classList.add("invalid");
+                    inputMsgLabel.textContent = "중복된 " + enToKr(className) + "입니다";
+                }
+            } else {
+                item.classList.remove("valid");
+                item.classList.add("invalid");
+                inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
+            }
+
+        }, 400);
+        return (event) => {
+            const value = event.target.value;
+            if (value && value.trim()) {
+                regexChecker(value);
+            } else {
+                inputMsgLabel.textContent = "ㅤ";
+                item.classList.remove("invalid");
+                item.classList.remove("valid");
+            }
+        }
+    }
+
+    function onClickUpdate(className) {
+        return (event) => {
+            const item = document.querySelector(".mypage-form .item." + className);
+            if(!item.classList.contains("valid")) {
+                window.alert("변경할 수 없습니다");
+            } else {
+                const input = item.querySelector("input");
+                const bodyObject = {};
+                bodyObject[className] = input.value;
+                fetch("/update/" + className, {
+                    method : "POST",
+                    body: JSON.stringify(bodyObject)
+                })
+                    .then(result => result.json())
+                    .then(data => {
+                        window.alert("변경되었습니다");
+                    });
+            }
+        }
+    }
+
+    document.querySelector(".item.nickname input").addEventListener("keyup",genOnChangeInput("nickname"));
+    document.querySelector(".item.email input").addEventListener("keyup",genOnChangeInput("email"));
+
+    document.querySelector(".item.nickname .edit-btn").addEventListener("click",onClickUpdate("nickname"));
+    document.querySelector(".item.email .edit-btn").addEventListener("click",onClickUpdate("email"));
+
+    document.querySelector(".item.introduction button.submit").addEventListener("click", (event) => {
+       const textarea = document.querySelector(".item.introduction textarea.introduction");
+       const value = textarea.value;
+       fetch("/update/introduction", {
+           method : "POST",
+           body : JSON.stringify({
+               introduction : value,
+           })
+       })
+           .then(result => result.json())
+           .then(data => {
+                window.alert("변경되었습니다");
+           });
+    });
+
     function storeProfileImgSrc(data) {
-        const { profileImgUrl } = data;
+        const {profileImgUrl} = data;
         localStorage.setItem("profile-img-url", profileImgUrl);
     }
 
     function setProfileImageFormSrcDefault() {
         const src = localStorage.getItem("profile-img-url");
-        if(src) {
+        if (src) {
             const profileFormImgEl = document.querySelector("#profile-img");
             const profileImgWrapperEl = document.querySelector(`.profile-img-wrapper`);
             profileFormImgEl.setAttribute("src", src);
             profileImgWrapperEl.classList.add("active");
         }
+    }
+
+    function setProfileValueDefault(data) {
+        const {nickname, email, introduction} = data;
+        const nicknameInputEl = document.querySelector(".profile-info-list .item.nickname input");
+        nicknameInputEl.value = nickname;
+        const emailInputEl = document.querySelector(".profile-info-list .item.email input");
+        emailInputEl.value = email;
+        const introductionTextareaEl = document.querySelector(".profile-info-list .item.introduction textarea.introduction");
+        introductionTextareaEl.textContent = introduction;
     }
 
     fetch("/memberinfo", {
@@ -76,6 +205,7 @@
                 storeProfileImgSrc(data);
                 setProfileImageFormSrcDefault();
                 setHeaderDropdownMenu(true);
+                setProfileValueDefault(data);
             } else {
                 setHeaderDropdownMenu(false);
             }
@@ -119,7 +249,7 @@
             method: "POST",
             body: formData,
         }).then((result) => {
-            if(result.ok) {
+            if (result.ok) {
                 window.alert("프로필 사진이 변경되었습니다");
             }
             return result.json();
