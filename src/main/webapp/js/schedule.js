@@ -8,18 +8,18 @@ const inputContent = $('#input-content');
 const inputGroup = $('#input-group');
 
 const buttonEventAdd = $('#button-event-add');
-
 const divGroup = $('#div-group');
+const divInputGroup = $('#div-input-group');
 
 let username;
 
 const colorArray = ['yellow', 'blue', 'green', 'purple', 'orange', 'red', 'skyblue', 'gray'];
 const textColorArray = ['black', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
 
-let followGroupArray = [];
+let followGroupInfo = [];
 let followGroupIdArray = [];
 
-let groupIdArray = [];
+let inputGroupIdArray = [];
 let hiddenGroupIdArray = [];
 
 
@@ -44,12 +44,12 @@ document.addEventListener('DOMContentLoaded', function () {
             url: '/schedule/list',
             method: 'POST',
             failure: function () {
-                alert('there was an error while fetching events!');
+                alert('문제가 발생했습니다. 다시 시도해 주세요.');
             },
         },
         eventSourceSuccess: function (content, response) {
             username = content.username;
-            followGroupArray = content.groups;
+            followGroupInfo = content.groups;
             return content.events;
         },
         eventDataTransform: function (eventData) {
@@ -57,25 +57,49 @@ document.addEventListener('DOMContentLoaded', function () {
             id = (!id) ? 0 : id;
             let colorIndex;
 
-            if (eventData.editor === username && !followGroupIdArray.includes(id)) {
-                followGroupIdArray.push(id);
+            if (eventData.editor === username && !inputGroupIdArray.includes(id)) {
+                inputGroupIdArray.push(id);
                 inputGroup.append("<option value=\"" + id + "\">" + id + "</option>");
             }
 
-            if (!groupIdArray.includes(id)) {
-                groupIdArray.push(id);
-                divGroup.append("<span id='span-group-" + id + "' class='badge d-flex align-items-center p-1 pe-2 text-primary-emphasis border border-secondary-subtle rounded-pill' style='font-size: 14px'>" +
-                    +id + " sampleGroupName</button>");
+            if (!followGroupIdArray.includes(id)) {
+                let groupname;
+
+                if (id === 0) {
+                    groupname = '개인 일정';
+                } else {
+                    let followIndex = followGroupInfo.findIndex(function (group) {
+                        return group.id === id;
+                    });
+                    groupname = followGroupInfo[followIndex].groupname;
+                }
+
+                let colorIndex = (followGroupIdArray.length) % colorArray.length;
+                followGroupIdArray.push(id);
+
+                divGroup.append(
+                    "<span id='span-group-" + id + "' " +
+                    "class='badge d-flex align-items-center px-5 py-2 m-2 text-primary-emphasis" +
+                    " border border-secondary-subtle rounded-pill' " +
+                    "style='" +
+                    "font-size: 14px; " +
+                    "color: " + textColorArray[colorIndex] + " !important; " +
+                    "background-color: " + colorArray[colorIndex] + ";" +
+                    "'>" + groupname + "</span>");
 
                 $('#span-group-' + id).on('click', function () {
                     if ($(this).hasClass('hidden')) {
                         $(this).removeClass('hidden');
-                        $(this).css('background', 'none');
+                        $(this).css({
+                            'background-color' : colorArray[colorIndex]
+                        });
 
                         hiddenGroupIdArray.splice(hiddenGroupIdArray.indexOf(id), 1);
                     } else {
                         $(this).addClass('hidden');
-                        $(this).css('background-color', 'gray');
+                        $(this).css({
+                            'background-color' : '#D3D3D3'
+                        });
 
                         hiddenGroupIdArray.push(id);
                     }
@@ -85,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
-            colorIndex = groupIdArray.indexOf(id) % colorArray.length;
+            colorIndex = followGroupIdArray.indexOf(id) % colorArray.length;
 
             return {
                 id: eventData.id,
@@ -110,6 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         select: function (selectionInfo) {
+            divInputGroup.show();
+
             setModal(
                 '일정 추가',
                 '추가',
@@ -124,6 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
             modalEventAdd.modal('toggle');
         },
         eventClick: function (info) {
+            divInputGroup.hide();
+
             setModal(
                 '일정 변경',
                 '변경',
@@ -165,13 +193,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(res => {
-                    console.log(res);
                 })
                 .catch(error => {
-                    console.log(error);
                     error.json().then(err => {
                         info.revert();
-                        alert(err.status);
+                        alert('문제가 발생했습니다. 다시 시도해 주세요.');
                     });
                 });
         }
@@ -207,15 +233,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => {
                     calendar.removeAllEvents();
                     calendar.refetchEvents();
-                    alert(res.status);
+                    alert('생성되었습니다.');
                 })
                 .catch(error => {
                     error.json().then(err => {
                         event.revert();
-                        alert(err.status);
+                        alert('문제가 발생했습니다. 다시 시도해 주세요.');
                     });
                 });
         } else if (modalTitle.text() === '일정 변경') {
+
             const event = {
                 id: inputEventId.val(),
                 groupID: inputGroup.val(),
@@ -241,11 +268,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => {
                     calendar.removeAllEvents();
                     calendar.refetchEvents();
-                    alert(res.status);
+                    alert('수정되었습니다.');
                 })
                 .catch(error => {
                     error.json().then(err => {
-                        alert(err.status);
+                        alert('문제가 발생했습니다. 다시 시도해 주세요.');
                     });
                 });
         }
