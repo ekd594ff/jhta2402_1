@@ -49,3 +49,31 @@ function regexCheck(type, value) {
     }
     return regex.test(value);
 }
+
+function genMsg(className) {
+    const msg = {
+        valid: "",
+        invalid: ""
+    }
+    switch (className) {
+        case "username" :
+            msg.valid = "사용 가능한 계정 입니다";
+            msg.invalid = "사용할 수 없는 계정 입니다";
+            break;
+        case "password" :
+            msg.valid = "사용 가능한 비밀번호 입니다";
+            msg.invalid = "사용할 수 없는 비밀번호 입니다";
+            break;
+        case "email":
+            msg.valid = "사용 가능한 이메일 주소 입니다";
+            msg.invalid = "사용할 수 없는 이메일 주소 입니다";
+            break;
+        case "nickname":
+            msg.valid = "사용 가능한 닉네임 입니다";
+            msg.invalid = "사용할 수 없는 닉네임 입니다";
+            break;
+        default:
+            break;
+    }
+    return msg;
+}

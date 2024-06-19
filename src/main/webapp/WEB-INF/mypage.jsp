@@ -38,9 +38,28 @@
                 <div class="top">
                     <label>
                         닉네임
-                        <input type="text"/>
+                        <input type="text" class="nickname"/>
                     </label>
-                    <button class="profile-img-submit">
+                    <button class="edit-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="bottom">
+                    <label class="message"></label>
+                </div>
+            </li>
+            <li class="item">
+                <div class="top">
+                    <label>
+                        이메일
+                        <input type="text" class="email"/>
+                    </label>
+                    <button class="edit-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                        </svg>
                     </button>
                 </div>
                 <div class="bottom">
@@ -54,19 +73,73 @@
 <script src="js/util.js"></script>
 <script src="js/common.js"></script>
 <script>
+
+    function genOnChangeInput(className) {
+        const inputMsgLabel = document.querySelector('.item.' + className + ' label');
+        const msg = genMsg(className);
+        const inputGroup = document.querySelector('.signup-input-group.' + className);
+        const regexChecker = debouncer(async (value) => {
+            const valid = regexCheck(className, value);
+            if (valid) {
+                //This string is valid for the regular expression only, not for duplication
+                const data = await duplicateCheck(className, value, inputMsgLabel);
+
+                if (!data) {
+                    inputGroup.classList.add("valid");
+                    inputGroup.classList.remove("invalid");
+                    inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
+                    return;
+                }
+
+                if (!data.isDuplication) {
+                    inputGroup.classList.remove("invalid");
+                    inputGroup.classList.add("valid");
+                    inputMsgLabel.textContent = msg["valid"];
+                } else {
+                    inputGroup.classList.remove("valid");
+                    inputGroup.classList.add("invalid");
+                    inputMsgLabel.textContent = "중복된 " + enToKr(className) + "입니다";
+                }
+            } else {
+                inputGroup.classList.remove("valid");
+                inputGroup.classList.add("invalid");
+                inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
+            }
+
+        }, 400);
+        return (event) => {
+            const value = event.target.value;
+            if (value && value.trim()) {
+                regexChecker(value);
+            } else {
+                inputMsgLabel.textContent = "ㅤ";
+                inputGroup.classList.remove("invalid");
+                inputGroup.classList.remove("valid");
+            }
+        }
+    }
+
     function storeProfileImgSrc(data) {
-        const { profileImgUrl } = data;
+        const {profileImgUrl} = data;
         localStorage.setItem("profile-img-url", profileImgUrl);
     }
 
     function setProfileImageFormSrcDefault() {
         const src = localStorage.getItem("profile-img-url");
-        if(src) {
+        if (src) {
             const profileFormImgEl = document.querySelector("#profile-img");
             const profileImgWrapperEl = document.querySelector(`.profile-img-wrapper`);
             profileFormImgEl.setAttribute("src", src);
             profileImgWrapperEl.classList.add("active");
         }
+    }
+
+    function setProfileValueDefault(data) {
+        const {nickname, email} = data;
+        const nicknameInputEl = document.querySelector(".item.nickname input");
+        nicknameInputEl.value = nickname;
+        const emailInputEl = document.querySelector(".item.email input");
+        emailInputEl.value = email;
     }
 
     fetch("/memberinfo", {
@@ -80,6 +153,7 @@
                 storeProfileImgSrc(data);
                 setProfileImageFormSrcDefault();
                 setHeaderDropdownMenu(true);
+                setProfileValueDefault(data);
             } else {
                 setHeaderDropdownMenu(false);
             }
@@ -123,7 +197,7 @@
             method: "POST",
             body: formData,
         }).then((result) => {
-            if(result.ok) {
+            if (result.ok) {
                 window.alert("프로필 사진이 변경되었습니다");
             }
             return result.json();

@@ -85,6 +85,9 @@ label[for="profile-img-input"] > svg {
     padding: 0;
     margin: 0;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .profile-info-list > li.item {
@@ -127,7 +130,25 @@ label[for="profile-img-input"] > svg {
     justify-content: space-between;
 }
 
-.profile-info-list > li.item > .top > input {
+.profile-info-list > li.item > .top  input {
     border: 0;
     border-bottom: 1px solid var(--color-default);
+    width: 75%;
+}
+
+.profile-info-list > li.item > .top > label {
+    display: flex;
+    width: 100%;
+    gap: 12px;
+    color: var(--color-default);
+}
+
+.profile-info-list > li.item .edit-btn {
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+}
+
+.profile-info-list > li.item .edit-btn > svg {
+    fill: var(--color-default);
 }
