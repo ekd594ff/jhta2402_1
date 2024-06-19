@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
 
         dayMaxEvents: true,
-        editable: true,
+        editable: false,
         selectable: true,
 
         events: {
@@ -56,8 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
             let id = eventData.groupID;
             id = (!id) ? 0 : id;
             let colorIndex;
+            let editable = eventData.editor === username;
 
-            if (eventData.editor === username && !inputGroupIdArray.includes(id)) {
+            if (editable && !inputGroupIdArray.includes(id)) {
                 inputGroupIdArray.push(id);
                 inputGroup.append("<option value=\"" + id + "\">" + id + "</option>");
             }
@@ -117,9 +118,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 title: eventData.title,
                 start: stringToDate(eventData.startDate),
                 end: stringToDate(eventData.endDate),
+                editable: editable,
                 extendedProps: {
                     groupId: id,
-                    content: eventData.content
+                    content: eventData.content,
+                    editor: eventData.editor
                 },
                 backgroundColor: colorArray[colorIndex],
                 textColor: textColorArray[colorIndex]
@@ -150,6 +153,8 @@ document.addEventListener('DOMContentLoaded', function () {
             modalEventAdd.modal('toggle');
         },
         eventClick: function (info) {
+            if (username !== info.event.extendedProps.editor) return;
+
             divInputGroup.hide();
 
             setModal(

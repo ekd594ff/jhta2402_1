@@ -22,11 +22,6 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.js"></script>
 </head>
-<style>
-    .blind {
-        display: none;
-    }
-</style>
 <body>
 <jsp:include page="../components/header.jsp"/>
 
