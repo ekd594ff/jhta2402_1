@@ -42,7 +42,6 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="input-event-id" name="input-event-id">
-
                 <div class="row m-3">
                     <label class="col-4" for="input-start-date">시작시간</label>
                     <input class="col-8" type="date" id="input-start-date" name="input-start-date">
@@ -72,9 +71,7 @@
         </div>
     </div>
 </div>
-
 <script src="${pageContext.request.contextPath}/js/schedule.js" defer></script>
-
 <jsp:include page="../components/footer.jsp"/>
 </body>
 </html>
