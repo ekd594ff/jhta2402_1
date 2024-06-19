@@ -73,7 +73,7 @@
     </div>
 </div>
 
-<script src="../js/schedule.js" defer></script>
+<script src="${pageContext.request.contextPath}/js/schedule.js" defer></script>
 
 <jsp:include page="../components/footer.jsp"/>
 </body>

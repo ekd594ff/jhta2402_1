@@ -2,20 +2,20 @@
 <html>
 <head>
     <title>Sign up</title>
-    <link rel="stylesheet" href="css/global.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="icon" href="public/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <script src="js/util.js"></script>
+    <script src="${pageContext.request.contextPath}/js/util.js"></script>
 </head>
 <body>
 <div class="signup-container">
     <form class="signup-form">
         <div class="logo">
             <a href="/">
-                <img src="public/imgs/jalendar.svg" height="48px"/>
+                <img src="${pageContext.request.contextPath}/public/imgs/jalendar.svg" height="48px"/>
             </a>
         </div>
         <h1>SIGN UP</h1>
