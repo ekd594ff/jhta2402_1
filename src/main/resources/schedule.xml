@@ -41,4 +41,30 @@
     <select id="getEditorName" parameterType="int" resultType="String" >
         select editor from jhta01_schedule js where id = #{id}
     </select>
+    <insert id="createSchedule" parameterType="ScheduleDTO" >
+        insert into jhta01_schedule values(
+        nextval('SCHEDULE_SEQ'),
+        null,
+        #{editor},
+        #{title},
+        #{content},
+        #{startDate},
+        #{endDate},
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+        )
+    </insert>
+    <insert id="createGroupSchedule" parameterType="ScheduleDTO" >
+        insert into jhta01_schedule values(
+        nextval('SCHEDULE_SEQ'),
+        #{groupID},
+        #{editor},
+        #{title},
+        #{content},
+        #{startDate},
+        #{endDate},
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+        )
+    </insert>
 </mapper>

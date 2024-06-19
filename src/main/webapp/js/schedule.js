@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
         eventSourceSuccess: function (content, response) {
             username = content.username;
             followGroupArray = content.groups;
-
             return content.events;
         },
         eventDataTransform: function (eventData) {
@@ -184,9 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
     buttonEventAdd.on('click', function () {
 
         if (modalTitle.text() === '일정 추가') {
-            tempId++;
-            console.log(tempId);
-
             const event = {
                 groupID: inputGroup.val(),
                 title: inputTitle.val(),
@@ -194,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 startDate: inputStartDate.val(),
                 endDate: inputEndDate.val()
             };
-
 
             fetch('/schedule/create', {
                 method: 'POST',
