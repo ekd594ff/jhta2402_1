@@ -293,21 +293,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     buttonEventDelete.on('click', function() {
+        let eventID = inputEventId.val();
         if (confirm("삭제하시겠습니까?")) {
-            fetch('/schedule/delete', {
-                method: 'POST',
+            fetch('/schedule/delete?id=' + eventID, {
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
                 },
             })
                 .then(response => {
+                    console.log(response);
                     if (!response.ok) {
                         throw response;
                     }
                     return response.json();
                 })
                 .then(res => {
-                    calendar.getEventById(res.id).remove();
+                    calendar.getEventById(eventID).remove();
                 })
                 .catch(error => {
                     error.json().then(err => {
