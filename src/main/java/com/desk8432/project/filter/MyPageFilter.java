@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebFilter({"/mypage/*"})
+@WebFilter({"/mypage/*", "/schedule/*"})
 public class MyPageFilter implements Filter {
 
     @Override

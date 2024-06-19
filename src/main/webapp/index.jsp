@@ -14,20 +14,5 @@
         crossorigin="anonymous"></script>
 <jsp:include page="components/footer.jsp"/>
 <script src="js/common.js"></script>
-<script>
-    fetch("/memberinfo", {
-        method: "GET"
-    })
-        .then((result) => result.json())
-        .then((resp) => {
-            const {data} = resp;
-            if (data) {
-                updateHeaderProfileImage(data);
-                setHeaderDropdownMenu(true);
-            } else {
-                setHeaderDropdownMenu(false);
-            }
-        });
-</script>
 </body>
 </html>
