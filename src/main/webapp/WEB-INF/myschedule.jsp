@@ -17,11 +17,13 @@
 </head>
 <body>
     <jsp:include page="../components/header.jsp"/>
-    <main class="container-xl">
-        <div id="div-group" class="d-flex flex-wrap gap-2 justify-content-center my-4"></div>
-        <div id='calendar'></div>
+    <main class="myschedule">
+        <div class="myschedule-container">
+            <div id="div-group" class="d-flex flex-wrap gap-2 justify-content-center my-4"></div>
+            <div id='calendar' class="jalendar"></div>
+        </div>
     </main>
-    <!-- Modal -->
+    <jsp:include page="../components/footer.jsp"/>
     <div class="modal fade" id="modal-add-event" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -61,7 +63,6 @@
             </div>
         </div>
     </div>
-    <jsp:include page="../components/footer.jsp"/>
     <script src="${pageContext.request.contextPath}/js/schedule.js" defer></script>
     <script src="${pageContext.request.contextPath}/js/util.js"></script>
     <script src="${pageContext.request.contextPath}/js/common.js"></script>
