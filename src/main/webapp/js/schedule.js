@@ -8,6 +8,7 @@ const inputContent = $('#input-content');
 const inputGroup = $('#input-group');
 
 const buttonEventAdd = $('#button-event-add');
+const buttonEventDelete = $('#button-event-delete');
 const divGroup = $('#div-group');
 const divInputGroup = $('#div-input-group');
 
@@ -138,6 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         select: function (selectionInfo) {
             divInputGroup.show();
+            buttonEventDelete.hide();
 
             setModal(
                 '일정 추가',
@@ -156,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (username !== info.event.extendedProps.editor) return;
 
             divInputGroup.hide();
+            buttonEventDelete.show();
 
             setModal(
                 '일정 변경',
@@ -211,7 +214,11 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar.render();
 
 
+    //
     buttonEventAdd.on('click', function () {
+        if (checkIsEmpty(inputTitle.val(), inputContent.val(), inputGroup.val(), inputStartDate.val())) {
+            return;
+        }
 
         if (modalTitle.text() === '일정 추가') {
             const event = {
@@ -285,6 +292,33 @@ document.addEventListener('DOMContentLoaded', function () {
         modalEventAdd.modal('toggle');
     });
 
+    buttonEventDelete.on('click', function() {
+        if (confirm("삭제하시겠습니까?")) {
+            fetch('/schedule/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw response;
+                    }
+                    return response.json();
+                })
+                .then(res => {
+                    calendar.getEventById(res.id).remove();
+                })
+                .catch(error => {
+                    error.json().then(err => {
+                        alert('문제가 발생했습니다. 다시 시도해 주세요.');
+                    });
+                });
+        }
+
+        modalEventAdd.modal('toggle');
+    });
+
 });
 
 function stringToDate(dateStr) {
@@ -305,4 +339,20 @@ function setModal(title, buttonText, eventId, groupId, start, end, eventTitle, e
     inputEndDate.val(end);
     inputTitle.val(eventTitle);
     inputContent.val(eventContent);
+}
+
+function checkIsEmpty(title, content, groupId, start) {
+    if (!title) {
+        alert('제목을 입력해주세요.');
+    } else if (!content) {
+        alert('내용을 입력해주세요.');
+    } else if (!groupId) {
+        alert('그룹을 선택해주세요.');
+    } else if (!start) {
+        alert('시작날짜를 입력해주세요.');
+    } else {
+        return false;
+    }
+
+    return true;
 }

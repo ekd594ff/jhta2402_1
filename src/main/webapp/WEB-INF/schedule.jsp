@@ -66,6 +66,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-danger" id="button-event-delete">삭제</button>
                 <button type="button" class="btn btn-primary" id="button-event-add">추가</button>
             </div>
         </div>
