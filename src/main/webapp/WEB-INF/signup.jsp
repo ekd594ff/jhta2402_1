@@ -118,50 +118,6 @@
             });
     }
 
-    function enToKr(className) {
-        let name = "";
-        switch (className) {
-            case "username" :
-                name = '계정'
-                break;
-            case "password" :
-                name = "비밀번호";
-                break;
-            case "email":
-                name = "이메일"
-                break;
-            case "nickname":
-                name = "닉네임"
-                break;
-            default:
-                break;
-        }
-        return name;
-    }
-
-    async function duplicateCheck(className, value) {
-        let URL = '/duplicate/';
-        const columnSet = new Set(['username', 'email', 'nickname']);
-        if (columnSet.has(className)) {
-            URL += className;
-
-            const body = {};
-            body[className] = value;
-
-            return fetch(URL, {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify(body)
-            })
-                .then((result) => result.json())
-        } else {
-            //throw new Error("wrong pathname");
-            return;
-        }
-    }
-
     function genOnChangeInput(className) {
         const inputMsgLabel = document.querySelector('.signup-input-group.' + className + ' label');
         const msg = genMsg(className);

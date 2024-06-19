@@ -34,11 +34,11 @@
                     <button class="profile-img-submit submit">프로필 변경</button>
                 </div>
             </li>
-            <li class="item">
+            <li class="item nickname">
                 <div class="top">
                     <label>
                         닉네임
-                        <input type="text" class="nickname"/>
+                        <input type="text"/>
                     </label>
                     <button class="edit-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -47,10 +47,10 @@
                     </button>
                 </div>
                 <div class="bottom">
-                    <label class="message"></label>
+                    <label class="message">　</label>
                 </div>
             </li>
-            <li class="item">
+            <li class="item email">
                 <div class="top">
                     <label>
                         이메일
@@ -63,7 +63,18 @@
                     </button>
                 </div>
                 <div class="bottom">
-                    <label class="message"></label>
+                    <label class="message">　</label>
+                </div>
+            </li>
+            <li class="item introduction">
+                <div class="top">
+                    <label>
+                        자기소개
+                        <textarea class="introduction" rows="4"></textarea>
+                    </label>
+                </div>
+                <div class="bottom">
+                    <button class="submit">소개 변경</button>
                 </div>
             </li>
         </ul>
@@ -73,36 +84,33 @@
 <script src="js/util.js"></script>
 <script src="js/common.js"></script>
 <script>
-
     function genOnChangeInput(className) {
-        const inputMsgLabel = document.querySelector('.item.' + className + ' label');
+        const item = document.querySelector('.item.' + className);
+        const inputMsgLabel = item.querySelector('label.message');
         const msg = genMsg(className);
-        const inputGroup = document.querySelector('.signup-input-group.' + className);
         const regexChecker = debouncer(async (value) => {
             const valid = regexCheck(className, value);
             if (valid) {
                 //This string is valid for the regular expression only, not for duplication
                 const data = await duplicateCheck(className, value, inputMsgLabel);
-
                 if (!data) {
-                    inputGroup.classList.add("valid");
-                    inputGroup.classList.remove("invalid");
+                    item.classList.add("valid");
+                    item.classList.remove("invalid");
                     inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
                     return;
                 }
-
                 if (!data.isDuplication) {
-                    inputGroup.classList.remove("invalid");
-                    inputGroup.classList.add("valid");
+                    item.classList.remove("invalid");
+                    item.classList.add("valid");
                     inputMsgLabel.textContent = msg["valid"];
                 } else {
-                    inputGroup.classList.remove("valid");
-                    inputGroup.classList.add("invalid");
+                    item.classList.remove("valid");
+                    item.classList.add("invalid");
                     inputMsgLabel.textContent = "중복된 " + enToKr(className) + "입니다";
                 }
             } else {
-                inputGroup.classList.remove("valid");
-                inputGroup.classList.add("invalid");
+                item.classList.remove("valid");
+                item.classList.add("invalid");
                 inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
             }
 
@@ -113,11 +121,53 @@
                 regexChecker(value);
             } else {
                 inputMsgLabel.textContent = "ㅤ";
-                inputGroup.classList.remove("invalid");
-                inputGroup.classList.remove("valid");
+                item.classList.remove("invalid");
+                item.classList.remove("valid");
             }
         }
     }
+
+    function onClickUpdate(className) {
+        return (event) => {
+            const item = document.querySelector(".mypage-form .item." + className);
+            if(!item.classList.contains("valid")) {
+                window.alert("변경할 수 없습니다");
+            } else {
+                const input = item.querySelector("input");
+                const bodyObject = {};
+                bodyObject[className] = input.value;
+                fetch("/update/" + className, {
+                    method : "POST",
+                    body: JSON.stringify(bodyObject)
+                })
+                    .then(result => result.json())
+                    .then(data => {
+                        window.alert("변경되었습니다");
+                    });
+            }
+        }
+    }
+
+    document.querySelector(".item.nickname input").addEventListener("keyup",genOnChangeInput("nickname"));
+    document.querySelector(".item.email input").addEventListener("keyup",genOnChangeInput("email"));
+
+    document.querySelector(".item.nickname .edit-btn").addEventListener("click",onClickUpdate("nickname"));
+    document.querySelector(".item.email .edit-btn").addEventListener("click",onClickUpdate("email"));
+
+    document.querySelector(".item.introduction button.submit").addEventListener("click", (event) => {
+       const textarea = document.querySelector(".item.introduction textarea.introduction");
+       const value = textarea.value;
+       fetch("/update/introduction", {
+           method : "POST",
+           body : JSON.stringify({
+               introduction : value,
+           })
+       })
+           .then(result => result.json())
+           .then(data => {
+                window.alert("변경되었습니다");
+           });
+    });
 
     function storeProfileImgSrc(data) {
         const {profileImgUrl} = data;
@@ -135,11 +185,13 @@
     }
 
     function setProfileValueDefault(data) {
-        const {nickname, email} = data;
-        const nicknameInputEl = document.querySelector(".item.nickname input");
+        const {nickname, email, introduction} = data;
+        const nicknameInputEl = document.querySelector(".profile-info-list .item.nickname input");
         nicknameInputEl.value = nickname;
-        const emailInputEl = document.querySelector(".item.email input");
+        const emailInputEl = document.querySelector(".profile-info-list .item.email input");
         emailInputEl.value = email;
+        const introductionTextareaEl = document.querySelector(".profile-info-list .item.introduction textarea.introduction");
+        introductionTextareaEl.textContent = introduction;
     }
 
     fetch("/memberinfo", {

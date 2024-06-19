@@ -13,7 +13,7 @@
 }
 
 .mypage-container > .mypage-form {
-    padding-top: 32px;
+    padding: 64px 0;
     margin: 0;
     width: var(--profile-form-width);
     display: flex;
@@ -151,4 +151,64 @@ label[for="profile-img-input"] > svg {
 
 .profile-info-list > li.item .edit-btn > svg {
     fill: var(--color-default);
+}
+
+.profile-info-list > li.item .name {
+    color: var(--color-default);
+}
+
+li.item.nickname, li.item.email {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-info-list > li.item > .top {
+    margin-bottom: 4px;
+}
+
+.profile-info-list > li.item label.message {
+    font-size: 14px;
+}
+
+.profile-info-list > li.item.valid label.message {
+    color: var(--color-valid);
+}
+
+.profile-info-list > li.item.valid input {
+    border-bottom: 1px solid var(--color-valid);
+}
+
+.profile-info-list > li.item.invalid label.message {
+    color: var(--color-invalid);
+}
+
+.profile-info-list > li.item.invalid input {
+    border-bottom: 1px solid var(--color-invalid);
+}
+
+.profile-info-list > li.item.introduction {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profile-info-list > li.item.introduction > .top > label {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-info-list > li.item.introduction > .bottom > button.submit {
+    margin-left: auto;
+}
+
+.profile-info-list > li.item.introduction textarea.introduction {
+    width: 100%;
+    resize: none;
+    border: 1px solid var(--color-default);
+    border-radius: var(--border-radius);
+    padding: 8px;
+}
+
+.profile-info-list > li.item.introduction textarea.introduction:focus {
+    outline: none;
 }
