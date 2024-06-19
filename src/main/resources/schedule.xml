@@ -67,4 +67,7 @@
         CURRENT_TIMESTAMP
         )
     </insert>
+    <delete id="deleteSchedule" parameterType="ScheduleDTO" >
+        delete from jhta01_schedule where id = #{id} and editor = #{editor}
+    </delete>
 </mapper>
