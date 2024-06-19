@@ -4,7 +4,6 @@ import com.desk8432.project.dto.schedule.ScheduleDTO;
 import com.desk8432.project.mybatis.MybatisConnectionFactory;
 import org.apache.ibatis.session.SqlSession;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListScheduleDAO {
