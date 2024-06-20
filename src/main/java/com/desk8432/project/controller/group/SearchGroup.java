@@ -1,4 +1,4 @@
-package com.desk8432.project.controller.schedule;
+package com.desk8432.project.controller.group;
 
 import com.desk8432.project.dao.group.SearchGroupDAO;
 import com.desk8432.project.dto.group.SearchGroupRequestDTO;

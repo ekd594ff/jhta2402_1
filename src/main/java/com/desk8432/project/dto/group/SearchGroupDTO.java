@@ -1,7 +1,14 @@
 package com.desk8432.project.dto.group;
 
-import java.util.Date;
+import lombok.*;
 
+import java.util.Date;
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class SearchGroupDTO {
 
     private int id;
@@ -9,6 +16,6 @@ public class SearchGroupDTO {
     private String name;
     private String imageUrl;
     private String content;
-    private Date createdAt;
-    private Date updatedAt;
+    private Date created_at;
+    private Date updated_at;
 }
