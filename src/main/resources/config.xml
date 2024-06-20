@@ -5,20 +5,21 @@
 <configuration>
     <properties resource="db.properties"></properties>
     <typeAliases>
-        <typeAlias type="com.desk8432.project.dto.member.MemberDTO" alias="MemberDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.DuplicateDTO" alias="DuplicateDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.InsertDTO" alias="InsertDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.UpdateEmailDTO" alias="UpdateEmailDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.UpdateImageUrlDTO" alias="UpdateImageUrlDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.UpdateIntroductionDTO" alias="UpdateIntroductionDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.UpdateNicknameDTO" alias="UpdateNicknameDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.UpdatePasswordDTO" alias="UpdatePasswordDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.MyPageDTO" alias="MyPageDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.DeleteMemberDTO" alias="DeleteMemberDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.LoginDTO" alias="LoginDTO" />
-        <typeAlias type="com.desk8432.project.dto.member.LoginMemberDTO" alias="LoginMemberDTO" />
-        <typeAlias type="com.desk8432.project.dto.schedule.ScheduleDTO" alias="ScheduleDTO" />
-        <typeAlias type="com.desk8432.project.dto.group.GroupDTO" alias="GroupDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.MemberDTO" alias="MemberDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.DuplicateDTO" alias="DuplicateDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.InsertDTO" alias="InsertDTO" />
+        <typeAlias type="org.desk8432.project.dto.group.InsertGroupDTO" alias="InsertGroupDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.UpdateEmailDTO" alias="UpdateEmailDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.UpdateImageUrlDTO" alias="UpdateImageUrlDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.UpdateIntroductionDTO" alias="UpdateIntroductionDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.UpdateNicknameDTO" alias="UpdateNicknameDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.UpdatePasswordDTO" alias="UpdatePasswordDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.MyPageDTO" alias="MyPageDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.DeleteMemberDTO" alias="DeleteMemberDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.LoginDTO" alias="LoginDTO" />
+        <typeAlias type="org.desk8432.project.dto.member.LoginMemberDTO" alias="LoginMemberDTO" />
+        <typeAlias type="org.desk8432.project.dto.schedule.ScheduleDTO" alias="ScheduleDTO" />
+        <typeAlias type="org.desk8432.project.dto.group.GroupDTO" alias="GroupDTO" />
 <!--        <typeAlias type="com.desk8432.project.dto.schedule.CreateScheduleDTO" alias="CreateScheduleDTO" />-->
     </typeAliases>
     <environments default="development">
@@ -42,5 +43,6 @@
         <mapper resource="file.xml" />
         <mapper resource="schedule.xml" />
         <mapper resource="group.xml" />
+        <mapper resource="group02.xml" />
     </mappers>
 </configuration>
