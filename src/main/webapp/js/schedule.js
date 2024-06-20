@@ -22,7 +22,11 @@ let followGroupIdArray = [];
 let inputGroupIdArray = [];
 let hiddenGroupIdArray = [];
 
-let activePopover = null;
+let activePopoverEvent = null;
+
+function onClickPopover(event) {
+    event.stopPropagation();
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
@@ -39,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
         dayMaxEvents: true,
         editable: false,
         selectable: true,
-
         events: {
             url: '/schedule/list',
             method: 'POST',
@@ -92,13 +95,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     if ($(this).hasClass('hidden')) {
                         $(this).removeClass('hidden');
                         $(this).css({
-                            'background-color' : colorArray[colorIndex]
+                            'background-color': colorArray[colorIndex]
                         });
                         hiddenGroupIdArray.splice(hiddenGroupIdArray.indexOf(id), 1);
                     } else {
                         $(this).addClass('hidden');
                         $(this).css({
-                            'background-color' : '#D3D3D3'
+                            'background-color': '#D3D3D3'
                         });
 
                         hiddenGroupIdArray.push(id);
@@ -124,15 +127,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     editor: eventData.editor
                 },
                 backgroundColor: colorArray[colorIndex],
-                textColor: textColorArray[colorIndex]
+                textColor: textColorArray[colorIndex],
             };
         },
         // trigger when group toggle
         eventDidMount: function (info) {
+            const {el} = info;
+
             if (hiddenGroupIdArray.includes(info.event.extendedProps.groupId)) {
-                $(info.el).hide();
+                $(el).hide();
             } else {
-                $(info.el).show();
+                $(el).show();
             }
         },
         select: function (selectionInfo) {
@@ -154,7 +159,33 @@ document.addEventListener('DOMContentLoaded', function () {
         eventClick: function (info) {
             if (username !== info.event.extendedProps.editor) return;
 
-            const { el } = info;
+            info.jsEvent.stopPropagation();
+
+            const {el} = info;
+            const popover = document.querySelector("#event-popover");
+            const rect = el.getBoundingClientRect()
+
+            if(el === activePopoverEvent) {
+                popover.classList.toggle("show");
+                return;
+            }
+
+            popover.classList.add("show");
+
+            activePopoverEvent = el;
+
+            const scroll = document.body.scrollTop;
+            popover.style.top = scroll + rect.top + 24 + "px";
+            popover.style.left = rect.left + "px";
+
+            const data = {
+                title : info.event.title,
+                content : info.event.extendedProps.content
+            };
+
+            console.log(data);
+
+            setPopOver(data);
 
             // divInputGroup.hide();
             //
@@ -306,4 +337,16 @@ function setModal(title, buttonText, eventId, groupId, start, end, eventTitle, e
     inputEndDate.val(end);
     inputTitle.val(eventTitle);
     inputContent.val(eventContent);
+}
+
+document.addEventListener("click", () => {
+   document.querySelector("#event-popover").classList.remove("show");
+});
+
+document.querySelector("#event-popover").addEventListener("click", onClickPopover);
+
+function setPopOver(data) {
+    const {title, content} = data;
+    document.querySelector("#event-title").value = title;
+    document.querySelector("#event-content").value = content;
 }

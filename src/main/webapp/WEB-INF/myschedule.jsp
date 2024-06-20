@@ -16,6 +16,30 @@
     <title>내 스케줄</title>
 </head>
 <body>
+    <div id="event-popover">
+        <ul class="popover-list">
+            <li class="event-title">
+                <input type="text" id="event-title"/>
+            </li>
+            <li class="event-term">
+                <label>
+                    시작일
+                    <input type="date" id="event-start-date"/>
+                </label>
+                <label>
+                    종료일
+                    <input type="date" id="event-end-date"/>
+                </label>
+            </li>
+            <li class="event-content">
+                <label>
+                    내용
+                    <textarea id="event-content" rows="3"></textarea>
+                </label>
+            </li>
+        </ul>
+    </div>
+    <div class="popover edit"></div>
     <jsp:include page="../components/header.jsp"/>
     <main class="myschedule">
         <div class="myschedule-container">
