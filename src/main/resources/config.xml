@@ -19,6 +19,8 @@
         <typeAlias type="com.desk8432.project.dto.member.LoginMemberDTO" alias="LoginMemberDTO" />
         <typeAlias type="com.desk8432.project.dto.schedule.ScheduleDTO" alias="ScheduleDTO" />
         <typeAlias type="com.desk8432.project.dto.group.GroupDTO" alias="GroupDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.SearchGroupRequestDTO" alias="SearchGroupRequestDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.SearchGroupDTO" alias="SearchGroupDTO" />
 <!--        <typeAlias type="com.desk8432.project.dto.schedule.CreateScheduleDTO" alias="CreateScheduleDTO" />-->
     </typeAliases>
     <environments default="development">
