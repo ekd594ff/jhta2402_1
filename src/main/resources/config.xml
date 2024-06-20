@@ -20,6 +20,9 @@
         <typeAlias type="com.desk8432.project.dto.member.LoginMemberDTO" alias="LoginMemberDTO" />
         <typeAlias type="com.desk8432.project.dto.schedule.ScheduleDTO" alias="ScheduleDTO" />
         <typeAlias type="com.desk8432.project.dto.group.GroupDTO" alias="GroupDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.SearchGroupRequestDTO" alias="SearchGroupRequestDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.SearchGroupDTO" alias="SearchGroupDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.FollowRequestDTO" alias="FollowRequestDTO" />
 <!--        <typeAlias type="com.desk8432.project.dto.schedule.CreateScheduleDTO" alias="CreateScheduleDTO" />-->
     </typeAliases>
     <environments default="development">
@@ -43,6 +46,10 @@
         <mapper resource="file.xml" />
         <mapper resource="schedule.xml" />
         <mapper resource="group.xml" />
+<<<<<<< HEAD
         <mapper resource="group02.xml" />
+=======
+        <mapper resource="follow.xml" />
+>>>>>>> develop
     </mappers>
 </configuration>
