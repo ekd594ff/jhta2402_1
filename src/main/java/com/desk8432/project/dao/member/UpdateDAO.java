@@ -1,7 +1,6 @@
 package com.desk8432.project.dao.member;
 
 import com.desk8432.project.dto.member.*;
-import org.desk8432.project.dto.member.*;
 import com.desk8432.project.mybatis.MybatisConnectionFactory;
 import com.desk8432.project.util.Regex;
 import org.apache.ibatis.session.SqlSession;
