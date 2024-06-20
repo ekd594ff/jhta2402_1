@@ -1,4 +1,4 @@
-package com.desk8432.project.controller.schedule;
+package com.desk8432.project.controller.group;
 
 import com.desk8432.project.dao.group.InsertGroupDAO;
 import com.desk8432.project.dto.group.InsertGroupDTO;
@@ -15,11 +15,11 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/creategroup")
+@WebServlet("/group/crud")
 public class CreateGroup extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/creategroup.jsp")
+        request.getRequestDispatcher("/WEB-INF/groupform.jsp")
                 .forward(request,response);
     }
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

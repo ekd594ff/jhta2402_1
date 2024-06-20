@@ -46,10 +46,7 @@
         <mapper resource="file.xml" />
         <mapper resource="schedule.xml" />
         <mapper resource="group.xml" />
-<<<<<<< HEAD
         <mapper resource="group02.xml" />
-=======
         <mapper resource="follow.xml" />
->>>>>>> develop
     </mappers>
 </configuration>

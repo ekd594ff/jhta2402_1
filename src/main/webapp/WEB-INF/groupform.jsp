@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <form action="/creategroup" method="post">
+    <form action="/group/crud" method="post">
         <div class="form-group">
             <label for="name">Name : </label>
             <input type="text" class="form-control" placeholder="Enter name" id="name">
@@ -46,7 +46,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/creategroup",
+                url: "/group/crud",
                 data: JSON.stringify(data),
                 contentType: "aplication/json; charset=utf-8",
                 dataType: "json"
