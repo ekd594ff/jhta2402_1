@@ -14,7 +14,7 @@ public class SearchGroupDTO {
     private int id;
     private String creator;
     private String name;
-    private String imageUrl;
+    private String image_url;
     private String content;
     private Date created_at;
     private Date updated_at;
