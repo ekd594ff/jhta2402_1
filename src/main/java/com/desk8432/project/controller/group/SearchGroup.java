@@ -39,6 +39,7 @@ public class SearchGroup extends HttpServlet {
 
         if (searchGroupResponseDTO.getResult() != null) {
             resp.setStatus(HttpServletResponse.SC_OK);
+            System.out.println(gson.toJson(searchGroupResponseDTO));
             resp.getWriter().write(gson.toJson(searchGroupResponseDTO));
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

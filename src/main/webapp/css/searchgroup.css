@@ -61,3 +61,7 @@
     position: relative;
     overflow: hidden;
 }
+
+.groupSearch-container ul.list{
+    width: 640px;
+}
