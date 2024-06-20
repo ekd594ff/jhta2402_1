@@ -3,7 +3,7 @@
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
     <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
-    <title>Title</title>
+    <title>그룹 생성</title>
 </head>
 <body>
 <jsp:include page="../components/header.jsp"/>
@@ -11,7 +11,7 @@
     <form class="mypage-form">
         <div class="profile-img-container">
             <div class="profile-img-wrapper">
-                <svg focusable="false"
+                   <svg focusable="false"
                      class="default"
                      aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon" fill="#fff">
                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
@@ -34,27 +34,11 @@
                     <button class="profile-img-submit submit">프로필 변경</button>
                 </div>
             </li>
-            <li class="item groupname">
+            <li class="item nickname">
                 <div class="top">
                     <label>
-                        그룹 이름
+                        닉네임
                         <input type="text"/>
-                    </label>
-                    <button class="edit-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
-                            <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="bottom">
-                    <label class="message">　</label>
-                </div>
-            </li>
-            <li class="item editor">
-                <div class="top">
-                    <label>
-                        에디터
-                        <input type="text" class="text"/>
                     </label>
                     <button class="edit-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
@@ -69,7 +53,7 @@
             <li class="item introduction">
                 <div class="top">
                     <label>
-                        그룹소개
+                        자기소개
                         <textarea class="introduction" rows="4"></textarea>
                     </label>
                 </div>
@@ -78,54 +62,15 @@
                 </div>
             </li>
         </ul>
+        <div class="group-submit">
+            <button class="submit">등록</button>
+        </div>
     </form>
 </div>
 <jsp:include page="../components/footer.jsp"/>
 <script src="${pageContext.request.contextPath}/js/util.js"></script>
 <script src="${pageContext.request.contextPath}/js/common.js"></script>
 <script>
-    function genOnChangeInput(className) {
-        const item = document.querySelector('.item.' + className);
-        const inputMsgLabel = item.querySelector('label.message');
-        const msg = genMsg(className);
-        const regexChecker = debouncer(async (value) => {
-            const valid = regexCheck(className, value);
-            if (valid) {
-                //This string is valid for the regular expression only, not for duplication
-                const data = await duplicateCheck(className, value, inputMsgLabel);
-                if (!data) {
-                    item.classList.add("valid");
-                    item.classList.remove("invalid");
-                    inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
-                    return;
-                }
-                if (!data.isDuplication) {
-                    item.classList.remove("invalid");
-                    item.classList.add("valid");
-                    inputMsgLabel.textContent = msg["valid"];
-                } else {
-                    item.classList.remove("valid");
-                    item.classList.add("invalid");
-                    inputMsgLabel.textContent = "중복된 " + enToKr(className) + "입니다";
-                }
-            } else {
-                item.classList.remove("valid");
-                item.classList.add("invalid");
-                inputMsgLabel.textContent = msg[valid ? "valid" : "invalid"];
-            }
-
-        }, 400);
-        return (event) => {
-            const value = event.target.value;
-            if (value && value.trim()) {
-                regexChecker(value);
-            } else {
-                inputMsgLabel.textContent = "ㅤ";
-                item.classList.remove("invalid");
-                item.classList.remove("valid");
-            }
-        }
-    }
 
     function onClickUpdate(className) {
         return (event) => {
@@ -148,11 +93,24 @@
         }
     }
 
-    document.querySelector(".item.nickname input").addEventListener("keyup",genOnChangeInput("nickname"));
-    document.querySelector(".item.email input").addEventListener("keyup",genOnChangeInput("email"));
+    // document.querySelector(".item.nickname input").addEventListener("keyup", {});
 
     document.querySelector(".item.nickname .edit-btn").addEventListener("click",onClickUpdate("nickname"));
-    document.querySelector(".item.email .edit-btn").addEventListener("click",onClickUpdate("email"));
+
+    document.querySelector(".item.introduction button.submit").addEventListener("click", (event) => {
+        const textarea = document.querySelector(".item.introduction textarea.introduction");
+        const value = textarea.value;
+        fetch("/update/introduction", {
+            method : "POST",
+            body : JSON.stringify({
+                introduction : value,
+            })
+        })
+            .then(result => result.json())
+            .then(data => {
+                window.alert("변경되었습니다");
+            });
+    });
 
     document.querySelector(".item.introduction button.submit").addEventListener("click", (event) => {
         const textarea = document.querySelector(".item.introduction textarea.introduction");
@@ -185,31 +143,30 @@
     }
 
     function setProfileValueDefault(data) {
-        const {nickname, email, introduction} = data;
         const nicknameInputEl = document.querySelector(".profile-info-list .item.nickname input");
         nicknameInputEl.value = nickname;
-        const emailInputEl = document.querySelector(".profile-info-list .item.email input");
-        emailInputEl.value = email;
         const introductionTextareaEl = document.querySelector(".profile-info-list .item.introduction textarea.introduction");
         introductionTextareaEl.textContent = introduction;
     }
 
-    fetch("/memberinfo", {
-        method: "GET"
-    })
-        .then((result) => result.json())
-        .then((resp) => {
-            const {data} = resp;
-            if (data) {
-                updateHeaderProfileImage(data);
-                storeProfileImgSrc(data);
-                setProfileImageFormSrcDefault();
-                setHeaderDropdownMenu(true);
-                setProfileValueDefault(data);
-            } else {
-                setHeaderDropdownMenu(false);
-            }
-        });
+    if (window.location.href === 'group/update') {
+        fetch("/memberinfo", {
+            method: "GET"
+        })
+            .then((result) => result.json())
+            .then((resp) => {
+                const {data} = resp;
+                if (data) {
+                    updateHeaderProfileImage(data);
+                    storeProfileImgSrc(data);
+                    setProfileImageFormSrcDefault();
+                    setHeaderDropdownMenu(true);
+                    setProfileValueDefault(data);
+                } else {
+                    setHeaderDropdownMenu(false);
+                }
+            });
+    }
 
     const mypageForm = document.querySelector(".mypage-form");
 
@@ -238,6 +195,33 @@
     }
 
     document.querySelector(".item .profile-img-submit").addEventListener("click", (event) => {
+        const content = document.querySelector(".item.introduction textarea.introduction").value;
+
+        const formData = new FormData();
+        const file = document.querySelector('input#profile-img-input').files[0];
+        if (!file) {
+            window.alert("파일을 업로드 해 주세요");
+            return;
+        }
+
+        formData.append("content", content);
+        formData.append("image", file);
+        fetch("/update/imageUrl", {
+            method: "POST",
+            body: formData,
+        }).then((result) => {
+            if (result.ok) {
+                window.alert("프로필 사진이 변경되었습니다");
+            }
+            return result.json();
+        });
+    });
+
+    document.querySelector(".mypage-form .group-submit button").addEventListener("click", (event) => {
+        const nickname = document.querySelector(".nickname.top label input").value;
+        console.log('nickname' + nickname);
+        return;
+
         const formData = new FormData();
         const file = document.querySelector('input#profile-img-input').files[0];
         if (!file) {
@@ -245,7 +229,7 @@
             return;
         }
         formData.append("image", file);
-        fetch("/update/imageUrl", {
+        fetch("/group/crud", {
             method: "POST",
             body: formData,
         }).then((result) => {
@@ -258,3 +242,4 @@
 </script>
 </body>
 </html>
+
