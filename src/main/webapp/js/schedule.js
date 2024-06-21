@@ -8,6 +8,7 @@ const inputContent = $('#input-content');
 const inputGroup = $('#input-group');
 
 const buttonEventAdd = $('#button-event-add');
+const buttonEventDelete = $('#button-event-delete');
 const divGroup = $('#div-group');
 const divInputGroup = $('#div-input-group');
 
@@ -63,23 +64,23 @@ document.addEventListener('DOMContentLoaded', function () {
             let colorIndex;
             let editable = eventData.editor === username;
 
+            let groupname;
+
+            if (id === 0) {
+                groupname = '개인 일정';
+            } else {
+                let followIndex = followGroupInfo.findIndex(function (group) {
+                    return group.id === id;
+                });
+                groupname = followGroupInfo[followIndex].groupname;
+            }
+
             if (editable && !inputGroupIdArray.includes(id)) {
                 inputGroupIdArray.push(id);
-                inputGroup.append("<option value=\"" + id + "\">" + id + "</option>");
+                inputGroup.append("<option value=\"" + id + "\">" + groupname + "</option>");
             }
 
             if (!followGroupIdArray.includes(id)) {
-                let groupname;
-
-                if (id === 0) {
-                    groupname = '개인 일정';
-                } else {
-                    let followIndex = followGroupInfo.findIndex(function (group) {
-                        return group.id === id;
-                    });
-                    groupname = followGroupInfo[followIndex].groupname;
-                }
-
                 let colorIndex = (followGroupIdArray.length) % colorArray.length;
                 followGroupIdArray.push(id);
 
@@ -144,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         select: function (selectionInfo) {
             divInputGroup.show();
+            buttonEventDelete.hide();
 
             setModal(
                 '일정 추가',
@@ -162,6 +164,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (username !== info.event.extendedProps.editor) return;
 
             info.jsEvent.stopPropagation();
+
+            // divInputGroup.hide();
+            // buttonEventDelete.show();
 
             const {el} = info;
             const popover = document.querySelector("#event-popover");
@@ -253,7 +258,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calendarInstance = calendar;
 
+    //
     buttonEventAdd.on('click', function () {
+        if (checkIsEmpty(inputTitle.val(), inputContent.val(), inputGroup.val(), inputStartDate.val())) {
+            return;
+        }
 
         if (modalTitle.text() === '일정 추가') {
             const event = {
@@ -327,6 +336,34 @@ document.addEventListener('DOMContentLoaded', function () {
         modalEventAdd.modal('toggle');
     });
 
+    buttonEventDelete.on('click', function() {
+        let eventID = inputEventId.val();
+        if (confirm("삭제하시겠습니까?")) {
+            fetch('/schedule/delete?id=' + eventID, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    console.log(response);
+                    if (!response.ok) {
+                        throw response;
+                    }
+                    return response.json();
+                })
+                .then(res => {
+                    calendar.getEventById(eventID).remove();
+                })
+                .catch(error => {
+                    error.json().then(err => {
+                        alert('문제가 발생했습니다. 다시 시도해 주세요.');
+                    });
+                });
+        }
+        modalEventAdd.modal('toggle');
+    });
+
 });
 
 function stringToDate(dateStr) {
@@ -350,8 +387,9 @@ function setModal(title, buttonText, eventId, groupId, start, end, eventTitle, e
 }
 
 document.addEventListener("click", () => {
-   document.querySelector("#event-popover").classList.remove("show");
+    document.querySelector("#event-popover").classList.remove("show");
 });
+
 
 document.querySelector("#event-popover").addEventListener("click", onClickPopover);
 
@@ -390,12 +428,12 @@ function onClickEventEditBtn(event) {
             .then(data => {
                 calendarInstance?.removeAllEvents();
                 calendarInstance?.refetchEvents();
-                alert('수정되었습니다.');
+                alert('수정되었습니다');
                 const popover = document.querySelector("#event-popover");
                 popover.classList.toggle("show");
             })
             .catch(error => {
-                alert('문제가 발생했습니다. 다시 시도해 주세요.');
+                alert('문제가 발생했습니다. 다시 시도해 주세요');
             });
     }
 }
@@ -404,6 +442,37 @@ function onClickEventDeleteBtn(event) {
     const choice = window.confirm("일정을 삭제하시겠습니까?");
     if(choice) {
         const eventId = document.querySelector("#event-id").value;
-        console.log(eventId);
+        fetch(`/schedule/delete?id=${eventId}`, {
+            method : "DELETE"
+        }).then((result) => {
+            if(!result.ok) {
+                throw new Error("");
+            }
+            return result.json();
+        }).then(data => {
+            alert("삭제되었습니다");
+            const popover = document.querySelector("#event-popover");
+            calendarInstance?.removeAllEvents();
+            calendarInstance?.refetchEvents();
+            popover.classList.toggle("show");
+        }).catch(err => {
+            alert('문제가 발생했습니다. 다시 시도해 주세요.');
+        });
     }
+}
+
+function checkIsEmpty(title, content, groupId, start) {
+    if (!title) {
+        alert('제목을 입력해주세요.');
+    } else if (!content) {
+        alert('내용을 입력해주세요.');
+    } else if (!groupId) {
+        alert('그룹을 선택해주세요.');
+    } else if (!start) {
+        alert('시작날짜를 입력해주세요.');
+    } else {
+        return false;
+    }
+
+    return true;
 }

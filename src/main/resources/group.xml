@@ -2,10 +2,56 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.desk8432.project">
+<mapper namespace="com.desk8432.project">
     <select id="getGroupList" resultType="GroupDTO" parameterType="String">
         select jg.id,"name" as groupname ,image_url from jhta01_group jg
         inner join jhta01_follow jf on jf.group_id = jg.id
         where jf.username = #{username}
+    </select>
+    <select id="getSearchGroupList" resultType="SearchGroupDTO" parameterType="SearchGroupRequestDTO">
+        select * from jhta01_group where
+        <choose>
+            <when test="searchFilter == 'all'">
+                creator like '%'||#{searchValue}||'%' or
+                name like '%'||#{searchValue}||'%' or
+                content like '%'||#{searchValue}||'%'
+            </when>
+            <when test="searchFilter == 'creator'">
+                creator like '%'||#{searchValue}||'%'
+            </when>
+            <when test="searchFilter == 'name'">
+                name like '%'||#{searchValue}||'%'
+            </when>
+            <when test="searchFilter == 'content'">
+                content like '%'||#{searchValue}||'%'
+            </when>
+            <otherwise>
+                0 == 1
+            </otherwise>
+        </choose>
+        order by updated_at desc
+        offset 10 * (#{page} - 1) limit 10
+    </select>
+    <select id="getSearchTotal" resultType="int" parameterType="SearchGroupRequestDTO">
+        select count(*) as count from jhta01_group where
+        <choose>
+            <when test="searchFilter == 'all'">
+                creator like '%'||#{searchValue}||'%' or
+                name like '%'||#{searchValue}||'%' or
+                content like '%'||#{searchValue}||'%'
+            </when>
+            <when test="searchFilter == 'creator'">
+                creator like '%'||#{searchValue}||'%'
+            </when>
+            <when test="searchFilter == 'name'">
+                name like '%'||#{searchValue}||'%'
+            </when>
+            <when test="searchFilter == 'content'">
+                content like '%'||#{searchValue}||'%'
+            </when>
+            <otherwise>
+                0 == 1
+            </otherwise>
+        </choose>
     </select>
 </mapper>
