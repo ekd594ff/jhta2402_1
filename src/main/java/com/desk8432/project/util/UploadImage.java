@@ -22,7 +22,7 @@ public class UploadImage {
                 DateTimeFormatter.ofPattern("dd")
         );
 
-        String imgFolder = File.separator+"image" +File.separator+ formatMonth + File.separator + formatDay;
+        String imgFolder = "/"+"image" +"/"+ formatMonth + "/" + formatDay;
 
 
         String imgFolderPath = servletConfig.getServletContext().getRealPath(imgFolder);
@@ -36,7 +36,7 @@ public class UploadImage {
         String extension = fileName.substring(fileName.lastIndexOf("."));
 
         String uploadUrl = username + "_" + formatNow + extension;
-        String returnUrl = imgFolder + File.separator + username + "_" + formatNow + extension;
+        String returnUrl = imgFolder + "/" + username + "_" + formatNow + extension;
 //        String filename = username + "_" + formatNow + extension;
 
         UpdateImageUrlDTO updateImageUrlDTO
@@ -46,6 +46,8 @@ public class UploadImage {
                 .location(imgFolder)
                 .imageUrl(returnUrl)
                 .fileName(uploadUrl)
+                .imgFolderPath(servletConfig.getServletContext().getRealPath(imgFolder))
+                .uploadUrl(imgFolderPath + "/" + username + "_" + formatNow + extension)
                 .build();
         return updateImageUrlDTO;
     }
