@@ -27,48 +27,79 @@
 <%--        </div>--%>
 <%--        <button class="btn btn-primary">follow</button>--%>
 <%--    </div>--%>
-    <ul class="list"></ul>
+    <ul class="list" id="content"></ul>
 </div>
 <jsp:include page="../components/footer.jsp"/>
 </body>
 <script src="${pageContext.request.contextPath}/js/components/groupitem.js"></script>
 <script>
-    function updateSearchGroupList(data) {
-        const {profileImgUrl} = data;
-        localStorage.setItem("profile-img-url", profileImgUrl);
-    }
+    let debounceTimer;
+    let isListOver = false;
     let searchParams = new URLSearchParams(window.location.search);
     let searchFilter = searchParams.get("searchFilter");
     let searchValue = searchParams.get("searchValue");
-    let page = searchParams.get("page");
+    let isLoading = false;
+    let total;
     let inputdata = {
         "searchFilter" : searchFilter,
         "searchValue" : searchValue,
-        "page" : page
+        "page" : 1
     }
-    fetch("/group/search", {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(inputdata)
-    })
-        .then((result) => {
-            return result.json();
+    document.addEventListener('DOMContentLoaded',()=> {
+        fetchData(inputdata);
+    });
+    function fetchData(inputdata){ //데이터 값 부르고 포스트 추가
+        if(isListOver) {
+            return;
+        }
+        fetch("/group/search", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputdata)
         })
-        .then((resp) => {
-            const {result} = resp;
-            console.log(result);
-            if (Array.isArray(result)){
-                const list = document.querySelector(".list");
-                for(const data of result) {
-
-                    const groupitem = groupItem(data);
-                    list.appendChild(groupitem);
+            .then((response) => {
+                return response.json();
+            })
+            .then((resp) => {
+                const {result} = resp;
+                total = resp;
+                console.log(total);
+                console.log(result);
+                if (Array.isArray(result)){
+                    console.log(result.length)
+                    if (result.length === 0) {
+                        isListOver = true;
+                    }
+                    const list = document.querySelector(".list");
+                    for(const data of result) {
+                        const groupitem = groupItem(data);
+                        list.appendChild(groupitem);
+                    }
                 }
-            }
-        });
+            });
+    }
+
+    window.addEventListener('scroll', debounce(handleScroll, 200));
+    async function handleScroll(){
+        const loading = document.getElementById('loading');
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && !isLoading) {
+            isLoading = true;
+            inputdata.page++;
+            await fetchData(inputdata);
+            isLoading = false;
+        }
+    }
+
+    function debounce(func, wait) {
+        return function(...args) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
     function setProfileValueDefault(data) {
         const {creator, name, imageUrl, content, created_at} = data;
         const creatorEl = document.querySelector(".group-info .item.group-editor");

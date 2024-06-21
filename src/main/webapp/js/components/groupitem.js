@@ -12,10 +12,15 @@ function groupItem(group) {
             </div>
         </div>
         <div class="right">
-            <h2>${group.name}</h2>
-            <div>${group.creator}</div>
-            <div>${group.created_at}</div>
-            <div>${group.content}</div>
+            <div class="info">
+                <h2>${group.name}</h2>
+                <div>${group.creator}</div>
+                <div>${group.created_at}</div>
+                <div>${group.content}</div>
+            </div>
+            <div class="button">
+                FOLLOW
+            </div>
         </div>
     `;
     return item;
