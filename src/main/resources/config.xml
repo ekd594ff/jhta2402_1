@@ -8,6 +8,7 @@
         <typeAlias type="com.desk8432.project.dto.member.MemberDTO" alias="MemberDTO" />
         <typeAlias type="com.desk8432.project.dto.member.DuplicateDTO" alias="DuplicateDTO" />
         <typeAlias type="com.desk8432.project.dto.member.InsertDTO" alias="InsertDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.InsertGroupDTO" alias="InsertGroupDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateEmailDTO" alias="UpdateEmailDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateImageUrlDTO" alias="UpdateImageUrlDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateIntroductionDTO" alias="UpdateIntroductionDTO" />
@@ -45,6 +46,7 @@
         <mapper resource="file.xml" />
         <mapper resource="schedule.xml" />
         <mapper resource="group.xml" />
+        <mapper resource="group02.xml" />
         <mapper resource="follow.xml" />
     </mappers>
 </configuration>

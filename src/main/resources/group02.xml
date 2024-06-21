@@ -3,16 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.desk8432.project">
-    <insert id="insertMember" parameterType="InsertDTO">
-        INSERT INTO JHTA01_MEMBER values(
-        nextval('MEMBER_SEQ'),
-        #{username},
-        #{nickname},
-        #{email},
-        #{password},
+    <insert id="insertGroup" parameterType="InsertGroupDTO">
+        INSERT INTO JHTA01_GROUP values(
+        nextval('GROUP_SEQ'),
+        #{creater},
+        #{name},
         '',
-        #{introduction},
-        'N',
+        #{content},
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
         )

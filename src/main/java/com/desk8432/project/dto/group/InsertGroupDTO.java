@@ -2,20 +2,19 @@ package com.desk8432.project.dto.group;
 
 import lombok.*;
 
-import java.util.Date;
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SearchGroupDTO {
-
-    private int id;
-    private String creator;
+public class InsertGroupDTO {
     private String name;
+    private String creator;
     private String image_url;
     private String content;
-    private Date created_at;
-    private Date updated_at;
+    private String created_at;
+    private String updated_at;
+
+
 }
