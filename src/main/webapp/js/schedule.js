@@ -14,8 +14,8 @@ const divInputGroup = $('#div-input-group');
 
 let username;
 
-const colorArray = ['yellow', 'blue', 'green', 'purple', 'orange', 'red', 'skyblue', 'gray'];
-const textColorArray = ['black', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
+const colorArray = ['#1a8fe3', 'blue', 'green', 'purple', 'orange', 'red', 'skyblue', 'gray'];
+const textColorArray = ['#ffffff', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
 
 let followGroupInfo = [];
 let followGroupIdArray = [];
@@ -23,24 +23,29 @@ let followGroupIdArray = [];
 let inputGroupIdArray = [];
 let hiddenGroupIdArray = [];
 
+let activePopoverEvent = null;
+
+let calendarInstance = null;
+
+function onClickPopover(event) {
+    event.stopPropagation();
+}
 
 document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
+    const calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         themeSystem: 'bootstrap5',
-        locale: 'ko',
+        locale: 'en',
         headerToolbar: {
-            left: 'today',
-            center: 'title',
-            right: 'prev,next',
+            left: 'title,prev,next',
+            center: '',
+            right: '',
         },
-
         dayMaxEvents: true,
         editable: false,
         selectable: true,
-
         events: {
             url: '/schedule/list',
             method: 'POST',
@@ -93,14 +98,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     if ($(this).hasClass('hidden')) {
                         $(this).removeClass('hidden');
                         $(this).css({
-                            'background-color' : colorArray[colorIndex]
+                            'background-color': colorArray[colorIndex]
                         });
-
                         hiddenGroupIdArray.splice(hiddenGroupIdArray.indexOf(id), 1);
                     } else {
                         $(this).addClass('hidden');
                         $(this).css({
-                            'background-color' : '#D3D3D3'
+                            'background-color': '#D3D3D3'
                         });
 
                         hiddenGroupIdArray.push(id);
@@ -126,15 +130,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     editor: eventData.editor
                 },
                 backgroundColor: colorArray[colorIndex],
-                textColor: textColorArray[colorIndex]
+                textColor: textColorArray[colorIndex],
             };
         },
         // trigger when group toggle
         eventDidMount: function (info) {
+            const {el} = info;
+
             if (hiddenGroupIdArray.includes(info.event.extendedProps.groupId)) {
-                $(info.el).hide();
+                $(el).hide();
             } else {
-                $(info.el).show();
+                $(el).show();
             }
         },
         select: function (selectionInfo) {
@@ -157,21 +163,58 @@ document.addEventListener('DOMContentLoaded', function () {
         eventClick: function (info) {
             if (username !== info.event.extendedProps.editor) return;
 
-            divInputGroup.hide();
-            buttonEventDelete.show();
+            info.jsEvent.stopPropagation();
 
-            setModal(
-                '일정 변경',
-                '변경',
-                info.event.id,
-                info.event.extendedProps.groupId,
-                stringToDate(info.event.start),
-                stringToDate(info.event.end),
-                info.event.title,
-                info.event.extendedProps.content
-            );
+            // divInputGroup.hide();
+            // buttonEventDelete.show();
 
-            modalEventAdd.modal('toggle');
+            const {el} = info;
+            const popover = document.querySelector("#event-popover");
+            const rect = el.getBoundingClientRect()
+
+            if(el === activePopoverEvent) {
+                popover.classList.toggle("show");
+                return;
+            }
+
+            popover.classList.add("show");
+
+            activePopoverEvent = el;
+
+            const scroll = document.body.scrollTop;
+
+            const popoverWidth = popover.getBoundingClientRect().width;
+
+
+            popover.style.top = scroll + rect.top + 24 + "px";
+            // when popover over window, optimize popover x position
+            popover.style.left
+                = (rect.left + popoverWidth > window.innerWidth ? window.innerWidth - popoverWidth - 40 : rect.left) + "px";
+
+            const data = {
+                title : info.event.title,
+                content : info.event.extendedProps.content,
+                startDate: stringToDate(info.event.start),
+                endDate : stringToDate(info.event.end),
+                id: info.event.id
+            };
+
+            setPopOver(data);
+
+            // divInputGroup.hide();
+            //
+            // setModal(
+            //     '일정 변경',
+            //     '변경',
+            //     info.event.id,
+            //     info.event.extendedProps.groupId,
+            //     stringToDate(info.event.start),
+            //     stringToDate(info.event.end),
+            //     info.event.title,
+            //     info.event.extendedProps.content
+            // );
+            //
+            // modalEventAdd.modal('toggle');
         },
 
         eventChange: function (info) {
@@ -213,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calendar.render();
 
+    calendarInstance = calendar;
 
     //
     buttonEventAdd.on('click', function () {
@@ -317,7 +361,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 });
         }
-
         modalEventAdd.modal('toggle');
     });
 
@@ -341,6 +384,81 @@ function setModal(title, buttonText, eventId, groupId, start, end, eventTitle, e
     inputEndDate.val(end);
     inputTitle.val(eventTitle);
     inputContent.val(eventContent);
+}
+
+document.addEventListener("click", () => {
+    document.querySelector("#event-popover").classList.remove("show");
+});
+
+
+document.querySelector("#event-popover").addEventListener("click", onClickPopover);
+
+function setPopOver(data) {
+    const {title, content, startDate, endDate, id} = data;
+    document.querySelector("#event-title").value = title;
+    document.querySelector("#event-content").value = content;
+    document.querySelector("#event-start-date").value = startDate;
+    document.querySelector("#event-end-date").value = endDate;
+    document.querySelector("#event-id").value = id;
+}
+
+function onClickEventEditBtn(event) {
+    const choice = window.confirm("일정을 변경하시겠습니까?");
+    if(choice) {
+        const editedEvent = {
+            title : document.querySelector("#event-title").value,
+            content : document.querySelector("#event-content").value,
+            startDate : document.querySelector("#event-start-date").value,
+            endDate : document.querySelector("#event-end-date").value,
+            id : document.querySelector("#event-id").value
+        };
+        fetch('/schedule/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(editedEvent)
+        })
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                }
+                throw new Error("");
+            })
+            .then(data => {
+                calendarInstance?.removeAllEvents();
+                calendarInstance?.refetchEvents();
+                alert('수정되었습니다');
+                const popover = document.querySelector("#event-popover");
+                popover.classList.toggle("show");
+            })
+            .catch(error => {
+                alert('문제가 발생했습니다. 다시 시도해 주세요');
+            });
+    }
+}
+
+function onClickEventDeleteBtn(event) {
+    const choice = window.confirm("일정을 삭제하시겠습니까?");
+    if(choice) {
+        const eventId = document.querySelector("#event-id").value;
+        fetch(`/schedule/delete?id=${eventId}`, {
+            method : "DELETE"
+        }).then((result) => {
+            if(!result.ok) {
+                throw new Error("");
+            }
+            return result.json();
+        }).then(data => {
+            alert("삭제되었습니다");
+            const popover = document.querySelector("#event-popover");
+            calendarInstance?.removeAllEvents();
+            calendarInstance?.refetchEvents();
+            popover.classList.toggle("show");
+        }).catch(err => {
+            alert('문제가 발생했습니다. 다시 시도해 주세요.');
+        });
+    }
 }
 
 function checkIsEmpty(title, content, groupId, start) {
