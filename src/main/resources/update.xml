@@ -38,4 +38,25 @@
         UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
     </update>
+    <update id="updateGroupName" parameterType="GroupDTO">
+        UPDATE JHTA01_GROUP
+        SET
+        name = #{groupname},
+        UPDATED_AT = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+    <update id="updateContent" parameterType="GroupDTO">
+        UPDATE JHTA01_GROUP
+        SET
+        content = #{content},
+        UPDATED_AT = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+    <update id="updateImage" parameterType="GroupDTO">
+        UPDATE JHTA01_GROUP
+        SET
+        image_url = #{imageUrl},
+        UPDATED_AT = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
 </mapper>
