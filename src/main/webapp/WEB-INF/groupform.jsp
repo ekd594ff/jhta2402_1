@@ -17,8 +17,8 @@
             <input type="text" class="form-control" placeholder="Enter name" id="name">
         </div>
         <div class="form-group">
-            <label for="creater">Creater : </label>
-            <input type="text" class="form-control" placeholder="Enter creater" id="creater">
+            <label for="creator">Creator : </label>
+            <input type="text" class="form-control" placeholder="Enter creator" id="creator">
         </div>
         <div class="form-group">
             <label for="content">Content : </label>
@@ -39,7 +39,7 @@
             // alert('user의 save 함수 호출 됨');
             let data = {
                 name: $("#name").val(),
-                creater: $("#creater").val(),
+                creator: $("#creator").val(),
                 content: $("#content").val()
             };
             // console.log(data);

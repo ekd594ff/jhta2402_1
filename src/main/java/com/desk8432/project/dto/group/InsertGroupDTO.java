@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 public class InsertGroupDTO {
     private String name;
-    private String creater;
+    private String creator;
     private String image_url;
     private String content;
     private String created_at;
