@@ -6,13 +6,16 @@
     <insert id="insertGroup" parameterType="InsertGroupDTO">
         INSERT INTO JHTA01_GROUP values(
         nextval('GROUP_SEQ'),
-        #{creater},
+        #{creator},
         #{name},
-        '',
+        #{image_url},
         #{content},
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
         )
     </insert>
+    <select id="getGroupId" resultType="int" parameterType="InsertGroupDTO">
+        select id from jhta01_group where 
+    </select>
 
 </mapper>
