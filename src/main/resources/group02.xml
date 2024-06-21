@@ -8,12 +8,17 @@
         nextval('GROUP_SEQ'),
         #{creator},
         #{name},
-        '',
+        #{image_url},
         #{content},
         CURRENT_TIMESTAMP,
         CURRENT_TIMESTAMP
         )
     </insert>
+  
+    <select id="getGroupId" resultType="int" parameterType="InsertGroupDTO">
+        select id from jhta01_group where 
+    </select>
+
     <delete id="deleteGroup" parameterType="DeleteGroupDTO">
         delete from jhta01_GROUP
         where creator = #{creator} and id = #{groupID}

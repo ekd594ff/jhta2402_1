@@ -17,8 +17,13 @@ public class InsertGroupDAO {
         } else {
             return false;
         }
-
     }
 
+    public int getGroupId(InsertGroupDTO insertgroupDTO) {
+        SqlSession sqlsession = MybatisConnectionFactory.getSqlSession();
+        int groupId = sqlsession.insert("getGroupId", insertgroupDTO);
+        sqlsession.close();
+        return groupId;
+    }
 
 }
