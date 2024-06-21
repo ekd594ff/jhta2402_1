@@ -120,8 +120,8 @@ body *{
 }
 
 #event-popover {
-    width: 300px;
-    height: 250px;
+    width: 250px;
+    height: 280px;
     background-color: #ffffff;
     z-index: 1992;
     position: absolute;
@@ -134,8 +134,9 @@ body *{
 }
 
 #event-popover.show {
-    display: block;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .popover-list {
@@ -144,7 +145,7 @@ body *{
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
 }
 
 .popover-list label {
@@ -195,11 +196,40 @@ body *{
     padding: 4px;
     box-sizing: border-box;
     resize: none;
-    border: 1px solid #dadada;
+    border: 1px solid #a5a5a5;
     border-radius: 5px;
     color: #000000;
 }
 
 .popover-list #event-content:focus {
     outline: none;
+}
+
+.popover-list .popover-btn-group {
+    display: flex;
+    gap: 12px;
+}
+
+.popover-list .popover-btn {
+    flex-grow: 1;
+    padding: 4px 0;
+    border: 0;
+    margin: 0;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.popover-list .popover-btn > svg {
+    fill: #000;
+    width: 18px;
+    height: 18px;
+}
+
+.popover-list .event-id {
+    display: none;
 }

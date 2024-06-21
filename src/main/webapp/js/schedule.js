@@ -24,12 +24,14 @@ let hiddenGroupIdArray = [];
 
 let activePopoverEvent = null;
 
+let calendarInstance = null;
+
 function onClickPopover(event) {
     event.stopPropagation();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
+    const calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
@@ -175,15 +177,22 @@ document.addEventListener('DOMContentLoaded', function () {
             activePopoverEvent = el;
 
             const scroll = document.body.scrollTop;
+
+            const popoverWidth = popover.getBoundingClientRect().width;
+
+
             popover.style.top = scroll + rect.top + 24 + "px";
-            popover.style.left = rect.left + "px";
+            // when popover over window, optimize popover x position
+            popover.style.left
+                = (rect.left + popoverWidth > window.innerWidth ? window.innerWidth - popoverWidth - 40 : rect.left) + "px";
 
             const data = {
                 title : info.event.title,
-                content : info.event.extendedProps.content
+                content : info.event.extendedProps.content,
+                startDate: stringToDate(info.event.start),
+                endDate : stringToDate(info.event.end),
+                id: info.event.id
             };
-
-            console.log(data);
 
             setPopOver(data);
 
@@ -242,6 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calendar.render();
 
+    calendarInstance = calendar;
 
     buttonEventAdd.on('click', function () {
 
@@ -346,7 +356,54 @@ document.addEventListener("click", () => {
 document.querySelector("#event-popover").addEventListener("click", onClickPopover);
 
 function setPopOver(data) {
-    const {title, content} = data;
+    const {title, content, startDate, endDate, id} = data;
     document.querySelector("#event-title").value = title;
     document.querySelector("#event-content").value = content;
+    document.querySelector("#event-start-date").value = startDate;
+    document.querySelector("#event-end-date").value = endDate;
+    document.querySelector("#event-id").value = id;
+}
+
+function onClickEventEditBtn(event) {
+    const choice = window.confirm("일정을 변경하시겠습니까?");
+    if(choice) {
+        const editedEvent = {
+            title : document.querySelector("#event-title").value,
+            content : document.querySelector("#event-content").value,
+            startDate : document.querySelector("#event-start-date").value,
+            endDate : document.querySelector("#event-end-date").value,
+            id : document.querySelector("#event-id").value
+        };
+        fetch('/schedule/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(editedEvent)
+        })
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                }
+                throw new Error("");
+            })
+            .then(data => {
+                calendarInstance?.removeAllEvents();
+                calendarInstance?.refetchEvents();
+                alert('수정되었습니다.');
+                const popover = document.querySelector("#event-popover");
+                popover.classList.toggle("show");
+            })
+            .catch(error => {
+                alert('문제가 발생했습니다. 다시 시도해 주세요.');
+            });
+    }
+}
+
+function onClickEventDeleteBtn(event) {
+    const choice = window.confirm("일정을 삭제하시겠습니까?");
+    if(choice) {
+        const eventId = document.querySelector("#event-id").value;
+        console.log(eventId);
+    }
 }
