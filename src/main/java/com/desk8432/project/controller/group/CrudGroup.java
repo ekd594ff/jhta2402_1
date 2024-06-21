@@ -54,6 +54,7 @@ public class CrudGroup extends HttpServlet {
 
         UpdateImageUrlDTO updateImageUrlDTO = getImageDTO(
                 image, username + "_" + groupName, getServletConfig());
+        System.out.println("updateImageUrlDTO = " + updateImageUrlDTO.toString());
 
         InsertGroupDTO insertGroupDTO = InsertGroupDTO.builder()
                 .image_url(updateImageUrlDTO.getImageUrl())
@@ -61,7 +62,7 @@ public class CrudGroup extends HttpServlet {
                 .content(content)
                 .creator(username)
                 .build();
-
+        System.out.println("insertGroupDTO = " + insertGroupDTO.toString());
         UpdateDAO updateDAO = new UpdateDAO();
         InsertGroupDAO insertGroupDAO = new InsertGroupDAO();
 

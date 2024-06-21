@@ -3,6 +3,7 @@ package com.desk8432.project.controller.group;
 import com.desk8432.project.dao.group.SearchGroupDAO;
 import com.desk8432.project.dto.group.SearchGroupRequestDTO;
 import com.desk8432.project.dto.group.SearchGroupResponseDTO;
+import com.desk8432.project.util.Dispatcher;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -22,13 +23,14 @@ public class SearchGroup extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+//        Dispatcher dispatcher = new Dispatcher();
+//        String jsonSTR = dispatcher.getBody(req);
+//        System.out.println("jsonSTR = " + jsonSTR);
         resp.setContentType("application/json; charset=utf-8");
         Gson gson = new Gson();
-
         SearchGroupRequestDTO searchGroupRequestDTO = gson.fromJson(req.getReader(), SearchGroupRequestDTO.class);
         SearchGroupDAO searchGroupDAO = new SearchGroupDAO();
-
+        System.out.println("searchGroupRequestDTO = " + searchGroupRequestDTO);
         SearchGroupResponseDTO searchGroupResponseDTO =
                 SearchGroupResponseDTO.builder()
                         .total(searchGroupDAO.getSearchTotal(searchGroupRequestDTO))
@@ -37,6 +39,7 @@ public class SearchGroup extends HttpServlet {
 
         if (searchGroupResponseDTO.getResult() != null) {
             resp.setStatus(HttpServletResponse.SC_OK);
+            System.out.println(gson.toJson(searchGroupResponseDTO));
             resp.getWriter().write(gson.toJson(searchGroupResponseDTO));
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
