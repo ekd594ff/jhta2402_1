@@ -6,7 +6,7 @@
     <insert id="insertGroup" parameterType="InsertGroupDTO">
         INSERT INTO JHTA01_GROUP values(
         nextval('GROUP_SEQ'),
-        #{creater},
+        #{creator},
         #{name},
         '',
         #{content},
@@ -14,5 +14,9 @@
         CURRENT_TIMESTAMP
         )
     </insert>
+    <delete id="deleteGroup" parameterType="DeleteGroupDTO">
+        delete from jhta01_GROUP
+        where creator = #{creator} and id = #{groupID}
+    </delete>
 
 </mapper>
