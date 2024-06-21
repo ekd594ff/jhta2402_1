@@ -144,52 +144,52 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         },
         select: function (selectionInfo) {
-            divInputGroup.show();
-            buttonEventDelete.hide();
+            //when select multiple cells
+            const { startStr ,endStr , jsEvent } = selectionInfo;
+            jsEvent.stopImmediatePropagation();
+            const popover = document.querySelector("#event-popover");
 
-            setModal(
-                '일정 추가',
-                '추가',
-                0,
-                null,
-                stringToDate(selectionInfo.start),
-                stringToDate(selectionInfo.end),
-                '',
-                ''
-            );
+            setAddEventPopover({startDate : startStr, endDate : endStr});
 
-            modalEventAdd.modal('toggle');
+            popover.querySelector(".popover-list").style.display = "none";
+            popover.querySelector(".popover-list.add").style.display = "flex";
+
+            setTimeout(() => {
+                popover.classList.add("show");
+                popover.classList.add("tail-center");
+            }, 10);
+
+            const scroll = document.body.scrollTop;
+
+            const startPoint = document.querySelector(`td.fc-day[data-date="${startStr}"]`);
+            const {top, left, width, height} = startPoint.getBoundingClientRect();
+
+            popover.style.top = scroll + top + height/2 + "px";
+            popover.style.left
+                = (left + width/2 > window.innerWidth ? window.innerWidth - width/2 - 40 : left - width/2) + "px";
+
         },
         eventClick: function (info) {
             if (username !== info.event.extendedProps.editor) return;
 
             info.jsEvent.stopPropagation();
 
-            // divInputGroup.hide();
-            // buttonEventDelete.show();
-
             const {el} = info;
             const popover = document.querySelector("#event-popover");
-            const rect = el.getBoundingClientRect()
+            const rect = el.getBoundingClientRect();
+
+            popover.querySelector(".popover-list").style.display = "flex";
+            popover.querySelector(".popover-list.add").style.display = "none";
 
             if(el === activePopoverEvent) {
                 popover.classList.toggle("show");
+                setEventPopoverPosition(popover, rect);
                 return;
             }
 
             popover.classList.add("show");
-
             activePopoverEvent = el;
-
-            const scroll = document.body.scrollTop;
-
-            const popoverWidth = popover.getBoundingClientRect().width;
-
-
-            popover.style.top = scroll + rect.top + 24 + "px";
-            // when popover over window, optimize popover x position
-            popover.style.left
-                = (rect.left + popoverWidth > window.innerWidth ? window.innerWidth - popoverWidth - 40 : rect.left) + "px";
+            setEventPopoverPosition(popover, rect);
 
             const data = {
                 title : info.event.title,
@@ -200,21 +200,6 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             setPopOver(data);
-
-            // divInputGroup.hide();
-            //
-            // setModal(
-            //     '일정 변경',
-            //     '변경',
-            //     info.event.id,
-            //     info.event.extendedProps.groupId,
-            //     stringToDate(info.event.start),
-            //     stringToDate(info.event.end),
-            //     info.event.title,
-            //     info.event.extendedProps.content
-            // );
-            //
-            // modalEventAdd.modal('toggle');
         },
 
         eventChange: function (info) {
@@ -332,7 +317,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 });
         }
-
         modalEventAdd.modal('toggle');
     });
 
@@ -387,7 +371,9 @@ function setModal(title, buttonText, eventId, groupId, start, end, eventTitle, e
 }
 
 document.addEventListener("click", () => {
-    document.querySelector("#event-popover").classList.remove("show");
+    const popoverEl =  document.querySelector("#event-popover");
+    popoverEl.classList.remove("show");
+    popoverEl.classList.remove("tail-center");
 });
 
 
@@ -451,9 +437,9 @@ function onClickEventDeleteBtn(event) {
             return result.json();
         }).then(data => {
             alert("삭제되었습니다");
-            const popover = document.querySelector("#event-popover");
             calendarInstance?.removeAllEvents();
             calendarInstance?.refetchEvents();
+            const popover = document.querySelector("#event-popover");
             popover.classList.toggle("show");
         }).catch(err => {
             alert('문제가 발생했습니다. 다시 시도해 주세요.');
@@ -475,4 +461,64 @@ function checkIsEmpty(title, content, groupId, start) {
     }
 
     return true;
+}
+
+function setEventPopoverPosition(popover, rect) {
+    const scroll = document.body.scrollTop;
+    const popoverWidth = popover.getBoundingClientRect().width;
+    popover.style.top = scroll + rect.top + 28 + "px";
+    // when popover over window, optimize popover x position
+    popover.style.left
+        = (rect.left + popoverWidth > window.innerWidth ? window.innerWidth - popoverWidth - 40 : rect.left) + "px";
+}
+
+function setAddEventPopover(data) {
+    const {startDate, endDate} = data;
+    document.querySelector("#add-event-start-date").value = startDate;
+    document.querySelector("#add-event-end-date").value = endDate;
+}
+
+function onClickCreateEvent(event) {
+    const newEvent = {
+        groupID: 0,
+        title: document.querySelector("#add-event-title").value,
+        content: document.querySelector("#add-event-content").value,
+        startDate: document.querySelector("#add-event-start-date").value,
+        endDate: document.querySelector("#add-event-end-date").value
+    };
+
+    fetch('/schedule/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newEvent)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw response;
+            }
+            return response.json();
+        })
+        .then(res => {
+            calendarInstance?.removeAllEvents();
+            calendarInstance?.refetchEvents();
+            alert('생성되었습니다');
+            const popover = document.querySelector("#event-popover");
+            popover.classList.toggle("show");
+            emptyCreateEventForm();
+        })
+        .catch(error => {
+            error.json().then(err => {
+                event.revert();
+                alert('문제가 발생했습니다 다시 시도해 주세요');
+            });
+        });
+}
+
+function emptyCreateEventForm() {
+    document.querySelector("#add-event-title").value = "";
+    document.querySelector("#add-event-content").value = "";
+    document.querySelector("#add-event-start-date").value = "";
+    document.querySelector("#add-event-end-date").value = "";
 }
