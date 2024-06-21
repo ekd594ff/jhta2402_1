@@ -10,7 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class GroupDTO {
-    private int id;
+    private Long id;
     private String groupname;
+    private String creator;
+    private String content;
     private String imageUrl;
 }
