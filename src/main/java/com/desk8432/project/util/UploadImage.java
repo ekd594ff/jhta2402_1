@@ -22,7 +22,7 @@ public class UploadImage {
                 DateTimeFormatter.ofPattern("dd")
         );
 
-        String imgFolder = "/"+"image" +"/"+ formatMonth + "/" + formatDay;
+        String imgFolder = "image" +"/"+ formatMonth + "/" + formatDay;
 
 
         String imgFolderPath = servletConfig.getServletContext().getRealPath(imgFolder);
@@ -46,8 +46,8 @@ public class UploadImage {
                 .location(imgFolder)
                 .imageUrl(returnUrl)
                 .fileName(uploadUrl)
-                .imgFolderPath(servletConfig.getServletContext().getRealPath(imgFolder))
-                .uploadUrl(imgFolderPath + "/" + username + "_" + formatNow + extension)
+                .imgFolderPath(imgFolderPath)
+                .uploadUrl(imgFolderPath + "/" + uploadUrl)
                 .build();
         return updateImageUrlDTO;
     }

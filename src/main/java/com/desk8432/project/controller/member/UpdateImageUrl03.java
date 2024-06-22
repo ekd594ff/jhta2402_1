@@ -47,7 +47,7 @@ public class UpdateImageUrl03 extends HttpServlet {
             }
         });
         CompletableFuture<Void> uploadImageFuture = CompletableFuture.runAsync(() -> {
-            uploadImage(image, updateImageUrlDTO.getImgFolderPath(),updateImageUrlDTO.getImageUrl());
+            uploadImage(image, updateImageUrlDTO.getImgFolderPath(),updateImageUrlDTO.getUploadUrl());
 //            uploadImage(image,updateImageUrlDTO.getLocation(), updateImageUrlDTO.getFileName()); //이미지 메인서버에 저장
         });
         CompletableFuture<Boolean> isFileImageFuture = CompletableFuture.supplyAsync(() -> {
