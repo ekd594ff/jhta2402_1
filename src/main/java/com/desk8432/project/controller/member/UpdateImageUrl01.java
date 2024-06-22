@@ -64,8 +64,8 @@ public class UpdateImageUrl01 extends HttpServlet {
                 DateTimeFormatter.ofPattern("dd")
         );
         String imgFolder = "/image" +"/"+ formatMonth + "/" + formatDay;
-
         String imgFolderPath = getServletConfig().getServletContext().getRealPath(imgFolder);
+
         System.out.println("imgFolderPath = " + imgFolderPath);
         String formatNow = LocalDateTime.now().format(
                 DateTimeFormatter.ofPattern("hhmmss")
@@ -73,8 +73,8 @@ public class UpdateImageUrl01 extends HttpServlet {
 
         String fileName = image.getSubmittedFileName();
         String extension = fileName.substring(fileName.lastIndexOf("."));
-
         String uploadUrl = imgFolderPath + "/" + username + "_" + formatNow + extension;
+
         String returnUrl = imgFolder + "/" + username + "_" + formatNow + extension;
         System.out.println("formatMonth = " + formatMonth);
         System.out.println("uploadUrl = " + uploadUrl);
