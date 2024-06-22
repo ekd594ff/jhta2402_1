@@ -47,7 +47,7 @@
             if (Array.isArray(myGroups)){
                 console.log(myGroups.length)
                 if (myGroups.length === 0) {
-                    document.querySelector('.mygroups-nothing').style.display='block';
+                    document.querySelector('.mygroups-nothing').style.display='flex';
                 }
                 const list = document.querySelector("#mygroups ");
                 for(const data of myGroups) {
@@ -58,7 +58,7 @@
             if (Array.isArray(followGroups)){
                 console.log(followGroups.length)
                 if (followGroups.length === 0) {
-                    document.querySelector('.followgroups-nothing').style.display = 'block';
+                    document.querySelector('.followgroups-nothing').style.display = 'flex';
                 }
                 const list = document.querySelector("#followgroups");
                 for(const data of followGroups) {
