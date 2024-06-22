@@ -1,5 +1,6 @@
 package com.desk8432.project.controller.member;
 
+import com.desk8432.project.dao.image.FileDAO;
 import com.desk8432.project.dao.member.UpdateDAO;
 import com.desk8432.project.dto.member.UpdateImageUrlDTO;
 import com.desk8432.project.util.CookieManager;
@@ -34,6 +35,7 @@ public class UpdateImageUrl03 extends HttpServlet {
 
 //        String username = req.getParameter("username");
         UpdateDAO updateDAO = new UpdateDAO();
+        FileDAO fileDAO = new FileDAO();
 
         Gson outGson = new Gson();
         Map<String,String> resultMap = new HashMap<>(); //결과값 반환
@@ -51,7 +53,7 @@ public class UpdateImageUrl03 extends HttpServlet {
         });
         CompletableFuture<Boolean> isFileImageFuture = CompletableFuture.supplyAsync(() -> {
             // 비동기 작업
-            return updateDAO.isFile(updateImageUrlDTO); // Boolean 값 반환
+            return fileDAO.isFile(updateImageUrlDTO); // Boolean 값 반환
         });
         isFileImageFuture.thenApply(result -> {
             if (result) {
