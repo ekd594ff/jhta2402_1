@@ -12,6 +12,10 @@
     width: 100%;
 }
 
+.right {
+    display: flex;
+}
+
 .header .avatar {
     width: var(--avatar-diameter);
     height: var(--avatar-diameter);
