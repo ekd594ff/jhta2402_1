@@ -65,6 +65,11 @@ public class DeleteMember extends HttpServlet {
         System.out.println(deleteMemberDTO.getUsername());
 
         if (deleteMemberDAO.deleteMember(deleteMemberDTO)) {
+            deleteMemberDAO.deleteMemberGroup(deleteMemberDTO.getUsername());
+            deleteMemberDAO.deleteMemberSchedule(deleteMemberDTO.getUsername());
+            deleteMemberDAO.deleteMemberFollow(deleteMemberDTO.getUsername());
+            deleteMemberDAO.deleteMemberFile(deleteMemberDTO.getUsername());
+
             System.out.println("success");
             resultMap.put("message", "ok");
 //            ScriptWriter.alertAndNext(resp, "회원가입되었습니다.", "/index/index");
