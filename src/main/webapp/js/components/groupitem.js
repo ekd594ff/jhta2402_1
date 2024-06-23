@@ -18,10 +18,28 @@ function groupItem(group) {
                 <div>${group.created_at}</div>
                 <div>${group.content}</div>
             </div>
-            <div class="button">
-                FOLLOW
+            <div class="button" id="follow-button">
+                팔로우
             </div>
         </div>
     `;
     return item;
 }
+
+const followButton = document.getElementById('follow-button');
+
+followButton.onclick = () =>{
+    if (followButton.classList.contains('')) {
+        //팔로우
+        followButton.classList.remove('show');
+        followButton.textContent = '팔로우'
+    } else {
+        //언팔로우
+        followButton.classList.add('show');
+        followButton.textContent = '취소'
+    }
+}
+
+
+
+

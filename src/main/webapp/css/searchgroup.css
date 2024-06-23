@@ -15,7 +15,7 @@
     margin: 30px;
     background-color: #B4B4B8;
     width: 65%;
-    max-width: 900px;
+    max-width: 1100px;
     flex-direction: row;
     display: flex;
     justify-content: space-between;
@@ -31,6 +31,8 @@
 }
 .group-info > ul{
     list-style-type: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .group-info > ul > .group-name{
@@ -65,3 +67,8 @@
 .groupSearch-container ul.list{
     width: 640px;
 }
+
+.groupSearch-container .showMoreButton{
+    display: flex;
+}
+
