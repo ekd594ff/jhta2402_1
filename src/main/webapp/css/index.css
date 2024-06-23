@@ -46,7 +46,9 @@
     height: 75vh;
     box-sizing: border-box;
 }
-
+.index-container > .landing * {
+    font-weight: bold;
+}
 
 .index-container > .landing.l-1 > h1,
 .index-container > .landing.l-1 > h3 {

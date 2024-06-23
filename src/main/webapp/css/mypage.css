@@ -1,5 +1,13 @@
 @import "variables.css";
 
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+
+
 .mypage-container {
     display: flex;
     justify-content: center;
@@ -10,6 +18,10 @@
     --color-default: #909090;
     --border-radius: 4px;
     --panel-size: 700px;
+}
+
+.mypage-container * {
+    font-family: "Pretendard-Regular";
 }
 
 .mypage-container > .mypage-form {
