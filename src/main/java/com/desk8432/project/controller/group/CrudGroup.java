@@ -234,6 +234,11 @@ public class CrudGroup extends HttpServlet {
             UpdateImageUrlDTO updateImageUrlDTO = getImageDTO(image, username, getServletConfig());
             InputImageUrlDTO inputImageUrlDTO = getInputImageUrlDTO(updateImageUrlDTO, groupID);
 
+            // 서버에 이미지 저장
+            CompletableFuture<Void> uploadImageFuture = CompletableFuture.runAsync(() -> {
+                uploadImage(image, updateImageUrlDTO.getImgFolderPath(),updateImageUrlDTO.getUploadUrl());
+            });
+
             // group image_url 수정
             CompletableFuture<Void> updateGroupImageUrl = CompletableFuture.runAsync(() -> {
                 updateGroupDAO.updateImage(GroupDTO.builder()
@@ -280,6 +285,7 @@ public class CrudGroup extends HttpServlet {
 
 
             try {
+                uploadImageFuture.get();
                 updateGroupImageUrl.get();
                 isFileImageFuture.get();
             } catch (InterruptedException | ExecutionException e) {
