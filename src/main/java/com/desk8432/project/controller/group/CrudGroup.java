@@ -6,6 +6,7 @@ import com.desk8432.project.dao.group.InsertGroupDAO;
 import com.desk8432.project.dao.image.FileDAO;
 import com.desk8432.project.dto.group.DeleteGroupDTO;
 import com.desk8432.project.dto.group.FollowRequestDTO;
+import com.desk8432.project.dto.group.GroupDTO;
 import com.desk8432.project.dto.group.InsertGroupDTO;
 import com.desk8432.project.dto.image.InputImageUrlDTO;
 import com.desk8432.project.dto.member.UpdateImageUrlDTO;
@@ -18,9 +19,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import net.coobird.thumbnailator.Thumbnails;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,9 +50,7 @@ public class CrudGroup extends HttpServlet {
         Map<String, String> resultMap = new HashMap<>();
         Gson gson = new Gson();
 
-        UpdateImageUrlDTO updateImageUrlDTO = getImageDTO(
-                image, username, getServletConfig());
-
+        UpdateImageUrlDTO updateImageUrlDTO = getImageDTO(image, username, getServletConfig());
         InsertGroupDTO insertGroupDTO = InsertGroupDTO.builder()
                 .image_url(updateImageUrlDTO.getImageUrl())
                 .name(groupName)
@@ -55,6 +59,7 @@ public class CrudGroup extends HttpServlet {
                 .build();
 
         FileDAO fileDAO = new FileDAO();
+
         InsertGroupDAO insertGroupDAO = new InsertGroupDAO();
         FollowGroupDAO followGroupDAO = new FollowGroupDAO();
 
@@ -146,6 +151,69 @@ public class CrudGroup extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.println(resultJson);
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json; charset=utf-8");
+
+        String username = CookieManager.readCookie(req, "username");
+        String groupname = req.getParameter("name");
+        String content = req.getParameter("content");
+        Long groupID = 0L;
+        // Part image = req.getPart("image");
+        if (req.getParameter("id") != null) {
+            groupID = Long.parseLong(req.getParameter("id"));
+            System.out.println("groupID == " + groupID);
+        }
+        System.out.println("username == " + username);
+        System.out.println("groupname == " + groupname);
+        System.out.println("content == " + content);
+        // System.out.println("image == " + image);
+
+        // 어떤 값이 들어오는지 판별 -> dao로 db에 적용
+        UpdateGroupDAO updateGroupDAO = new UpdateGroupDAO();
+
+        if (content != null) {
+            // 컨텐츠 변경
+            boolean contentResult = updateGroupDAO.updateContent(
+                    GroupDTO.builder()
+                            .id(groupID)
+                            .content(content)
+                            .build());
+
+            if (contentResult) {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                System.out.println("update content 성공~!");
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                System.out.println("update content 실패 ㅠㅠ");
+
+            }
+
+        } else if (groupname != null) {
+            // 그룹 이름 변경
+            boolean groupNameResult = updateGroupDAO.updateGroupName(
+                    GroupDTO.builder()
+                            .id(groupID)
+                            .groupname(groupname)
+                            .build());
+
+            if (groupNameResult) {
+                resp.setStatus(HttpServletResponse.SC_OK);
+                System.out.println("update group name 성공~!");
+            } else {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                System.out.println("update group name 실패 ㅠㅠ");
+
+            }
+
+        }
+        // 이미지 변경
+
+
+    }
+
+
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

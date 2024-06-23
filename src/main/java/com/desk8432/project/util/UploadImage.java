@@ -5,6 +5,7 @@ import jakarta.servlet.ServletConfig;
 import jakarta.servlet.http.Part;
 import net.coobird.thumbnailator.Thumbnails;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,7 +21,9 @@ public class UploadImage {
         String formatDay = LocalDateTime.now().format(
                 DateTimeFormatter.ofPattern("dd")
         );
-        String imgFolder = "/image" +"/"+ formatMonth + "/" + formatDay;
+
+        String imgFolder = "image" +"/"+ formatMonth + "/" + formatDay;
+
 
         String imgFolderPath = servletConfig.getServletContext().getRealPath(imgFolder);
         System.out.println("imgFolderPath = " + imgFolderPath);
@@ -32,7 +35,7 @@ public class UploadImage {
         String fileName = image.getSubmittedFileName();
         String extension = fileName.substring(fileName.lastIndexOf("."));
 
-        String uploadUrl = imgFolderPath + "/" + username + "_" + formatNow + extension;
+        String uploadUrl = username + "_" + formatNow + extension;
         String returnUrl = imgFolder + "/" + username + "_" + formatNow + extension;
 //        String filename = username + "_" + formatNow + extension;
 
@@ -40,9 +43,11 @@ public class UploadImage {
                 = UpdateImageUrlDTO.builder()
                 .username(username)
                 .originalName(fileName)
-                .location(imgFolderPath)
+                .location(imgFolder)
                 .imageUrl(returnUrl)
                 .fileName(uploadUrl)
+                .imgFolderPath(imgFolderPath)
+                .uploadUrl(imgFolderPath + "/" + uploadUrl)
                 .build();
         return updateImageUrlDTO;
     }

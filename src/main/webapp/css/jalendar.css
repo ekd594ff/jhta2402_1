@@ -121,7 +121,6 @@ body *{
 
 #event-popover {
     width: 250px;
-    height: 280px;
     background-color: #ffffff;
     z-index: 1992;
     position: absolute;
@@ -131,6 +130,25 @@ body *{
     border: 1px solid gray;
     padding: 16px;
     box-sizing: border-box;
+}
+
+#event-popover:before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -6px;
+    left: 10%;
+    background-color: white;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    transform: rotate(45deg);
+    border-bottom: 0;
+    border-right: 0;
+}
+
+#event-popover.tail-center:before {
+    left: calc(50% - 7px);
 }
 
 #event-popover.show {
@@ -145,7 +163,7 @@ body *{
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
 .popover-list label {
@@ -192,7 +210,7 @@ body *{
     gap: 8px;
 }
 
-.popover-list #event-content {
+.popover-list #event-content,  .popover-list #add-event-content{
     padding: 4px;
     box-sizing: border-box;
     resize: none;
@@ -201,13 +219,14 @@ body *{
     color: #000000;
 }
 
-.popover-list #event-content:focus {
+.popover-list #event-content:focus, .popover-list #add-event-content:focus{
     outline: none;
 }
 
 .popover-list .popover-btn-group {
     display: flex;
     gap: 12px;
+    padding-top: 8px;
 }
 
 .popover-list .popover-btn {
@@ -232,4 +251,8 @@ body *{
 
 .popover-list .event-id {
     display: none;
+}
+
+.jalendar .fc-popover {
+    z-index: 100;
 }
