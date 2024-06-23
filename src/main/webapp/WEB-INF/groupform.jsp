@@ -96,8 +96,9 @@
                     alert('유효하지 않은 접근입니다');
                     window.location.href = '/group/list';
                 }
+
                 storeProfileImgSrc(resp);
-                setProfileImageFormSrcDefault()
+                setProfileImageFormSrcDefault();
                 setProfileValueDefault(resp);
 
             });
@@ -113,6 +114,7 @@
             const value = textarea.value;
 
             let formData = new FormData();
+            formData.append('id', ${requestScope.id});
             formData.append('content', value);
 
             fetch("/group/crud", {
@@ -135,6 +137,7 @@
             }
 
             let formData = new FormData();
+            formData.append('id', ${requestScope.id});
             formData.append('image', file);
 
             fetch("/group/crud", {
@@ -161,11 +164,8 @@
             const content = document.querySelector(".item.introduction textarea.introduction").value;
             const file = document.querySelector('input#profile-img-input').files[0];
 
-            if (!file) {
-                window.alert("파일을 업로드 해 주세요");
-                return;
-            } else if (!groupName) {
-                window.alert("파일을 업로드 해 주세요");
+            if (!groupName) {
+                window.alert("그룹 이름을 입력해주세요");
                 return;
             }
 
@@ -195,6 +195,7 @@
             const input = item.querySelector("input");
 
             let formData = new FormData();
+            formData.append('id', ${requestScope.id});
             formData.append('name', input.value);
 
             fetch("/group/crud", {
@@ -209,7 +210,7 @@
     }
 
     function storeProfileImgSrc(resp) {
-        localStorage.setItem("profile-img-url", resp.imageUrl);
+        localStorage.setItem("profile-img-url", resp.image_url);
     }
 
     function setProfileImageFormSrcDefault() {
@@ -217,7 +218,7 @@
         if (src) {
             const profileFormImgEl = document.querySelector("#profile-img");
             const profileImgWrapperEl = document.querySelector(`.profile-img-wrapper`);
-            profileFormImgEl.setAttribute("src", src);
+            profileFormImgEl.setAttribute("src",  "/" + src);
             profileImgWrapperEl.classList.add("active");
         }
     }
