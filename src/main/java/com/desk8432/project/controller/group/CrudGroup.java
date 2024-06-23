@@ -3,6 +3,7 @@ package com.desk8432.project.controller.group;
 import com.desk8432.project.dao.group.DeleteGroupDAO;
 import com.desk8432.project.dao.group.FollowGroupDAO;
 import com.desk8432.project.dao.group.InsertGroupDAO;
+import com.desk8432.project.dao.group.UpdateGroupDAO;
 import com.desk8432.project.dao.image.FileDAO;
 import com.desk8432.project.dto.group.DeleteGroupDTO;
 import com.desk8432.project.dto.group.FollowRequestDTO;
@@ -237,7 +238,6 @@ public class CrudGroup extends HttpServlet {
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             System.out.println("실패 ㅠㅠ");
-
         }
     }
 

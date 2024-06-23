@@ -71,7 +71,7 @@
     display: none;
 }
 
-.button {
+.follow-button {
     background-color: #007bff;
     color: #ffffff;
     padding: 10px 10px;
@@ -83,7 +83,9 @@
     margin: 10px;
 }
 
-.button:hover {
+
+
+.follow-button:hover {
     background-color: #0056b3;
 }
 
