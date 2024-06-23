@@ -1,0 +1,78 @@
+@import "variables.css";
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.index {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.index * {
+    font-family: 'Pretendard-Regular';
+}
+
+.index-container {
+    width: 100%;
+    max-width: 900px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 128px;
+    padding-bottom: 128px;
+}
+
+.index-container > .landing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 32px;
+    height: 75vh;
+    box-sizing: border-box;
+}
+
+
+.index-container > .landing.l-1 > h1,
+.index-container > .landing.l-1 > h3 {
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.index-container > .landing.l-1 > h1 {
+    animation: fadeIn 1s ease-in-out 0s forwards;
+}
+
+.index-container > .landing.l-1 > h3 {
+    animation: fadeIn 1s ease-in-out 0.5s forwards;
+}
+
+.index-container > .landing.l-1 > h1 {
+    font-weight: 900;
+    font-size: 42px;
+}
+
+.index-container > .landing.l-2,
+.index-container > .landing.l-3 {
+    padding: 64px 0;
+    gap: 16px;
+}
+
+.index-container > .landing.l-2:target {
+    background-color: darkblue;
+}
