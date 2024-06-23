@@ -11,6 +11,7 @@
         <typeAlias type="com.desk8432.project.dto.group.InsertGroupDTO" alias="InsertGroupDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateEmailDTO" alias="UpdateEmailDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateImageUrlDTO" alias="UpdateImageUrlDTO" />
+        <typeAlias type="com.desk8432.project.dto.image.InputImageUrlDTO" alias="InputImageUrlDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateIntroductionDTO" alias="UpdateIntroductionDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateNicknameDTO" alias="UpdateNicknameDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdatePasswordDTO" alias="UpdatePasswordDTO" />
