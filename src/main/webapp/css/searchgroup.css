@@ -10,47 +10,11 @@
     --color-default: #909090;
     --border-radius: 4px;
 }
-
-.group-container{
-    margin: 30px;
-    background-color: #B4B4B8;
-    width: 65%;
-    max-width: 900px;
-    flex-direction: row;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 100px;
-    padding: 10px;
-}
-.group-info{
-    width: 45%;
-    flex-direction: row;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.group-info > ul{
-    list-style-type: none;
-}
-
-.group-info > ul > .group-name{
-    font-size: 30px;
-}
-.group-info > ul > .group-editor{
-    margin-bottom: 10px;
-}
-.group-info > ul > .group-createdAt{
-
-}
-.btn-primary{
-    margin: 30px;
-    margin-right: 80px;
-    height: 50px;
-    width: 60px;
+.groupSearch-container >.list > h2 {
     text-align: center;
 }
 
-.group-img {
+.groupSearch-container .group-img {
     background-color: #909090;
     border-radius: 50%;
     width: 150px;
@@ -65,3 +29,8 @@
 .groupSearch-container ul.list{
     width: 640px;
 }
+
+.groupSearch-container .showMoreButton{
+    display: flex;
+}
+

@@ -6,7 +6,12 @@
                 <img src="${pageContext.request.contextPath}/public/imgs/jalendar.svg" height="36px"/>
             </a>
         </div>
-        <div class="right">
+        <div class="right d-flex">
+            <form class="search d-flex" id="searchForm" method="post">
+                <input class="form-control search-box" type="search" id="searchQuery" name="searchQuery"
+                       placeholder="검색어를 입력하세요." autocomplete="off" value="${param.query}">
+                <button class="btn btn-primary search-btn mx-1" type="button" onclick="searchGroup();">Click</button>
+            </form>
             <div class="avatar" style="width: 36px; height: 36px; border-radius: 50%;background-color: #909090; display: flex !important; justify-content: center; align-items: center;">
                 <svg focusable="false"
                      aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon" width="28px" height="28px" fill="#fff">

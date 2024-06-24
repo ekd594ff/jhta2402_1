@@ -1,5 +1,6 @@
 package com.desk8432.project.controller.group;
 
+import com.desk8432.project.util.ScriptWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,11 +16,11 @@ public class UpdateGroup extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         if (id == null) {
-            resp.sendRedirect("/");
+            ScriptWriter.alertAndNext(resp, "그룹 아이디가 필요합니다", "/");
             return;
         }
 
         req.setAttribute("id", Integer.parseInt(id));
-        req.getRequestDispatcher("/WEB-INF/groupform.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/groupUpdateForm.jsp").forward(req, resp);
     }
 }

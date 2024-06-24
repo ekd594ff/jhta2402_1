@@ -8,11 +8,17 @@
         inner join jhta01_follow jf on jf.group_id = jg.id
         where jf.username = #{username}
     </select>
+    <select id="getGroupById" resultType="GroupDTO" parameterType="long">
+        select id, creator, name as groupname, content, image_url as imageUrl from jhta01_group where id = #{group_id}
+    </select>
 <!--    <select id="getMyGroups" resultType="SearchGroupDTO" parameterType="String">-->
 <!--        select * from jhta01_group where creator in #{username}-->
 <!--    </select>-->
     <select id="getSearchGroupList" resultType="SearchGroupDTO" parameterType="SearchGroupRequestDTO">
-        select * from jhta01_group where
+        select id,creator,"name" ,image_url ,"content",created_at ,updated_at ,
+        (case when id in (select group_id from jhta01_follow jf where username = #{username}) then true else false end) as is_follow ,
+        case when creator = #{username} then true else false end as is_creator
+        from jhta01_group where
         <choose>
             <when test="searchFilter == 'all'">
                 creator like '%'||#{searchValue}||'%' or
@@ -34,6 +40,16 @@
         </choose>
         order by updated_at desc
         offset 10 * (#{page} - 1) limit 10
+    </select>
+    <select id="getGroupInformation" resultType="SearchGroupDTO" parameterType="FollowRequestDTO">
+        select id,creator,"name" ,image_url ,"content",created_at ,updated_at ,
+        case when id in
+        (select group_id from jhta01_follow jf
+        where username = #{username})
+        then true else false end as is_follow,
+        case when creator = #{username} then true else false end as is_creator
+        from jhta01_group
+        where id = #{groupID}
     </select>
     <select id="getSearchTotal" resultType="int" parameterType="SearchGroupRequestDTO">
         select count(*) as count from jhta01_group where

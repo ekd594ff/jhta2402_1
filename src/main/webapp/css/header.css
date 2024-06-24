@@ -12,6 +12,14 @@
     width: 100%;
 }
 
+.header .search > search-box {
+    margin: 0;
+}
+
+.header .search > search-btn {
+    margin: 0;
+}
+
 .header .avatar {
     width: var(--avatar-diameter);
     height: var(--avatar-diameter);
@@ -53,4 +61,12 @@
 .header .dropdown-menu li {
     user-select: none;
     cursor: pointer;
+}
+
+.header form.search {
+    margin: 0;
+}
+
+.header .right {
+    gap: 16px;
 }

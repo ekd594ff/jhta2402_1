@@ -31,6 +31,9 @@ public class FollowGroup extends HttpServlet {
         FollowGroupDAO followGroupDAO = new FollowGroupDAO();
         List<SearchGroupDTO> searchGroupDTOList = followGroupDAO.getFollowGroup(username);
 
+        for (SearchGroupDTO searchGroupDTO : searchGroupDTOList) { //db쿼리로 작업하는게 유용
+            searchGroupDTO.set_follow(true);
+        }
         if (searchGroupDTOList != null) {
             GroupViewResponseDTO groupViewResponseDTO = getGroupViewResponseDTO(searchGroupDTOList, username);
             resp.setStatus(HttpServletResponse.SC_OK);
@@ -42,7 +45,6 @@ public class FollowGroup extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         resp.setContentType("application/json; charset=utf-8");
         Gson gson = new Gson();
 
