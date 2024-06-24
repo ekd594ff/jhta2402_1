@@ -132,7 +132,6 @@
         <%--        storeProfileImgSrc(resp);--%>
         <%--        setProfileImageFormSrcDefault()--%>
         <%--        setProfileValueDefault(resp);--%>
-
         <%--    });--%>
 
         <%--document.querySelectorAll("button").forEach((button) => {--%>

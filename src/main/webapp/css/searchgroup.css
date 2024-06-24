@@ -10,6 +10,9 @@
     --color-default: #909090;
     --border-radius: 4px;
 }
+.groupSearch-container >.list > h2 {
+    text-align: center;
+}
 
 .group-container{
     margin: 30px;

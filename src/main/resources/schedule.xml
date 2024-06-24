@@ -26,7 +26,7 @@
         on js.group_id = jg.id
         where js.group_id in
         (select group_id from jhta01_follow where username = #{username})
-        or js.group_id isnull
+        or (js.group_id isnull and js.editor = #{username})
     </select>
     <update id="updateSchedule" parameterType="ScheduleDTO" >
         update jhta01_schedule

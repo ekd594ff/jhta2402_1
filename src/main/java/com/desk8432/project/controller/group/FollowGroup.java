@@ -34,7 +34,6 @@ public class FollowGroup extends HttpServlet {
         for (SearchGroupDTO searchGroupDTO : searchGroupDTOList) { //db쿼리로 작업하는게 유용
             searchGroupDTO.set_follow(true);
         }
-
         if (searchGroupDTOList != null) {
             GroupViewResponseDTO groupViewResponseDTO = getGroupViewResponseDTO(searchGroupDTOList, username);
             resp.setStatus(HttpServletResponse.SC_OK);
