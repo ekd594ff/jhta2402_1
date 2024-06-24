@@ -28,6 +28,9 @@
         (select group_id from jhta01_follow where username = #{username})
         or (js.group_id isnull and js.editor = #{username})
     </select>
+    <select id="getGroupScheduleList" resultType="ScheduleDTO" parameterType="Long">
+        select * from jhta01_schedule js where group_id = #{groupID};
+    </select>
     <update id="updateSchedule" parameterType="ScheduleDTO" >
         update jhta01_schedule
         set

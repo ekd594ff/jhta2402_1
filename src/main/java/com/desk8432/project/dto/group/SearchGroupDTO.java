@@ -19,4 +19,5 @@ public class SearchGroupDTO {
     private Date created_at;
     private Date updated_at;
     private boolean is_follow;
+    private boolean is_creator;
 }
