@@ -20,5 +20,8 @@
         delete from jhta01_follow
             where username = #{username} and group_id = #{groupID};
     </delete>
+    <select id="isFollowGroup" resultType="int" parameterType="IsFollowDTO">
+        select count(*) from jhta01_follow where group_id = #{groupID} and username = #{username}
+    </select>
 
 </mapper>

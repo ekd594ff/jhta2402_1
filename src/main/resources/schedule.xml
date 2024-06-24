@@ -29,7 +29,8 @@
         or (js.group_id isnull and js.editor = #{username})
     </select>
     <select id="getGroupScheduleList" resultType="ScheduleDTO" parameterType="Long">
-        select * from jhta01_schedule js where group_id = #{groupID};
+        select id, group_id as groupID, editor, title, content, start_date as startDate, end_date as endDate
+            from jhta01_schedule js where group_id = #{groupID};
     </select>
     <update id="updateSchedule" parameterType="ScheduleDTO" >
         update jhta01_schedule
