@@ -13,4 +13,32 @@ public class DeleteMemberDAO {
         sqlSession.close();
         return result > 0;
     }
+
+    public void deleteMemberGroup(String username) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        int result = sqlSession.delete("deleteMemberGroup", username);
+        System.out.println(result + " Group row deleted");
+        sqlSession.close();
+    }
+
+    public void deleteMemberSchedule(String username) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        int result = sqlSession.delete("deleteMemberSchedule", username);
+        System.out.println(result + " Schedule row deleted");
+        sqlSession.close();
+    }
+
+    public void deleteMemberFollow(String username) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        int result = sqlSession.delete("deleteMemberFollow", username);
+        System.out.println(result + " Follow row deleted");
+        sqlSession.close();
+    }
+
+    public void deleteMemberFile(String username) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        int result = sqlSession.delete("deleteMemberFile", username);
+        System.out.println(result + " File row deleted");
+        sqlSession.close();
+    }
 }

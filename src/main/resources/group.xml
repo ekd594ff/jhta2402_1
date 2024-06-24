@@ -8,6 +8,9 @@
         inner join jhta01_follow jf on jf.group_id = jg.id
         where jf.username = #{username}
     </select>
+<!--    <select id="getMyGroups" resultType="SearchGroupDTO" parameterType="String">-->
+<!--        select * from jhta01_group where creator in #{username}-->
+<!--    </select>-->
     <select id="getSearchGroupList" resultType="SearchGroupDTO" parameterType="SearchGroupRequestDTO">
         select * from jhta01_group where
         <choose>

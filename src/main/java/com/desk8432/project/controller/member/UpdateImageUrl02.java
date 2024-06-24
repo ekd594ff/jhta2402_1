@@ -4,6 +4,7 @@ import com.desk8432.project.dao.member.UpdateDAO;
 import com.desk8432.project.dto.member.UpdateImageUrlDTO;
 import com.desk8432.project.util.CookieManager;
 import com.google.gson.Gson;
+import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
@@ -66,7 +67,6 @@ public class UpdateImageUrl02 extends HttpServlet {
                 DateTimeFormatter.ofPattern("dd")
         );
         String imgFolder = "/image" +"/"+ formatMonth + "/" + formatDay;
-
         String imgFolderPath = getServletConfig().getServletContext().getRealPath(imgFolder);
         System.out.println("imgFolderPath = " + imgFolderPath);
         String formatNow = LocalDateTime.now().format(
@@ -81,6 +81,7 @@ public class UpdateImageUrl02 extends HttpServlet {
         String returnUrl = imgFolder + "/" + username + "_" + formatNow + extension;
 //        String filename = username + "_" + formatNow + extension;
 
+        FilterConfig servletConfig = null;
         UpdateImageUrlDTO updateImageUrlDTO
                 = UpdateImageUrlDTO.builder()
                 .username(username)
@@ -88,6 +89,7 @@ public class UpdateImageUrl02 extends HttpServlet {
                 .location(imgFolderPath)
                 .imageUrl(returnUrl)
                 .fileName(uploadUrl)
+
                 .build();
         return updateImageUrlDTO;
     }

@@ -7,8 +7,22 @@
         UPDATE JHTA01_MEMBER
         SET
         IS_DELETE = 'Y',
+        IMAGE_URL = NULL,
         UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
         and password = #{password}
     </update>
+
+    <delete id="deleteMemberGroup" parameterType="String">
+        delete from jhta01_group where creator = #{username}
+    </delete>
+    <delete id="deleteMemberSchedule" parameterType="String">
+        delete from jhta01_schedule where editor = #{username}
+    </delete>
+    <delete id="deleteMemberFollow" parameterType="String">
+        delete from jhta01_follow where username = #{username}
+    </delete>
+    <delete id="deleteMemberFile" parameterType="String">
+        delete from jhta01_file where username =  #{username}
+    </delete>
 </mapper>

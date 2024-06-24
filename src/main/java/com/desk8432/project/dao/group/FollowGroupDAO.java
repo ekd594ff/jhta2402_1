@@ -16,7 +16,12 @@ public class FollowGroupDAO {
         sqlSession.close();
         return groupDTOList;
     }
-
+//    public List<SearchGroupDTO> getMyGroups(String username){
+//        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+//        List<SearchGroupDTO> groupDTOList = sqlSession.selectList("getMyGroups", username);
+//        sqlSession.close();
+//        return  groupDTOList;
+//    }
 
     public boolean addFollowGroup(FollowRequestDTO followRequestDTO) {
         SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();

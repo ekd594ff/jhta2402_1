@@ -15,8 +15,12 @@
         )
     </insert>
   
-    <select id="getGroupId" resultType="int" parameterType="InsertGroupDTO">
-        select id from jhta01_group where 
+    <select id="getGroupId" resultType="long" parameterType="InsertGroupDTO">
+        select id from jhta01_group where creator = #{creator} and name = #{name}
+    </select>
+
+    <select id="getGroupInfo" resultType="InsertGroupDTO" parameterType="long">
+        select * from jhta01_group where id = #{group_id}
     </select>
 
     <delete id="deleteGroup" parameterType="DeleteGroupDTO">

@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class GroupViewResponseDTO {
-
     private List<SearchGroupDTO> myGroups;
     private List<SearchGroupDTO> followGroups;
 }
