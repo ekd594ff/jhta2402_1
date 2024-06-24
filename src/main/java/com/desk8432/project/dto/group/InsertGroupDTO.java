@@ -15,6 +15,4 @@ public class InsertGroupDTO {
     private String content;
     private String created_at;
     private String updated_at;
-
-
 }

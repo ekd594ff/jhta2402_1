@@ -46,8 +46,6 @@
             .then((resp) => {
                 const {result} = resp;
                 total = resp;
-                console.log(total);
-                console.log(result);
                 if (Array.isArray(result)){
                     console.log(result.length)
                     if (result.length === 0) {
