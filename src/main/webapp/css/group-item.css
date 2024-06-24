@@ -83,6 +83,9 @@
     margin: 10px;
 }
 
+.follow-button.following{
+    background-color: #909090;
+}
 
 
 .follow-button:hover {

@@ -29,6 +29,10 @@ public class SearchGroup extends HttpServlet {
 //        Dispatcher dispatcher = new Dispatcher();
 //        String jsonSTR = dispatcher.getBody(req);
 //        System.out.println("jsonSTR = " + jsonSTR);
+
+//        String searchQuery = req.getParameter("searchQuery");
+//        resp.getWriter().println("Search Query == " + searchQuery);
+
         resp.setContentType("application/json; charset=utf-8");
         Gson gson = new Gson();
         SearchGroupRequestDTO searchGroupRequestDTO = gson.fromJson(req.getReader(), SearchGroupRequestDTO.class);
