@@ -30,6 +30,8 @@
 <jsp:include page="../components/footer.jsp"/>
 </body>
 <script src="${pageContext.request.contextPath}/js/components/groupitem.js"></script>
+<script src="${pageContext.request.contextPath}/js/util.js"></script>
+<script src="${pageContext.request.contextPath}/js/common.js"></script>
 <script>
     let isMyGroupBlank = false;
     let isFollowGroupBlank = false;
