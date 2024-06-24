@@ -18,4 +18,5 @@ public class SearchGroupDTO {
     private String content;
     private Date created_at;
     private Date updated_at;
+    private boolean is_follow;
 }

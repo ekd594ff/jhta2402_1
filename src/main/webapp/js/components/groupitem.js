@@ -18,10 +18,31 @@ function groupItem(group) {
                 <div>${group.created_at}</div>
                 <div>${group.content}</div>
             </div>
-            <div class="button">
-                FOLLOW
-            </div>
+            <button class="follow-button ${group.is_follow ? "following" : ""}" >
+                ${group.is_follow ? "취소" : "팔로우"}
+            </button>
         </div>
     `;
+
+
+    const followButton = item.querySelector('.follow-button');
+
+    followButton.onclick = () => {
+        if (followButton.classList.contains('following')) {
+            //언팔로우
+            followButton.classList.remove('following');
+            followButton.textContent = '팔로우'
+        } else {
+            //팔로우
+            followButton.classList.add('following');
+            followButton.textContent = '취소'
+        }
+    };
+
     return item;
 }
+
+
+
+
+
