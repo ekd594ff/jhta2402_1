@@ -4,7 +4,7 @@ function updateHeaderProfileImage(data) {
         const avatarEl = document.querySelector(".header .avatar");
         avatarEl.classList.add("active");
         const avatarImageEl = avatarEl.querySelector(".avatar-img");
-        avatarImageEl.setAttribute("src", profileImgUrl);
+        avatarImageEl.setAttribute("src", "/" + profileImgUrl);
     }
 }
 

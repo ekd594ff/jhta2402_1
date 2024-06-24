@@ -74,7 +74,7 @@ public class CrudGroup extends HttpServlet {
                 return;
             }
 
-            uploadImage(image, updateImageUrlDTO.getImgFolderPath(),updateImageUrlDTO.getUploadUrl());
+            uploadImage(image, updateImageUrlDTO.getImgFolderPath(), updateImageUrlDTO.getUploadUrl());
         });
 
         // group DB에 저장
@@ -196,54 +196,42 @@ public class CrudGroup extends HttpServlet {
         Map<String, String> resultMap = new HashMap<>();
         Gson gson = new Gson();
 
-        if (content != null) {
-            // 컨텐츠 변경
-            boolean contentResult = updateGroupDAO.updateContent(
+        if (image == null) {
+            // 이름, 컨텐츠 변경
+            boolean contentResult = updateGroupDAO.updateGroupNameContent(
                     GroupDTO.builder()
                             .id(groupID)
+                            .groupname(groupname)
                             .content(content)
                             .build());
 
             if (contentResult) {
                 resp.setStatus(HttpServletResponse.SC_OK);
+                resultMap.put("status", "ok");
                 System.out.println("update content 성공~!");
             } else {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                resultMap.put("status", "failure");
                 System.out.println("update content 실패 ㅠㅠ");
 
             }
 
-        } else if (groupname != null) {
-            // 그룹 이름 변경
-            boolean groupNameResult = updateGroupDAO.updateGroupName(
-                    GroupDTO.builder()
-                            .id(groupID)
-                            .groupname(groupname)
-                            .build());
-
-            if (groupNameResult) {
-                resp.setStatus(HttpServletResponse.SC_OK);
-                System.out.println("update group name 성공~!");
-            } else {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                System.out.println("update group name 실패 ㅠㅠ");
-
-            }
-
-        } else if (image != null) {
+        } else {
             // 이미지 변경
             UpdateImageUrlDTO updateImageUrlDTO = getImageDTO(image, username, getServletConfig());
             InputImageUrlDTO inputImageUrlDTO = getInputImageUrlDTO(updateImageUrlDTO, groupID);
 
             // 서버에 이미지 저장
             CompletableFuture<Void> uploadImageFuture = CompletableFuture.runAsync(() -> {
-                uploadImage(image, updateImageUrlDTO.getImgFolderPath(),updateImageUrlDTO.getUploadUrl());
+                uploadImage(image, updateImageUrlDTO.getImgFolderPath(), updateImageUrlDTO.getUploadUrl());
             });
 
-            // group image_url 수정
+            // group 수정
             CompletableFuture<Void> updateGroupImageUrl = CompletableFuture.runAsync(() -> {
                 updateGroupDAO.updateImage(GroupDTO.builder()
                         .id(groupID)
+                        .groupname(groupname)
+                        .content(content)
                         .imageUrl(updateImageUrlDTO.getImageUrl())
                         .build());
             }).exceptionally(ex -> {
@@ -262,9 +250,10 @@ public class CrudGroup extends HttpServlet {
                     boolean isUpdateFile = fileDAO.updateFileGroup(inputImageUrlDTO);
                     System.out.println("isUpdateFile : " + isUpdateFile);
                     if (isUpdateFile) {
-                        resultMap.put("isUpdateFile", "ok");
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                        resultMap.put("status", "ok");
                     } else {
-                        resp.setStatus(400);
+                        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                         resultMap.put("isUpdateFile", "fail");
                     }
                     return isUpdateFile;
@@ -272,9 +261,10 @@ public class CrudGroup extends HttpServlet {
                     boolean isInsertFile = fileDAO.insertFileGroup(inputImageUrlDTO);
                     System.out.println("isInsertFile : " + isInsertFile);
                     if (isInsertFile) {
-                        resultMap.put("isInsertFile", "ok");
+                        resp.setStatus(HttpServletResponse.SC_OK);
+                        resultMap.put("status", "ok");
                     } else {
-                        resp.setStatus(400);
+                        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                         resultMap.put("isInsertFile", "fail");
                     }
                     return isInsertFile;
@@ -293,7 +283,6 @@ public class CrudGroup extends HttpServlet {
                 throw new RuntimeException(e);
             }
         }
-
 
         String resultJson = gson.toJson(resultMap);
         resp.setContentType("application/json; charset=utf-8");

@@ -148,11 +148,20 @@ main.group-container * {
 
 .group-container .item.btn-group {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .group-container .item.btn-group > .submit {
     background-color: var(--color-primary);
+    color: #fff;
+    border-radius: var(--border-rdius);
+    font-size: 14px;
+    border: 0;
+    padding: 8px;
+}
+
+.group-container .item.btn-group > .delete {
+    background-color: var(--color-invalid);
     color: #fff;
     border-radius: var(--border-rdius);
     font-size: 14px;
