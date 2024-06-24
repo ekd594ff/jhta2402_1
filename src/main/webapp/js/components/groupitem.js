@@ -1,4 +1,7 @@
 function groupItem(group) {
+
+    console.log(group);
+
     const item = document.createElement("li");
     item.classList.add("group-item");
 
@@ -24,21 +27,41 @@ function groupItem(group) {
         </div>
     `;
 
-
     const followButton = item.querySelector('.follow-button');
-
+    let inputdata = {
+        "groupID" : group.id,
+    }
     followButton.onclick = () => {
         if (followButton.classList.contains('following')) {
-            //언팔로우
-            followButton.classList.remove('following');
-            followButton.textContent = '팔로우'
+            fetch(`/group/follow?groupID=${group.id}`,{ //언팔로우
+                method: "DELETE",
+                // headers: {
+                //     'Accept': 'application/json',
+                //     'Content-Type': 'application/json'
+                // },
+                // body: JSON.stringify(inputdata)
+            }) .then((response)=>{
+                console.log(response);
+            }) .then(()=>{
+                followButton.classList.remove('following');
+                followButton.textContent = '팔로우'
+            })
         } else {
-            //팔로우
-            followButton.classList.add('following');
-            followButton.textContent = '취소'
+            fetch("/group/follow",{ //팔로우
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(inputdata)
+            }) .then((response)=>{
+                console.log(response);
+            }) .then(()=>{
+                followButton.classList.add('following');
+                followButton.textContent = '취소'
+            })
         }
     };
-
     return item;
 }
 

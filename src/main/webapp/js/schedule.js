@@ -347,7 +347,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         modalEventAdd.modal('toggle');
     });
-
 });
 
 function stringToDate(dateStr) {

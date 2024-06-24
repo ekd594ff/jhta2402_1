@@ -34,7 +34,6 @@
     let isMyGroupBlank = false;
     let isFollowGroupBlank = false;
 
-
     fetch("/group/follow", {
         method: "GET",
     })
@@ -68,6 +67,5 @@
                 }
             }
         });
-
 </script>
 </html>
