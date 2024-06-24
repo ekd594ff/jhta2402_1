@@ -1,7 +1,5 @@
 function groupItem(group) {
 
-    console.log(group);
-
     const item = document.createElement("li");
     item.classList.add("group-item");
 
@@ -40,8 +38,6 @@ function groupItem(group) {
                 //     'Content-Type': 'application/json'
                 // },
                 // body: JSON.stringify(inputdata)
-            }) .then((response)=>{
-                console.log(response);
             }) .then(()=>{
                 followButton.classList.remove('following');
                 followButton.textContent = '팔로우'
@@ -54,8 +50,6 @@ function groupItem(group) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(inputdata)
-            }) .then((response)=>{
-                console.log(response);
             }) .then(()=>{
                 followButton.classList.add('following');
                 followButton.textContent = '취소'

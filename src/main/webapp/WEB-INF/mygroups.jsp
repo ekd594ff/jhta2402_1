@@ -42,10 +42,7 @@
         })
         .then((resp) => {
             const {myGroups,followGroups} = resp;
-            console.log(myGroups);
-            console.log(followGroups);
             if (Array.isArray(myGroups)){
-                console.log(myGroups.length)
                 if (myGroups.length === 0) {
                     document.querySelector('.mygroups-nothing').style.display='flex';
                 }
@@ -56,7 +53,6 @@
                 }
             }
             if (Array.isArray(followGroups)){
-                console.log(followGroups.length)
                 if (followGroups.length === 0) {
                     document.querySelector('.followgroups-nothing').style.display = 'flex';
                 }
