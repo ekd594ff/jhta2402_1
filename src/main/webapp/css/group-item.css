@@ -71,27 +71,55 @@
     display: none;
 }
 
-.follow-button {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 10px 10px;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    height: 35px;
-    margin: 10px;
-}
-
-.follow-button.following{
-    background-color: #909090;
-}
-
-
-.follow-button:hover {
-    background-color: #0056b3;
-}
-
 .group-item.hidden{
     display: none;
+}
+
+
+.group-follow-button {
+    display: flex;
+    gap: 4px;
+}
+
+.group-follow-button > button {
+    border-radius: 4px;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 16px;
+    display: none;
+}
+
+.group-follow-button > .flex{
+    display: flex;
+}
+.group-follow-button > button.follow-btn {
+    background-color: #0d6efd;
+    color: #fff;
+}
+.group-follow-button > button.follow-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.group-follow-button > button.unfollow-btn {
+    background-color: transparent;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+}
+
+.group-follow-button > button.unfollow-btn:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.group-follow-button > button.group-edit-btn {
+    background-color: transparent;
+    color: #909090;
+    border: 1px solid #909090
+}
+
+.group-follow-button > button.group-edit-btn:hover {
+    background-color: #909090;
+    color: #fff;
 }
