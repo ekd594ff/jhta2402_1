@@ -55,7 +55,7 @@
     groupForm.addEventListener("submit", (event) => {
         event.preventDefault();
     });
-
+  
     if ("${sessionScope.member.username}" === "") {
         alert('로그인 후 이용 가능합니다');
         window.location.href = '/signin';

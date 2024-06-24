@@ -15,6 +15,7 @@ import com.desk8432.project.util.CookieManager;
 
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ import static com.desk8432.project.util.UploadImage.getImageDTO;
 import static com.desk8432.project.util.UploadImage.uploadImage;
 
 @WebServlet("/group/crud")
+@MultipartConfig
 public class CrudGroup extends HttpServlet {
 
     @Override
@@ -213,7 +215,6 @@ public class CrudGroup extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 resultMap.put("status", "failure");
                 System.out.println("update content 실패 ㅠㅠ");
-
             }
 
         } else {
@@ -315,7 +316,6 @@ public class CrudGroup extends HttpServlet {
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             System.out.println("실패 ㅠㅠ");
-
         }
     }
 

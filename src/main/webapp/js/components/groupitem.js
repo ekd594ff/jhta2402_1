@@ -1,4 +1,5 @@
 function groupItem(group) {
+
     const item = document.createElement("li");
     item.classList.add("group-item");
 
@@ -18,10 +19,47 @@ function groupItem(group) {
                 <div>${group.created_at}</div>
                 <div>${group.content}</div>
             </div>
-            <div class="button">
-                FOLLOW
-            </div>
+            <button class="follow-button ${group.is_follow ? "following" : ""}" >
+                ${group.is_follow ? "취소" : "팔로우"}
+            </button>
         </div>
     `;
+
+    const followButton = item.querySelector('.follow-button');
+    let inputdata = {
+        "groupID" : group.id,
+    }
+    followButton.onclick = () => {
+        if (followButton.classList.contains('following')) {
+            fetch(`/group/follow?groupID=${group.id}`,{ //언팔로우
+                method: "DELETE",
+                // headers: {
+                //     'Accept': 'application/json',
+                //     'Content-Type': 'application/json'
+                // },
+                // body: JSON.stringify(inputdata)
+            }) .then(()=>{
+                followButton.classList.remove('following');
+                followButton.textContent = '팔로우'
+            })
+        } else {
+            fetch("/group/follow",{ //팔로우
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(inputdata)
+            }) .then(()=>{
+                followButton.classList.add('following');
+                followButton.textContent = '취소'
+            })
+        }
+    };
     return item;
 }
+
+
+
+
+
