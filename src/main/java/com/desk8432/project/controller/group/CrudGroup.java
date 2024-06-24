@@ -79,6 +79,7 @@ public class CrudGroup extends HttpServlet {
             }
             return false;
         });
+
         // group DB에 저장 되면 검색
         insertGroupFuture.thenApply(res -> {
 
