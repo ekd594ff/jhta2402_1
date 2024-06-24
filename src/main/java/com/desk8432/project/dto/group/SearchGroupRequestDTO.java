@@ -12,5 +12,6 @@ public class SearchGroupRequestDTO {
 
     private String searchFilter;
     private String searchValue;
+    private String username;
     private int page;
 }

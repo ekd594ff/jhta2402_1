@@ -12,7 +12,9 @@
 <!--        select * from jhta01_group where creator in #{username}-->
 <!--    </select>-->
     <select id="getSearchGroupList" resultType="SearchGroupDTO" parameterType="SearchGroupRequestDTO">
-        select * from jhta01_group where
+        select id,creator,"name" ,image_url ,"content",created_at ,updated_at ,
+        (case when id in (select group_id from jhta01_follow jf where username = #{username}) then true else false end) as is_follow
+        from jhta01_group where
         <choose>
             <when test="searchFilter == 'all'">
                 creator like '%'||#{searchValue}||'%' or

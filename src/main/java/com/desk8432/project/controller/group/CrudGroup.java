@@ -212,9 +212,7 @@ public class CrudGroup extends HttpServlet {
             } else {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 System.out.println("update content 실패 ㅠㅠ");
-
             }
-
         } else if (groupname != null) {
             // 그룹 이름 변경
             boolean groupNameResult = updateGroupDAO.updateGroupName(
@@ -328,7 +326,6 @@ public class CrudGroup extends HttpServlet {
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             System.out.println("실패 ㅠㅠ");
-
         }
     }
 
