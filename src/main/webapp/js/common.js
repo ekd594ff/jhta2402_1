@@ -71,6 +71,14 @@ function shutdownDropdownMenu() {
     }
 }
 
+function searchGroup() {
+    alert("searchGroup");
+    var searchQuery = document.getElementById("searchQuery").value;
+    var form = document.getElementById("searchForm");
+    form.action = "/group/search";
+    form.submit();
+}
+
 document.addEventListener("DOMContentLoaded", (event) => {
     addAvatarHeaderDropdownToggleButtonHandler();
     addDropdownItemDropdownOffHandler();
