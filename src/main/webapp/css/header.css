@@ -12,20 +12,6 @@
     width: 100%;
 }
 
-.right {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.header .search > input {
-    margin: 0;
-}
-
-.header .search > button {
-    margin: 0;
-}
-
 .header .avatar {
     width: var(--avatar-diameter);
     height: var(--avatar-diameter);
