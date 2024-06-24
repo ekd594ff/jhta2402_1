@@ -109,12 +109,12 @@
                 </div>
             </div>
             <div class="right">
-                <h2 class="group-name">그룹 이름</h2>
-                <pre class="group-content">그룹 내용</pre>
+                <h2 class="group-name" id="div-group-name">그룹 이름</h2>
+                <pre class="group-content" id="div-group-content">그룹 내용</pre>
                 <div class="follow-btn-group">
-                    <button class="follow" onclick="onClickGroupFollowBtn(event)">팔로우</button>
-                    <button class="unfollow" onclick="onClickGroupUnFollowBtn(event)">언팔로우</button>
-                    <button class="group-edit" onclick="onClickGroupEditBtn(event)">그룹수정</button>
+                    <button class="follow">팔로우</button>
+                    <button class="unfollow">언팔로우</button>
+                    <button class="group-edit">그룹수정</button>
                 </div>
             </div>
         </div>

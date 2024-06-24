@@ -3,41 +3,33 @@ const modalEventAdd = $('#modal-add-event');
 const inputEventId = $('#input-event-id');
 const inputStartDate = $('#input-start-date');
 const inputEndDate = $('#input-end-date');
-const inputTitle = $('#input-title');
-const inputContent = $('#input-content');
-const inputGroup = $('#input-group');
+const eventTitle = $('#event-title');
+const eventContent = $('#event-content');
+// const inputGroup = $('#input-group');
 
 const buttonEventAdd = $('#button-event-add');
 const buttonEventDelete = $('#button-event-delete');
-const divGroup = $('#div-group');
-const divInputGroup = $('#div-input-group');
+// const divGroup = $('#div-group');
+// const divInputGroup = $('#div-input-group');
+//
+const divGroupName = $('#div-group-name');
+const divGroupContent = $('#div-group-content');
+
+const buttonFollow = $('.follow');
+const buttonUnFollow = $('.unfollow');
+const buttonEdit = $('.group-edit');
 
 let username;
+let groupInfo;
+let isFollow = false;
+let editable = false;
 
 const colorArray = ['#1a8fe3', 'blue', 'green', 'purple', 'orange', 'red', 'skyblue', 'gray'];
 const textColorArray = ['#ffffff', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
 
-let followGroupInfo = [];
-let followGroupIdArray = [];
-
-let inputGroupIdArray = [];
-let hiddenGroupIdArray = [];
-
 let activePopoverEvent = null;
 
 let calendarInstance = null;
-
-function onClickGroupFollowBtn(event) {
-    console.log("group follow button click");
-}
-
-function onClickGroupUnFollowBtn(event) {
-    console.log("group unfollow button click");
-}
-
-function onClickGroupEditBtn(event) {
-    console.log("group edit button click");
-}
 
 function onClickPopover(event) {
     event.stopPropagation();
@@ -59,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         editable: false,
         selectable: true,
         events: {
-            url: '/schedule/list',
+            url: '/schedule/group',
             method: 'POST',
             failure: function () {
                 alert('문제가 발생했습니다. 다시 시도해 주세요.');
@@ -67,67 +59,22 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         eventSourceSuccess: function (content, response) {
             username = content.username;
-            followGroupInfo = content.groups;
+            groupInfo = content.group;
+            console.log(groupInfo);
+            isFollow = content.isFollow;
+            editable = username === groupInfo['creator'] + '';
+
+            initialSetting();
+
+            console.log(content.events);
             return content.events;
         },
         eventDataTransform: function (eventData) {
             let id = eventData.groupID;
             id = (!id) ? 0 : id;
             let colorIndex;
-            let editable = eventData.editor === username;
 
-            let groupname;
-
-            if (id === 0) {
-                groupname = '개인 일정';
-            } else {
-                let followIndex = followGroupInfo.findIndex(function (group) {
-                    return group.id === id;
-                });
-                groupname = followGroupInfo[followIndex].groupname;
-            }
-
-            if (editable && !inputGroupIdArray.includes(id)) {
-                inputGroupIdArray.push(id);
-                inputGroup.append("<option value=\"" + id + "\">" + groupname + "</option>");
-            }
-
-            if (!followGroupIdArray.includes(id)) {
-                let colorIndex = (followGroupIdArray.length) % colorArray.length;
-                followGroupIdArray.push(id);
-
-                divGroup.append(
-                    "<span id='span-group-" + id + "' " +
-                    "class='badge d-flex align-items-center px-5 py-2 m-2 text-primary-emphasis" +
-                    " border border-secondary-subtle rounded-pill' " +
-                    "style='" +
-                    "font-size: 14px; " +
-                    "color: " + textColorArray[colorIndex] + " !important; " +
-                    "background-color: " + colorArray[colorIndex] + ";" +
-                    "'>" + groupname + "</span>");
-
-                $('#span-group-' + id).on('click', function () {
-                    if ($(this).hasClass('hidden')) {
-                        $(this).removeClass('hidden');
-                        $(this).css({
-                            'background-color': colorArray[colorIndex]
-                        });
-                        hiddenGroupIdArray.splice(hiddenGroupIdArray.indexOf(id), 1);
-                    } else {
-                        $(this).addClass('hidden');
-                        $(this).css({
-                            'background-color': '#D3D3D3'
-                        });
-
-                        hiddenGroupIdArray.push(id);
-                    }
-
-                    calendar.removeAllEvents();
-                    calendar.refetchEvents();
-                });
-            }
-
-            colorIndex = followGroupIdArray.indexOf(id) % colorArray.length;
+            colorIndex = 0;
 
             return {
                 id: eventData.id,
@@ -145,17 +92,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 textColor: textColorArray[colorIndex],
             };
         },
-        // trigger when group toggle
-        eventDidMount: function (info) {
-            const {el} = info;
-
-            if (hiddenGroupIdArray.includes(info.event.extendedProps.groupId)) {
-                $(el).hide();
-            } else {
-                $(el).show();
-            }
-        },
         select: function (selectionInfo) {
+            if (!editable) {
+                calendar.unselect();
+                return;
+            }
+
             //when select multiple cells
             const { startStr ,endStr , jsEvent } = selectionInfo;
             jsEvent.stopImmediatePropagation();
@@ -182,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         },
         eventClick: function (info) {
-            if (username !== info.event.extendedProps.editor) return;
+            if (!editable) return;
 
             info.jsEvent.stopPropagation();
 
@@ -215,6 +157,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
 
         eventChange: function (info) {
+            if (!editable) return;
+
             info.event.extendedProps.groupId = info.oldEvent.groupId;
             info.event.groupId = info.event.id;
 
@@ -255,17 +199,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calendarInstance = calendar;
 
-    //
     buttonEventAdd.on('click', function () {
-        if (checkIsEmpty(inputTitle.val(), inputContent.val(), inputGroup.val(), inputStartDate.val())) {
+        if (checkIsEmpty(eventTitle.val(), eventContent.val(), inputStartDate.val())) {
             return;
         }
 
         if (modalTitle.text() === '일정 추가') {
             const event = {
-                groupID: inputGroup.val(),
-                title: inputTitle.val(),
-                content: inputContent.val(),
+                groupID: groupInfo['id'] + '',
+                title: eventTitle.val(),
+                content: eventContent.val(),
                 startDate: inputStartDate.val(),
                 endDate: inputEndDate.val()
             };
@@ -284,8 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(res => {
-                    calendar.removeAllEvents();
-                    calendar.refetchEvents();
+                    calendar.addEvent(event);
                     alert('생성되었습니다.');
                 })
                 .catch(error => {
@@ -298,9 +240,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const event = {
                 id: inputEventId.val(),
-                groupID: inputGroup.val(),
-                title: inputTitle.val(),
-                content: inputContent.val(),
+                groupID: groupInfo['id'] + '',
+                title: eventTitle.val(),
+                content: eventContent.val(),
                 startDate: inputStartDate.val(),
                 endDate: inputEndDate.val()
             };
@@ -319,8 +261,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(res => {
-                    calendar.removeAllEvents();
-                    calendar.refetchEvents();
+                    calendar.getEventById(event.id).remove();
+                    calendar.addEvent(event);
                     alert('수정되었습니다.');
                 })
                 .catch(error => {
@@ -359,6 +301,48 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         modalEventAdd.modal('toggle');
     });
+
+    buttonEdit.on('click', function () {
+        window.location.href = '/group/update?id=' + groupInfo['id'];
+    });
+
+    buttonFollow.on('click', function () {
+        const data = {
+            "username": username,
+            "groupID": groupInfo['id'],
+        };
+        $.ajax({
+            url: '/group/follow',
+            method: 'POST',
+            dataType : 'json',
+            contentType : 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                alert("팔로우 되었습니다");
+                buttonFollow.css('display', 'none');
+                buttonUnFollow.css('display', 'block');
+            },
+            error: function (result) {
+                alert("오류가 발생했습니다. 다시 시도해주세요");
+            }
+        })
+    });
+
+    buttonUnFollow.on('click', function () {
+        $.ajax({
+            url: '/group/follow?groupID=' + groupInfo['id'],
+            method: 'DELETE',
+            dataType: 'text',
+            success: function (result) {
+                alert("팔로우 해제되었습니다");
+                buttonFollow.css('display', 'block');
+                buttonUnFollow.css('display', 'none');
+            },
+            error: function (result) {
+                alert("오류가 발생했습니다. 다시 시도해주세요");
+            }
+        });
+    });
 });
 
 function stringToDate(dateStr) {
@@ -374,11 +358,10 @@ function setModal(title, buttonText, eventId, groupId, start, end, eventTitle, e
     modalTitle.text(title);
     buttonEventAdd.text(buttonText);
     inputEventId.val(eventId);
-    inputGroup.val(groupId);
     inputStartDate.val(start);
     inputEndDate.val(end);
-    inputTitle.val(eventTitle);
-    inputContent.val(eventContent);
+    eventTitle.val(eventTitle);
+    eventContent.val(eventContent);
 }
 
 document.addEventListener("click", () => {
@@ -491,7 +474,7 @@ function setAddEventPopover(data) {
 
 function onClickCreateEvent(event) {
     const newEvent = {
-        groupID: 0,
+        groupID: groupInfo['id'] + '',
         title: document.querySelector("#add-event-title").value,
         content: document.querySelector("#add-event-content").value,
         startDate: document.querySelector("#add-event-start-date").value,
@@ -532,4 +515,18 @@ function emptyCreateEventForm() {
     document.querySelector("#add-event-content").value = "";
     document.querySelector("#add-event-start-date").value = "";
     document.querySelector("#add-event-end-date").value = "";
+}
+
+function initialSetting() {
+    divGroupName.text(groupInfo['groupname']);
+    divGroupContent.text(groupInfo['content']);
+
+    if (username === groupInfo['creator'] + '') {
+        buttonEdit.css('display', 'block');
+    } else if (isFollow) {
+        buttonUnFollow.css('display', 'block');
+    } else {
+        buttonFollow.css('display', 'block');
+    }
+
 }

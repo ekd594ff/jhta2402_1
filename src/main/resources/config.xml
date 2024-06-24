@@ -25,6 +25,7 @@
         <typeAlias type="com.desk8432.project.dto.group.SearchGroupDTO" alias="SearchGroupDTO" />
         <typeAlias type="com.desk8432.project.dto.group.FollowRequestDTO" alias="FollowRequestDTO" />
         <typeAlias type="com.desk8432.project.dto.group.DeleteGroupDTO" alias="DeleteGroupDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.IsFollowDTO" alias="IsFollowDTO" />
 <!--        <typeAlias type="com.desk8432.project.dto.schedule.CreateScheduleDTO" alias="CreateScheduleDTO" />-->
     </typeAliases>
     <environments default="development">

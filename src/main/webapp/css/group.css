@@ -64,16 +64,19 @@
 .myschedule .follow-btn-group > button.follow {
     background-color: #0d6efd;
     color: #fff;
+    display: none;
 }
 
 .myschedule .follow-btn-group > button.unfollow {
     background-color: transparent;
     color: #0d6efd;
     border: 1px solid #0d6efd;
+    display: none;
 }
 
 .myschedule .follow-btn-group > button.group-edit {
     background-color: transparent;
     color: #909090;
-    border: 1px solid #909090
+    border: 1px solid #909090;
+    display: none;
 }
