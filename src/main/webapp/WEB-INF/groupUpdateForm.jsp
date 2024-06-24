@@ -10,7 +10,7 @@
 <jsp:include page="../components/header.jsp"/>
 <main class="group-container">
     <form class="group-form">
-        <h2>그룹 생성</h2>
+        <h2>그룹 수정</h2>
         <ul class="list">
             <li class="item group-img-title">
                 <div class="left">
@@ -39,8 +39,8 @@
                 </label>
             </li>
             <li class="item btn-group">
-                <div></div>
-                <button class="submit">그룹 생성</button>
+                <button class="delete">그룹 삭제</button>
+                <button class="submit">그룹 수정</button>
             </li>
         </ul>
     </form>
@@ -55,15 +55,23 @@
     groupForm.addEventListener("submit", (event) => {
         event.preventDefault();
     });
-  
-    if ("${sessionScope.member.username}" === "") {
-        alert('로그인 후 이용 가능합니다');
-        window.location.href = '/signin';
-    }
 
-    // document.querySelectorAll("button").forEach((button) => {
-    //     button.style.visibility = (button.className !== 'create-group') ? 'hidden' : '';
-    // });
+    let changeFile = false;
+
+    fetch("/group/info?id=" + "${requestScope.id}", {
+        method: "GET"
+    })
+        .then((result) => result.json())
+        .then((resp) => {
+            <%--if (resp.creator !== "${sessionScope.member.username}") {--%>
+            <%--    alert('유효하지 않은 접근입니다');--%>
+            <%--    window.location.href = '/mygroups';--%>
+            <%--}--%>
+
+            setGroupImageFormSrcDefault(resp);
+            setGroupValueDefault(resp);
+
+        });
 
     document.querySelector(".btn-group .submit").addEventListener("click", (event) => {
 
@@ -78,28 +86,55 @@
 
         const formData = new FormData();
 
+        formData.append("id", ${requestScope.id});
         formData.append("name", groupName);
         formData.append("content", content);
-        formData.append("image", file);
+        if (changeFile) {
+            formData.append("image", file);
+        }
 
         fetch("/group/crud", {
-            method: "POST",
+            method: "PUT",
             body: formData,
         }).then((result) => {
-            if (result.ok) {
-                window.alert("그룹이 추가되었습니다");
-                window.location.href = '/mygroups';
-            }
+            console.log(result);
+            window.location.href = '/mygroups';
+            window.alert("그룹 정보가 수정되었습니다");
             return result.json();
         });
     });
+
+    document.querySelector(".btn-group .delete").addEventListener("click", (event) => {
+
+        const groupName = document.querySelector("#group-name").value;
+        const content = document.querySelector("#group-content").value;
+        const file = document.querySelector('#group-img-input').files[0];
+
+        if (!groupName) {
+            window.alert("그룹 이름을 입력해주세요");
+            return;
+        }
+
+        if (confirm("그룹을 삭제하시겠습니까?")) {
+            fetch("/group/crud?id=${requestScope.id}", {
+                method: "DELETE",
+            }).then((result) => {
+                console.log(result);
+                window.location.href = '/mygroups';
+                window.alert("그룹이 삭제되었습니다");
+                return result.json();
+            });
+        }
+
+    });
+
 
     function setGroupImageFormSrcDefault(resp) {
         const imageUrl = resp.image_url;
         if (imageUrl) {
             const groupFormImgEl = document.querySelector("#group-img");
             const groupImgWrapperEl = document.querySelector('.group-img-wrapper');
-            groupFormImgEl.setAttribute("src",  "/" + imageUrl);
+            groupFormImgEl.setAttribute("src", "/" + imageUrl);
             groupFormImgEl.style.display = "block";
             groupImgWrapperEl.classList.add("active");
         }
@@ -113,6 +148,8 @@
     }
 
     function onChangeFileInput(event) {
+        changeFile = true;
+
         const file = event.target.files?.[0];
         const groupImgContainerEl = document.querySelector(`.group-img-container`);
         const groupImgEl = document.querySelector(`img#group-img`);
@@ -130,6 +167,5 @@
             groupImgEl.setAttribute("src", imgSrc);
         }
     }
+
 </script>
-</body>
-</html>
