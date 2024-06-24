@@ -146,6 +146,7 @@
         <%--    const value = textarea.value;--%>
 
         <%--    let formData = new FormData();--%>
+        <%--    formData.append('id', ${requestScope.id});--%>
         <%--    formData.append('content', value);--%>
 
         <%--    fetch("/group/crud", {--%>
@@ -168,6 +169,7 @@
         <%--    }--%>
 
         <%--    let formData = new FormData();--%>
+        <%--    formData.append('id', ${requestScope.id}));--%>
         <%--    formData.append('image', file);--%>
 
         <%--    fetch("/group/crud", {--%>
@@ -193,11 +195,8 @@
             const content = document.querySelector("#group-content").value;
             const file = document.querySelector('#group-img-input').files[0];
 
-            if (!file) {
-                window.alert("파일을 업로드 해 주세요");
-                return;
-            } else if (!groupName) {
-                window.alert("그룹 이름을 입력 해 주세요");
+            if (!groupName) {
+                window.alert("그룹 이름을 입력해주세요");
                 return;
             }
 
@@ -226,9 +225,9 @@
             const groupContentTextarea = document.querySelector("#group-content");
 
             let formData = new FormData();
-            formData.append('name', groupNameInput.value);
-            formData.append('content', groupContentTextarea.value);
-
+            formData.append('id', ${requestScope.id});
+            formData.append('name', input.value);
+      
             fetch("/group/crud", {
                 method: "PUT",
                 body: formData
@@ -249,7 +248,7 @@
         if (src) {
             const profileFormImgEl = document.querySelector("#profile-img");
             const profileImgWrapperEl = document.querySelector(`.profile-img-wrapper`);
-            profileFormImgEl.setAttribute("src", src);
+            profileFormImgEl.setAttribute("src",  "/" + src);
             profileImgWrapperEl.classList.add("active");
         }
     }
