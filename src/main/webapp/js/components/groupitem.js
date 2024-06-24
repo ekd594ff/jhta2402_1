@@ -19,43 +19,55 @@ function groupItem(group) {
                 <div>${group.created_at}</div>
                 <div>${group.content}</div>
             </div>
-            <button class="follow-button ${group.is_follow ? "following" : ""}" >
-                ${group.is_follow ? "취소" : "팔로우"}
-            </button>
+            <div class="group-follow-button">
+                    <button class="follow-btn" >팔로우</button>
+                    <button class="unfollow-btn" >언팔로우</button>
+                    <button class="group-edit-btn" >그룹수정</button>
+            </div>
         </div>
     `;
+    const is_follow = group.is_follow;
+    const is_creator = group.is_creator;
 
-    const followButton = item.querySelector('.follow-button');
-    let inputdata = {
-        "groupID" : group.id,
+    if (is_creator) {
+        const groupEditButton = item.querySelector('.group-edit-btn');
+        groupEditButton.classList.add("flex");
+    } else if (is_follow) {
+        const followButton = item.querySelector('.follow-btn');
+        followButton.classList.add("flex");
+    } else {
+        const unFollowButton = item.querySelector('.unfollow-btn');
+        unFollowButton.classList.add("flex");
     }
-    followButton.onclick = () => {
-        if (followButton.classList.contains('following')) {
-            fetch(`/group/follow?groupID=${group.id}`,{ //언팔로우
-                method: "DELETE",
-                // headers: {
-                //     'Accept': 'application/json',
-                //     'Content-Type': 'application/json'
-                // },
-                // body: JSON.stringify(inputdata)
-            }) .then(()=>{
-                followButton.classList.remove('following');
-                followButton.textContent = '팔로우'
-            })
-        } else {
-            fetch("/group/follow",{ //팔로우
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(inputdata)
-            }) .then(()=>{
-                followButton.classList.add('following');
-                followButton.textContent = '취소'
-            })
-        }
-    };
+
+
+    // followButton.onclick = () => {
+    //     if (followButton.classList.contains('following')) {
+    //         fetch(`/group/follow?groupID=${group.id}`,{ //언팔로우
+    //             method: "DELETE",
+    //             // headers: {
+    //             //     'Accept': 'application/json',
+    //             //     'Content-Type': 'application/json'
+    //             // },
+    //             // body: JSON.stringify(inputdata)
+    //         }) .then(()=>{
+    //             followButton.classList.remove('following');
+    //             followButton.textContent = '팔로우'
+    //         })
+    //     } else {
+    //         fetch("/group/follow",{ //팔로우
+    //             method: "POST",
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(inputdata)
+    //         }) .then(()=>{
+    //             followButton.classList.add('following');
+    //             followButton.textContent = '취소'
+    //         })
+    //     }
+    // };
     return item;
 }
 
