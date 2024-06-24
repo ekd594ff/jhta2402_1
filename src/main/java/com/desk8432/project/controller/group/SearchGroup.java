@@ -26,11 +26,10 @@ public class SearchGroup extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String searchQuery = req.getParameter("searchQuery");
-
-
+//        Dispatcher dispatcher = new Dispatcher();
+//        String jsonSTR = dispatcher.getBody(req);
+//        System.out.println("jsonSTR = " + jsonSTR);
         resp.setContentType("application/json; charset=utf-8");
-        resp.getWriter().println("Search Query == " + searchQuery);
         Gson gson = new Gson();
         SearchGroupRequestDTO searchGroupRequestDTO = gson.fromJson(req.getReader(), SearchGroupRequestDTO.class);
         SearchGroupDAO searchGroupDAO = new SearchGroupDAO();
