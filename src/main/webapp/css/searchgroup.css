@@ -1,6 +1,8 @@
 @import "variables.css";
 
 .groupSearch-container {
+    user-select: none;
+    padding-top: 20px;
     display: flex;
     justify-content: center;
     --color-invalid: #f44336;
@@ -9,11 +11,18 @@
     --color-primary: #0d6efd;
     --color-default: #909090;
     --border-radius: 4px;
+    flex-direction: column;
+    align-items: center;
+}
+.groupSearch-container > ul{
+    padding: 0;
+}
+.groupSearch-container > ul > li .info{
+    cursor: pointer;
 }
 .groupSearch-container >.list > h2 {
     text-align: center;
 }
-
 .groupSearch-container .group-img {
     background-color: #909090;
     border-radius: 50%;
@@ -26,11 +35,57 @@
     overflow: hidden;
 }
 
+.groupSearch-container .img-container{
+    cursor: pointer;
+}
+
 .groupSearch-container ul.list{
     width: 640px;
 }
 
-.groupSearch-container .showMoreButton{
-    display: flex;
+
+/* styles.css 파일에 다음 내용을 추가하세요 */
+
+/* 검색 폼 스타일 */
+.custom-search-form {
+    background-color: #f8f9fa; /* 폼 배경색 */
+    padding: 10px; /* 폼 패딩 */
+    border-radius: 10px; /* 폼 테두리 둥글게 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 폼 그림자 */
+    max-width: 600px; /* 폼 최대 너비 */
+    margin: 0 auto; /* 폼을 가운데 정렬 */
 }
+
+/* 검색 필터 스타일 */
+.custom-search-filter {
+    border: 1px solid #ced4da; /* 필터 테두리 색상 */
+    border-radius: 15px 0 0 15px; /* 필터 테두리 둥글게 (왼쪽만 더 둥글게) */
+    padding: 5px; /* 필터 패딩 */
+}
+
+/* 검색 박스 스타일 */
+.custom-search-box {
+    border: 1px solid #ced4da; /* 검색 박스 테두리 색상 */
+    border-left: 0; /* 검색 박스 왼쪽 테두리 제거 */
+    border-right: 0; /* 검색 박스 오른쪽 테두리 제거 */
+    border-radius: 0; /* 검색 박스 테두리 둥글게 제거 */
+    flex-grow: 1; /* 검색 박스가 더 넓어지도록 */
+    padding: 5px; /* 검색 박스 패딩 */
+}
+
+/* 검색 버튼 스타일 */
+.custom-search-btn {
+    background-color: #007bff; /* 버튼 배경색 */
+    border: none; /* 버튼 테두리 제거 */
+    border-radius: 0 15px 15px 0; /* 버튼 테두리 둥글게 (오른쪽만 더 둥글게) */
+    color: white; /* 버튼 텍스트 색상 */
+    padding: 7px 15px; /* 버튼 패딩 */
+    cursor: pointer; /* 커서 변경 */
+}
+
+.custom-search-btn:hover {
+    background-color: #0056b3; /* 버튼 호버 시 배경색 */
+}
+
+
 

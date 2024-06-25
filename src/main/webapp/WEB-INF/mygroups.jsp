@@ -19,6 +19,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon mygroups-nothing" style="width: 32px; height: 32px;vertical-align: middle;fill: currentColor;overflow: hidden; display: none" viewBox="0 0 1024 1024" version="1.1">
                 <path d="M512 64c-247.4 0-448 200.6-448 448 0 247.4 200.6 448 448 448s448-200.6 448-448C960 264.6 759.4 64 512 64L512 64zM118.3 512c0-217.4 176.3-393.7 393.7-393.7 94.3 0 180.9 33.2 248.7 88.5 10.3 8.4 20.1 17.3 29.5 26.6L220.8 777c-1-1.1-2-2.2-2.9-3.3C155.9 704.2 118.3 612.5 118.3 512L118.3 512zM512 905.7c-94.8 0-181.8-33.5-249.7-89.3l565.4-539.7c49 65.6 78 147.1 78 235.3C905.7 729.4 729.4 905.7 512 905.7L512 905.7zM512 905.7"/></svg>
         </ul>
+        <div class="hidden-item-btn-group">
+            <button class="btn show-myitem-btn hidden" >더보기</button>
+            <button class="btn hidden-myitem-btn hidden" >숨기기</button>
+        </div>
     </div>
     <div class="groupSearch-container">
         <ul class="list" id="followgroups">
@@ -26,6 +30,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="svg-icon followgroups-nothing" style="width: 32px; height: 32px;vertical-align: middle;fill: currentColor;overflow: hidden; display: none" viewBox="0 0 1024 1024" version="1.1">
                 <path d="M512 64c-247.4 0-448 200.6-448 448 0 247.4 200.6 448 448 448s448-200.6 448-448C960 264.6 759.4 64 512 64L512 64zM118.3 512c0-217.4 176.3-393.7 393.7-393.7 94.3 0 180.9 33.2 248.7 88.5 10.3 8.4 20.1 17.3 29.5 26.6L220.8 777c-1-1.1-2-2.2-2.9-3.3C155.9 704.2 118.3 612.5 118.3 512L118.3 512zM512 905.7c-94.8 0-181.8-33.5-249.7-89.3l565.4-539.7c49 65.6 78 147.1 78 235.3C905.7 729.4 729.4 905.7 512 905.7L512 905.7zM512 905.7"/></svg>
         </ul>
+        <div class="hidden-item-btn-group">
+            <button class="btn show-item-btn hidden" >더보기</button>
+            <button class="btn hidden-item-btn hidden" >숨기기</button>
+        </div>
     </div>
 <jsp:include page="../components/footer.jsp"/>
 </body>
@@ -35,6 +43,10 @@
 <script>
     let isMyGroupBlank = false;
     let isFollowGroupBlank = false;
+    const showMyItemBtn = document.querySelector('.show-myitem-btn');
+    const hiddenMyItemBtn = document.querySelector('.hidden-myitem-btn');
+    const showItemBtn = document.querySelector('.show-item-btn');
+    const hiddenItemBtn = document.querySelector('.hidden-item-btn');
 
     fetch("/group/follow", {
         method: "GET",
@@ -49,9 +61,17 @@
                     document.querySelector('.mygroups-nothing').style.display='flex';
                 }
                 const list = document.querySelector("#mygroups ");
-                for(const data of myGroups) {
+                myGroups.forEach((data, index) => {
                     const groupitem = groupItem(data);
                     list.appendChild(groupitem);
+                    if (index > 2) {
+                        groupitem.classList.add("hidden");
+                        groupitem.classList.add("hidden-myitem");
+                    }
+                })
+                hiddenMyItems=document.querySelectorAll('.hidden-myitem');
+                if (myGroups.length > 3) {
+                    showMyItemBtn.classList.remove("hidden");
                 }
             }
             if (Array.isArray(followGroups)){
@@ -59,11 +79,48 @@
                     document.querySelector('.followgroups-nothing').style.display = 'flex';
                 }
                 const list = document.querySelector("#followgroups");
-                for(const data of followGroups) {
+                followGroups.forEach((data, index) => {
                     const groupitem = groupItem(data);
                     list.appendChild(groupitem);
+                    if (index > 2) {
+                        groupitem.classList.add("hidden");
+                        groupitem.classList.add("hidden-followitem");
+                    }
+                })
+                hiddenFollowItems=document.querySelectorAll('.hidden-followitem');
+                if (followGroups.length > 3) {
+                    showItemBtn.classList.remove("hidden");
                 }
             }
         });
+
+    showMyItemBtn.onclick = () => {
+        showMyItemBtn.classList.add("hidden");
+        hiddenMyItemBtn.classList.remove("hidden");
+        hiddenMyItems.forEach(element =>{
+            element.classList.remove("hidden");
+        });
+    }
+    hiddenMyItemBtn.onclick = () => {
+        hiddenMyItemBtn.classList.add("hidden");
+        showMyItemBtn.classList.remove("hidden");
+        hiddenMyItems.forEach(element =>{
+            element.classList.add("hidden");
+        });
+    }
+    showItemBtn.onclick = () => {
+        showItemBtn.classList.add("hidden");
+        hiddenItemBtn.classList.remove("hidden");
+        hiddenFollowItems.forEach(element =>{
+            element.classList.remove("hidden");
+        });
+    }
+    hiddenItemBtn.onclick = () => {
+        hiddenItemBtn.classList.add("hidden");
+        showItemBtn.classList.remove("hidden");
+        hiddenFollowItems.forEach(element =>{
+            element.classList.add("hidden");
+        });
+    }
 </script>
 </html>
