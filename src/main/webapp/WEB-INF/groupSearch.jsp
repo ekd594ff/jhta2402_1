@@ -18,7 +18,7 @@
             <input class="custom-search-box form-control" type="search" id="customSearchQuery" name="searchValue"
                    placeholder="검색어를 입력하세요." autocomplete="off" value="${param.query}">
             <div class="input-group-append">
-                <button class="custom-search-btn" type="button" onclick="searchGroup();">Click</button>
+                <button class="custom-search-btn" type="button" onclick="clickSearchGroup();">Click</button>
             </div>
         </div>
     </form>
@@ -92,8 +92,7 @@
         };
     }
 
-
-    function searchGroup() {
+    function clickSearchGroup() {
         const searchFilter = document.getElementById('customSearchFilter').value;
         const searchQuery = document.getElementById('customSearchQuery').value;
 
