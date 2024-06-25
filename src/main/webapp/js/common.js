@@ -72,11 +72,11 @@ function shutdownDropdownMenu() {
 }
 
 function searchGroup() {
-    alert("searchGroup");
-    var searchQuery = document.getElementById("searchQuery").value;
-    var form = document.getElementById("searchForm");
-    form.action = "/group/search";
-    form.submit();
+    console.log('search');
+    //const searchQuery = $("#searchQuery").val();
+    const searchQuery = document.querySelector("#searchQuery").value;
+    console.log("searchQuery===="+searchQuery);
+    window.location.replace('http://localhost:8080/group/search?searchFilter=all&searchValue='+searchQuery+'&page=1');
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {

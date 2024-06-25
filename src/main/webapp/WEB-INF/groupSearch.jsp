@@ -11,6 +11,7 @@
 </div>
 <jsp:include page="../components/footer.jsp"/>
 </body>
+<script src="${pageContext.request.contextPath}/js/common.js"></script>
 <script src="${pageContext.request.contextPath}/js/components/groupitem.js"></script>
 <script>
 
