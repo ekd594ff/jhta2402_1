@@ -63,12 +63,12 @@ public class LoginController extends HttpServlet {
                 resp.setStatus(200);
                 resultMap.put("message", "ok");
             } else {
-                CookieManager.deleteCookie(resp, "rememberID");
+                CookieManager.deleteCookie(resp, "username");
                 resp.setStatus(400);
                 resultMap.put("message", "fail");
             }
         } else {
-            CookieManager.deleteCookie(resp, "rememberID");
+            CookieManager.deleteCookie(resp, "username");
             resp.setStatus(400);
             resultMap.put("message", "fail");
         }
