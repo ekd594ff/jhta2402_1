@@ -88,7 +88,7 @@
         }).then((result) => {
             if (result.ok) {
                 window.alert("그룹이 추가되었습니다");
-                window.location.href = '/mygroups';
+                window.location.href = '/group/my';
             }
             return result.json();
         });

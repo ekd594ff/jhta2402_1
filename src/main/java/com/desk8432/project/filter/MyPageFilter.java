@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter({"/mypage/*", "/schedule/*", "/group/*", "/mygroups"})
+@WebFilter({"/mypage/*", "/schedule/*", "/group/*"})
 public class MyPageFilter implements Filter {
 
     @Override
