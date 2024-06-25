@@ -7,6 +7,21 @@
 <body>
 <jsp:include page="../components/header.jsp"/>
 <div class="groupSearch-container">
+    <form action="/group/search" class="custom-search-form" id="customSearchForm" method="get">
+        <div class="input-group">
+            <select class="custom-search-filter" id="customSearchFilter" name="searchFilter">
+                <option value="all">전체</option>
+                <option value="name">제목</option>
+                <option value="creator">작성자</option>
+                <option value="content">내용</option>
+            </select>
+            <input class="custom-search-box form-control" type="search" id="customSearchQuery" name="searchValue"
+                   placeholder="검색어를 입력하세요." autocomplete="off" value="${param.query}">
+            <div class="input-group-append">
+                <button class="custom-search-btn" type="button" onclick="clickSearchGroup();">Click</button>
+            </div>
+        </div>
+    </form>
     <ul class="list" id="content"></ul>
 </div>
 <jsp:include page="../components/footer.jsp"/>
@@ -78,6 +93,14 @@
         };
     }
 
+    function clickSearchGroup() {
+        const searchFilter = document.getElementById('customSearchFilter').value;
+        const searchQuery = document.getElementById('customSearchQuery').value;
+
+        // 검색 필터와 검색어를 URL 파라미터로 추가하여 이동
+        // const url = "/group/search?searchFilter="+searchFilter+"&searchValue="+searchQuery;
+        window.location.search = "?searchFilter="+searchFilter+"&searchValue="+searchQuery;
+    }
     // function setGroupInfoDefault(data) {
     //     const {creator, name, imageUrl, content, created_at} = data;
     //     const creatorEl = document.querySelector(".group-info .item.group-editor");

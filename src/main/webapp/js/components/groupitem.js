@@ -20,54 +20,68 @@ function groupItem(group) {
                 <div>${group.content}</div>
             </div>
             <div class="group-follow-button">
-                    <button class="follow-btn" >팔로우</button>
-                    <button class="unfollow-btn" >언팔로우</button>
-                    <button class="group-edit-btn" >그룹수정</button>
+                    <button class="follow-btn hidden" >팔로우</button>
+                    <button class="unfollow-btn hidden" >언팔로우</button>
+                    <button class="group-edit-btn hidden" >그룹수정</button>
             </div>
         </div>
     `;
     const is_follow = group.is_follow;
     const is_creator = group.is_creator;
 
+    const inputdata = {
+        "groupID" : group.id
+    }
+
+    const unFollowButton = item.querySelector('.unfollow-btn');
+    const followButton = item.querySelector('.follow-btn');
+    const groupEditButton = item.querySelector('.group-edit-btn');
+
+
+
     if (is_creator) {
-        const groupEditButton = item.querySelector('.group-edit-btn');
-        groupEditButton.classList.add("flex");
+        groupEditButton.classList.remove("hidden");
     } else if (is_follow) {
-        const followButton = item.querySelector('.follow-btn');
-        followButton.classList.add("flex");
+        unFollowButton.classList.remove("hidden");
     } else {
-        const unFollowButton = item.querySelector('.unfollow-btn');
-        unFollowButton.classList.add("flex");
+        followButton.classList.remove("hidden");
+    }
+
+    const redirectToGroupPage = () => {
+        window.location.assign(`/group/page?id=${group.id}`);
+    };
+
+    item.querySelector('.left > .img-container').addEventListener('click', redirectToGroupPage);
+    item.querySelector('.right > .info').addEventListener('click', redirectToGroupPage);
+
+    groupEditButton.onclick = () => {
+        window.location.assign(`/group/update?id=${group.id}`);
+    }
+
+    followButton.onclick = () => {
+        fetch('/group/follow',{
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(inputdata)
+        }).then(() =>{
+            followButton.classList.add("hidden");
+            unFollowButton.classList.remove("hidden");
+        })
+    }
+    unFollowButton.onclick = () => {
+        fetch(`/group/follow?groupID=${group.id}`,{
+            method: "DELETE"
+        }).then(()=>{
+            unFollowButton.classList.add("hidden");
+            followButton.classList.remove("hidden");
+        })
     }
 
 
-    // followButton.onclick = () => {
-    //     if (followButton.classList.contains('following')) {
-    //         fetch(`/group/follow?groupID=${group.id}`,{ //언팔로우
-    //             method: "DELETE",
-    //             // headers: {
-    //             //     'Accept': 'application/json',
-    //             //     'Content-Type': 'application/json'
-    //             // },
-    //             // body: JSON.stringify(inputdata)
-    //         }) .then(()=>{
-    //             followButton.classList.remove('following');
-    //             followButton.textContent = '팔로우'
-    //         })
-    //     } else {
-    //         fetch("/group/follow",{ //팔로우
-    //             method: "POST",
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify(inputdata)
-    //         }) .then(()=>{
-    //             followButton.classList.add('following');
-    //             followButton.textContent = '취소'
-    //         })
-    //     }
-    // };
+
     return item;
 }
 
