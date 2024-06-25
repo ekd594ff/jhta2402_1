@@ -10,7 +10,6 @@ import java.io.IOException;
 
 @WebFilter({"/mypage/*", "/schedule/*"})
 public class MyPageFilter implements Filter {
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
