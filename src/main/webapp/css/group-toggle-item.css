@@ -1,0 +1,29 @@
+.group-toggle-item {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent !important;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+    height: 30px;
+    border-radius: 15px;
+    padding: 0 10px;
+}
+
+.group-toggle-item > .group-color {
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+}
+
+.group-toggle-item > .group-name {
+    font-size: 12px;
+}
+
+.group-toggle-item.hidden {
+    background-color: transparent !important;
+    border: 1px solid #dadada !important;
+}
