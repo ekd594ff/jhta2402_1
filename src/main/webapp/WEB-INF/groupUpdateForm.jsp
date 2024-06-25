@@ -65,7 +65,7 @@
         .then((resp) => {
             <%--if (resp.creator !== "${sessionScope.member.username}") {--%>
             <%--    alert('유효하지 않은 접근입니다');--%>
-            <%--    window.location.href = '/mygroups';--%>
+            <%--    window.location.href = '/group/my';--%>
             <%--}--%>
 
             setGroupImageFormSrcDefault(resp);
@@ -98,7 +98,7 @@
             body: formData,
         }).then((result) => {
             console.log(result);
-            window.location.href = '/mygroups';
+            window.location.href = '/group/my';
             window.alert("그룹 정보가 수정되었습니다");
             return result.json();
         });
@@ -120,7 +120,7 @@
                 method: "DELETE",
             }).then((result) => {
                 console.log(result);
-                window.location.href = '/mygroups';
+                window.location.href = '/group/my';
                 window.alert("그룹이 삭제되었습니다");
                 return result.json();
             });
