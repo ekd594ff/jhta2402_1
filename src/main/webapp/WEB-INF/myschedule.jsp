@@ -13,6 +13,7 @@
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.js"></script>
+    <script src="${pageContext.request.contextPath}/js/components/groupToggleItem.js"></script>
     <title>내 일정</title>
 </head>
 <body>

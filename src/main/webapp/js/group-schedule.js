@@ -60,11 +60,10 @@ document.addEventListener('DOMContentLoaded', function () {
         eventSourceSuccess: function (content, response) {
             username = content.username;
             groupInfo = content.group;
-            console.log(groupInfo);
             isFollow = content.isFollow;
             editable = username === groupInfo['creator'] + '';
 
-            initialSetting();
+            initialSetting(groupInfo);
 
             console.log(content.events);
             return content.events;
@@ -517,7 +516,10 @@ function emptyCreateEventForm() {
     document.querySelector("#add-event-end-date").value = "";
 }
 
-function initialSetting() {
+function initialSetting(groupInfo) {
+
+    const { imageUrl } = groupInfo;
+
     divGroupName.text(groupInfo['groupname']);
     divGroupContent.text(groupInfo['content']);
 
@@ -529,4 +531,11 @@ function initialSetting() {
         buttonFollow.css('display', 'block');
     }
 
+    const groupImgContainerEl = document.querySelector(".group-img-container");
+    const groupImgEl = document.querySelector("img.group-img");
+
+    if(imageUrl) {
+        groupImgContainerEl.classList.add("active");
+        groupImgEl.setAttribute("src", `/${imageUrl}`);
+    }
 }

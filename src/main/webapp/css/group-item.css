@@ -35,8 +35,10 @@
     font-size: 12px;
 }
 
-.group-item > .right > h2 {
+.group-item > .right > .info > h2 {
     font-size: 16px;
+    width: 400px;
+    overflow: hidden;
 }
 
 .group-item .img-container {

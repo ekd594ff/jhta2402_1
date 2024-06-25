@@ -43,11 +43,11 @@ public class DeleteMember extends HttpServlet {
                 deleteMemberDTO.setPassword(hashPW);
                 resultJson = deleteMember(resp, deleteMemberDTO);
             } else {
-                CookieManager.deleteCookie(resp, "rememberID");
+                CookieManager.deleteCookie(resp, "username");
                 System.out.println("no user check false");
             }
         } else {
-            CookieManager.deleteCookie(resp, "rememberID");
+            CookieManager.deleteCookie(resp, "username");
             System.out.println("no user hash false");
         }
 

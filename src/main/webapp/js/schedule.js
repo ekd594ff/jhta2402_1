@@ -14,7 +14,7 @@ const divInputGroup = $('#div-input-group');
 
 let username;
 
-const colorArray = ['#1a8fe3', 'blue', 'green', 'purple', 'orange', 'red', 'skyblue', 'gray'];
+const colorArray = ['#1a8fe3', '#dc0073', '#8f00ff', '#ff600a', '#04e762', '#f00c18', '#00d37b', '#1fd224'];
 const textColorArray = ['#ffffff', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
 
 let followGroupInfo = [];
@@ -26,6 +26,8 @@ let hiddenGroupIdArray = [];
 let activePopoverEvent = null;
 
 let calendarInstance = null;
+
+let groupCount = 0;
 
 function onClickPopover(event) {
     event.stopPropagation();
@@ -52,6 +54,20 @@ document.addEventListener('DOMContentLoaded', function () {
             failure: function () {
                 alert('문제가 발생했습니다. 다시 시도해 주세요.');
             },
+            success: function (data) {
+                const groupIdSet = new Set();
+                groupCount = data.reduce((acc,cur) => {
+                    const {groupID} = cur;
+                    if(groupID !== undefined) {
+                        if(groupIdSet.has(groupID)) {
+                            return acc;
+                        } else {
+                            groupIdSet.add(groupID);
+                            return acc + 1;
+                        }
+                    }
+                }, -1);
+            }
         },
         eventSourceSuccess: function (content, response) {
             username = content.username;
@@ -81,18 +97,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (!followGroupIdArray.includes(id)) {
-                let colorIndex = (followGroupIdArray.length) % colorArray.length;
+
+                console.log(groupCount);
+
+                let colorIndex = (groupCount - followGroupIdArray.length) % colorArray.length;
+
                 followGroupIdArray.push(id);
 
-                divGroup.append(
-                    "<span id='span-group-" + id + "' " +
-                    "class='badge d-flex align-items-center px-5 py-2 m-2 text-primary-emphasis" +
-                    " border border-secondary-subtle rounded-pill' " +
-                    "style='" +
-                    "font-size: 14px; " +
-                    "color: " + textColorArray[colorIndex] + " !important; " +
-                    "background-color: " + colorArray[colorIndex] + ";" +
-                    "'>" + groupname + "</span>");
+                const item = groupToggleItem({id, bgColor : colorArray[colorIndex], name: groupname});
+
+                divGroup.append(item);
 
                 $('#span-group-' + id).on('click', function () {
                     if ($(this).hasClass('hidden')) {
@@ -115,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
-            colorIndex = followGroupIdArray.indexOf(id) % colorArray.length;
+            colorIndex = (groupCount - followGroupIdArray.indexOf(id)) % colorArray.length;
 
             return {
                 id: eventData.id,
