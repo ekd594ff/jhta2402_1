@@ -76,7 +76,13 @@ function searchGroup() {
     //const searchQuery = $("#searchQuery").val();
     const searchQuery = document.querySelector("#searchQuery").value;
     console.log("searchQuery===="+searchQuery);
-    window.location.replace('http://localhost:8080/group/search?searchFilter=all&searchValue='+searchQuery+'&page=1');
+    window.location.replace('/group/search?searchFilter=all&searchValue='+searchQuery+'&page=1');
+}
+
+function onKeydownEnter(event) {
+    if(event.keyCode === 13) {
+        searchGroup();
+    }
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {

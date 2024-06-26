@@ -11,8 +11,7 @@
     <script src="${pageContext.request.contextPath}/js/util.js"></script>
 </head>
 <body>
-<div class="signup-container">
-    <form class="signup-form">
+<div class="signup-container"><form class="signup-form">
         <div class="logo">
             <a href="/">
                 <img src="${pageContext.request.contextPath}/public/imgs/jalendar.svg" height="48px"/>

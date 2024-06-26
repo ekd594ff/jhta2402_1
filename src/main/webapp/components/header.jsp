@@ -9,8 +9,9 @@
         <div class="right d-flex">
             <div class="search d-flex" id="searchForm">
                 <input class="form-control search-box" type="search" id="searchQuery" name="searchQuery"
+                       onkeydown="onKeydownEnter(event)"
                        placeholder="검색어를 입력하세요." autocomplete="off" value="${param.query}">
-                <button class="btn btn-primary search-btn mx-1" type="button" onclick="searchGroup();">Click</button>
+                <button class="custom-btn search-btn mx-2" type="button" onclick="searchGroup();"><span>Search</span></button>
             </div>
             <div class="avatar" style="width: 36px; height: 36px; border-radius: 50%;background-color: #909090; display: flex !important; justify-content: center; align-items: center;">
                 <svg focusable="false"
@@ -28,6 +29,7 @@
                     <div class="login">
                         <li><a class="dropdown-item" href="/mypage">마이페이지</a></li>
                         <li><a class="dropdown-item" href="/schedule/my">내 일정</a></li>
+                        <li><a class="dropdown-item" href="/group/my">그룹 목록</a></li>
                         <li><a class="dropdown-item" href="/group/create">그룹 생성</a></li>
                         <li><a class="dropdown-item" onclick="logoutHandler(event)">로그아웃</a></li>
                     </div>
