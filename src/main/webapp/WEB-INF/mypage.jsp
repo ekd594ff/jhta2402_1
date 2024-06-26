@@ -77,6 +77,13 @@
                     <button class="submit">소개 변경</button>
                 </div>
             </li>
+            <li class="item delete-member">
+                <label>
+                    비밀번호
+                    <input type="password" class="password"/>
+                </label>
+                <button class="delete-btn">회원 탈퇴</button>
+            </li>
         </ul>
     </form>
 </div>
@@ -84,6 +91,27 @@
 <script src="${pageContext.request.contextPath}/js/util.js"></script>
 <script src="${pageContext.request.contextPath}/js/common.js"></script>
 <script>
+
+    function softDeleteMember() {
+        if (!confirm("삭제하시겠습니까?")) return;
+        const password = document.querySelector('.password').value;
+        const bodyObject = {};
+        bodyObject["password"] = password;
+        fetch("/member/delete", {
+            method: "POST",
+            body: JSON.stringify(bodyObject),
+        }).then(response => response.json())
+            .then((result) => {
+                if (result.success === "ok") {
+                    window.alert(result.message);
+                    window.location.href = "/signin";
+                } else {
+                    window.alert(result.message);
+                }
+            return result.json();
+        });
+    }
+
     function genOnChangeInput(className) {
         const item = document.querySelector('.item.' + className);
         const inputMsgLabel = item.querySelector('label.message');
@@ -147,6 +175,10 @@
             }
         }
     }
+
+    document.querySelector(".item.delete-member .delete-btn").addEventListener("click", softDeleteMember);
+
+
 
     document.querySelector(".item.nickname input").addEventListener("keyup",genOnChangeInput("nickname"));
     document.querySelector(".item.email input").addEventListener("keyup",genOnChangeInput("email"));
