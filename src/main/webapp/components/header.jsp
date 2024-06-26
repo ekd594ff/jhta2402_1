@@ -11,7 +11,7 @@
                 <input class="form-control search-box" type="search" id="searchQuery" name="searchQuery"
                        onkeydown="onKeydownEnter(event)"
                        placeholder="검색어를 입력하세요." autocomplete="off" value="${param.query}">
-                <button class="btn btn-primary search-btn mx-1" type="button" onclick="searchGroup();">Click</button>
+                <button class="custom-btn search-btn mx-2" type="button" onclick="searchGroup();"><span>Search</span></button>
             </div>
             <div class="avatar" style="width: 36px; height: 36px; border-radius: 50%;background-color: #909090; display: flex !important; justify-content: center; align-items: center;">
                 <svg focusable="false"
