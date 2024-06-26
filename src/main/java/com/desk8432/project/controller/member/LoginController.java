@@ -54,6 +54,10 @@ public class LoginController extends HttpServlet {
 
             boolean checkLogin = ((loginMemberDTO != null) && BCrypt.checkpw(password, hashPW));
 
+            System.out.println("loginMemberDTO = " + loginMemberDTO);
+            System.out.println("loginMemberDTO != null" + (loginMemberDTO != null));
+            System.out.println("checkLogin = " + checkLogin);
+
             if (checkLogin) {
                 // myPageDTO를 쿠키 저장 / 세션에 저장
                 HttpSession session = req.getSession();
