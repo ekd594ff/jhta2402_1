@@ -45,11 +45,13 @@ main.group-container * {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    width: 100%;
 }
 
 .group-form  > ul.list > .item {
     list-style: none;
     display: flex;
+    width: 100%;
 }
 
 .group-form  > ul.list > .item > .right {
