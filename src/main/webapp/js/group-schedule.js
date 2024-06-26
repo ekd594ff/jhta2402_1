@@ -42,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         themeSystem: 'bootstrap5',
         locale: 'en',
+        height: "auto",
         headerToolbar: {
             left: 'title,prev,next',
             center: '',

@@ -6,3 +6,9 @@
     --header-dropdown-menu-width: 250px;
     --group-img-diameter : 120px;
 }
+
+@media (max-width: 575px) {
+    :root {
+        --group-img-diameter : 80px;
+    }
+}
