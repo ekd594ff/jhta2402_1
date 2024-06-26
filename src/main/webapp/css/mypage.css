@@ -294,7 +294,17 @@ li.item.nickname, li.item.email {
     min-width: 120px;
 }
 
-.item.delete-member
+.item.delete-member .delete-btn-group > .delete-cancel {
+    background-color: transparent;
+    box-sizing: border-box;
+    border: 1px solid #909090;
+    color: #000;
+}
+
+.item.delete-member .delete-btn-group > .delete-submit {
+    background-color: #c0392b;
+    color: #fff;
+}
 
 .item.delete-member .delete-btn:hover {
     background-color: #c0392b;
