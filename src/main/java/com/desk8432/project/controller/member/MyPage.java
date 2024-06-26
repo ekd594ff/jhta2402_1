@@ -1,8 +1,5 @@
 package com.desk8432.project.controller.member;
 
-import com.desk8432.project.dao.member.MyPageDAO;
-import com.desk8432.project.dto.member.MyPageDTO;
-import com.desk8432.project.util.CookieManager;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.Cookie;

@@ -4,7 +4,7 @@ function updateHeaderProfileImage(data) {
         const avatarEl = document.querySelector(".header .avatar");
         avatarEl.classList.add("active");
         const avatarImageEl = avatarEl.querySelector(".avatar-img");
-        avatarImageEl.setAttribute("src", profileImgUrl);
+        avatarImageEl.setAttribute("src", "/" + profileImgUrl);
     }
 }
 
@@ -68,6 +68,20 @@ function shutdownDropdownMenu() {
     const headerDropdownMenu = document.querySelector(".header .dropdown-menu");
     if(headerDropdownMenu.classList.contains("show")) {
         headerDropdownMenu.classList.remove("show");
+    }
+}
+
+function searchGroup() {
+    console.log('search');
+    //const searchQuery = $("#searchQuery").val();
+    const searchQuery = document.querySelector("#searchQuery").value;
+    console.log("searchQuery===="+searchQuery);
+    window.location.replace('/group/search?searchFilter=all&searchValue='+searchQuery+'&page=1');
+}
+
+function onKeydownEnter(event) {
+    if(event.keyCode === 13) {
+        searchGroup();
     }
 }
 

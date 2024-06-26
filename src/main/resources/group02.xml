@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.desk8432.project">
+    <insert id="insertGroup" parameterType="InsertGroupDTO">
+        INSERT INTO JHTA01_GROUP values(
+        nextval('GROUP_SEQ'),
+        #{creator},
+        #{name},
+        #{image_url},
+        #{content},
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP
+        )
+    </insert>
+    <select id="getGroupId" resultType="long" parameterType="InsertGroupDTO">
+        select id from jhta01_group where creator = #{creator} and name = #{name}
+    </select>
+    <select id="getGroupInfo" resultType="InsertGroupDTO" parameterType="long">
+        select * from jhta01_group where id = #{group_id}
+    </select>
+    <delete id="deleteGroup" parameterType="DeleteGroupDTO">
+        delete from jhta01_GROUP
+        where creator = #{creator} and id = #{groupID}
+    </delete>
+</mapper>

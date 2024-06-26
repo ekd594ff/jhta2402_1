@@ -2,13 +2,27 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.desk8432.project">
+<mapper namespace="com.desk8432.project">
     <update id="deleteMember" parameterType="DeleteMemberDTO">
         UPDATE JHTA01_MEMBER
         SET
         IS_DELETE = 'Y',
+        IMAGE_URL = NULL,
         UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
         and password = #{password}
     </update>
+
+    <delete id="deleteMemberGroup" parameterType="String">
+        delete from jhta01_group where creator = #{username}
+    </delete>
+    <delete id="deleteMemberSchedule" parameterType="String">
+        delete from jhta01_schedule where editor = #{username}
+    </delete>
+    <delete id="deleteMemberFollow" parameterType="String">
+        delete from jhta01_follow where username = #{username}
+    </delete>
+    <delete id="deleteMemberFile" parameterType="String">
+        delete from jhta01_file where username =  #{username}
+    </delete>
 </mapper>

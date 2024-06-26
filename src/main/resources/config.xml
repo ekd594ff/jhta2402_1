@@ -8,8 +8,10 @@
         <typeAlias type="com.desk8432.project.dto.member.MemberDTO" alias="MemberDTO" />
         <typeAlias type="com.desk8432.project.dto.member.DuplicateDTO" alias="DuplicateDTO" />
         <typeAlias type="com.desk8432.project.dto.member.InsertDTO" alias="InsertDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.InsertGroupDTO" alias="InsertGroupDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateEmailDTO" alias="UpdateEmailDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateImageUrlDTO" alias="UpdateImageUrlDTO" />
+        <typeAlias type="com.desk8432.project.dto.image.InputImageUrlDTO" alias="InputImageUrlDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateIntroductionDTO" alias="UpdateIntroductionDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdateNicknameDTO" alias="UpdateNicknameDTO" />
         <typeAlias type="com.desk8432.project.dto.member.UpdatePasswordDTO" alias="UpdatePasswordDTO" />
@@ -19,6 +21,11 @@
         <typeAlias type="com.desk8432.project.dto.member.LoginMemberDTO" alias="LoginMemberDTO" />
         <typeAlias type="com.desk8432.project.dto.schedule.ScheduleDTO" alias="ScheduleDTO" />
         <typeAlias type="com.desk8432.project.dto.group.GroupDTO" alias="GroupDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.SearchGroupRequestDTO" alias="SearchGroupRequestDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.SearchGroupDTO" alias="SearchGroupDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.FollowRequestDTO" alias="FollowRequestDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.DeleteGroupDTO" alias="DeleteGroupDTO" />
+        <typeAlias type="com.desk8432.project.dto.group.IsFollowDTO" alias="IsFollowDTO" />
 <!--        <typeAlias type="com.desk8432.project.dto.schedule.CreateScheduleDTO" alias="CreateScheduleDTO" />-->
     </typeAliases>
     <environments default="development">
@@ -42,5 +49,7 @@
         <mapper resource="file.xml" />
         <mapper resource="schedule.xml" />
         <mapper resource="group.xml" />
+        <mapper resource="group02.xml" />
+        <mapper resource="follow.xml" />
     </mappers>
 </configuration>

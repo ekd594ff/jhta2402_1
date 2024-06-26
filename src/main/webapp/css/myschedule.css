@@ -12,5 +12,6 @@ main.myschedule {
     width: 100%;
     max-width: 900px;
     box-sizing: border-box;
-    height: 100%;
+    min-height: 100%;
+    margin-bottom: 64px;
 }

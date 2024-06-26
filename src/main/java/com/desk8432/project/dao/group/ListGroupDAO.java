@@ -14,4 +14,11 @@ public class ListGroupDAO {
         sqlSession.close();
         return groupDTOList;
     }
+
+    public GroupDTO getGroupById(long groupId) {
+        SqlSession sqlSession = MybatisConnectionFactory.getSqlSession();
+        GroupDTO groupDTO = sqlSession.selectOne("getGroupById", groupId);
+        sqlSession.close();
+        return groupDTO;
+    }
 }

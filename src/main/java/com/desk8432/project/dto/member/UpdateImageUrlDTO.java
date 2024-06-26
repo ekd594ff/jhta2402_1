@@ -14,4 +14,6 @@ public class UpdateImageUrlDTO {
     private String originalName;
     private String fileName;
     private String location;
+    private String imgFolderPath;
+    private String uploadUrl;
 }

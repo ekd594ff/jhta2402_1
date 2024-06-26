@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.desk8432.project">
+<mapper namespace="com.desk8432.project">
 <!--    <select id="getGroupName" resultType="UpdateScheduleDTO" parameterType="UpdateScheduleDTO">-->
 <!--        select js.id ,js.group_id as groupID,js.editor,js.title,-->
 <!--        js."content",js.start_date as startDate,js.end_date as endDate ,jg."name" as groupname-->
@@ -26,7 +26,11 @@
         on js.group_id = jg.id
         where js.group_id in
         (select group_id from jhta01_follow where username = #{username})
-        or js.group_id isnull
+        or (js.group_id isnull and js.editor = #{username})
+    </select>
+    <select id="getGroupScheduleList" resultType="ScheduleDTO" parameterType="Long">
+        select id, group_id as groupID, editor, title, content, start_date as startDate, end_date as endDate
+            from jhta01_schedule js where group_id = #{groupID};
     </select>
     <update id="updateSchedule" parameterType="ScheduleDTO" >
         update jhta01_schedule

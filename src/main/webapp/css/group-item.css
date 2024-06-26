@@ -1,0 +1,156 @@
+.groupSearch-container > .list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.group-item {
+    width: 100%;
+    list-style: none;
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    overflow: hidden;
+}
+.group-item > .left{
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e9e9e9;
+}
+.group-item > .right > .info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.group-item > .right{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    /*background-color: #f0f0f0;*/
+}
+
+.group-item > .right > * {
+    font-size: 12px;
+}
+
+.group-item > .right > .info > h2 {
+    font-size: 16px;
+    width: auto;
+    overflow: hidden;
+}
+
+.group-item .img-container {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #909090;
+}
+
+.group-item .img-container > svg {
+    fill: #f9f9fb;
+    width: 60%;
+    height: 60%;
+}
+
+.group-item .img-container > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.group-item .img-container.active > img {
+    display: block;
+}
+
+.group-item .img-container.active > svg {
+    display: none;
+}
+
+.group-item.hidden{
+    display: none;
+}
+
+
+.group-follow-button {
+    display: flex;
+    gap: 4px;
+}
+
+.group-follow-button > button {
+    border-radius: 4px;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 16px;
+    display: flex;
+}
+
+.group-item.hidden{
+    display: none;
+}
+
+.group-follow-button > .hidden{
+    display: none;
+}
+.group-follow-button > button.follow-btn {
+    background-color: #0d6efd;
+    color: #fff;
+}
+.group-follow-button > button.follow-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.group-follow-button > button.unfollow-btn {
+    background-color: transparent;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+}
+
+.group-follow-button > button.unfollow-btn:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.group-follow-button > button.group-edit-btn {
+    background-color: transparent;
+    color: #909090;
+    border: 1px solid #909090;
+}
+
+.group-follow-button > button.group-edit-btn:hover {
+    background-color: #909090;
+    color: #fff;
+}
+
+@media (max-width: 575px) {
+    .groupSearch-container > .list {
+        width: 350px;
+    }
+
+    .group-item {
+        width: 350px;
+    }
+    .group-item .img-container {
+        width: 40px;
+        height: 40px;
+    }
+
+}

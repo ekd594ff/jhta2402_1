@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.desk8432.project">
+<mapper namespace="com.desk8432.project">
     <update id="updateEmail" parameterType="UpdateEmailDTO">
         UPDATE JHTA01_MEMBER
         SET
@@ -37,5 +37,22 @@
         PASSWORD = #{password},
         UPDATED_AT = CURRENT_TIMESTAMP
         WHERE username = #{username}
+    </update>
+    <update id="updateGroupNameContent" parameterType="GroupDTO">
+        UPDATE JHTA01_GROUP
+        SET
+        name = #{groupname},
+        content = #{content},
+        UPDATED_AT = CURRENT_TIMESTAMP
+        WHERE id = #{id}
+    </update>
+    <update id="updateImage" parameterType="GroupDTO">
+        UPDATE JHTA01_GROUP
+        SET
+        name = #{groupname},
+        content = #{content},
+        image_url = #{imageUrl},
+        UPDATED_AT = CURRENT_TIMESTAMP
+        WHERE id = #{id}
     </update>
 </mapper>

@@ -1,0 +1,94 @@
+@import "variables.css";
+
+.myschedule .group-info {
+    display: flex;
+    padding: 64px 0;
+}
+
+.myschedule .group-info > .left {
+    padding-right: 32px;
+}
+
+.myschedule .group-info > .right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+}
+
+.myschedule .group-info > .right > h2 , .myschedule .group-info > .right > h3 {
+    padding: 0;
+    margin: 0;
+}
+
+.myschedule .group-info > .right > .group-name {
+    font-size: 20px;
+}
+
+.myschedule .group-info > .right > .group-content {
+    font-size: 14px;
+}
+
+.myschedule .group-info .group-img-container {
+    width: var(--group-img-diameter);
+    height: var(--group-img-diameter);
+    border-radius: 50%;
+    background-color: #909090;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.myschedule .group-info .group-img-container > svg {
+    fill: #fff;
+    width: 50%;
+}
+
+.myschedule .group-info .group-img-container > img {
+    display: none;
+}
+
+.myschedule .group-info .group-img-container.active > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.myschedule .group-info .group-img-container.active > svg {
+    display: none;
+}
+
+.myschedule .follow-btn-group {
+    display: flex;
+    gap: 4px;
+}
+
+.myschedule .follow-btn-group > button {
+    border-radius: 4px;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 16px;
+}
+
+.myschedule .follow-btn-group > button.follow {
+    background-color: #0d6efd;
+    color: #fff;
+    display: none;
+}
+
+.myschedule .follow-btn-group > button.unfollow {
+    background-color: transparent;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+    display: none;
+}
+
+.myschedule .follow-btn-group > button.group-edit {
+    background-color: transparent;
+    color: #909090;
+    border: 1px solid #909090;
+    display: none;
+}

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.ibatis.jdbc.Null;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
@@ -45,30 +46,34 @@ public class LoginController extends HttpServlet {
         Map<String,String> resultMap = new HashMap<>();
 
         if (hashPW != null) {
-            boolean checkLogin = BCrypt.checkpw(password, hashPW);
+            LoginMemberDTO loginMemberDTO = loginDAO.loginMember(
+                    LoginDTO.builder()
+                            .username(username)
+                            .password(hashPW)
+                            .build());
+
+            boolean checkLogin = ((loginMemberDTO != null) && BCrypt.checkpw(password, hashPW));
+
+            System.out.println("loginMemberDTO = " + loginMemberDTO);
+            System.out.println("loginMemberDTO != null" + (loginMemberDTO != null));
+            System.out.println("checkLogin = " + checkLogin);
 
             if (checkLogin) {
-                LoginMemberDTO myPageDTO = loginDAO.loginMember(
-                        LoginDTO.builder()
-                        .username(username)
-                        .password(hashPW)
-                        .build());
-
                 // myPageDTO를 쿠키 저장 / 세션에 저장
                 HttpSession session = req.getSession();
-                session.setAttribute("member", myPageDTO);
+                session.setAttribute("member", loginMemberDTO);
 
                 CookieManager.createCookie(resp, "username", username, 60 * 60 * 24 * 7);
 
                 resp.setStatus(200);
                 resultMap.put("message", "ok");
             } else {
-                CookieManager.deleteCookie(resp, "rememberID");
+                CookieManager.deleteCookie(resp, "username");
                 resp.setStatus(400);
                 resultMap.put("message", "fail");
             }
         } else {
-            CookieManager.deleteCookie(resp, "rememberID");
+            CookieManager.deleteCookie(resp, "username");
             resp.setStatus(400);
             resultMap.put("message", "fail");
         }

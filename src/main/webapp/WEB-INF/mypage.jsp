@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
     <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
     <title>${infoMemberDTO.nickname}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
 <jsp:include page="../components/header.jsp"/>
@@ -77,6 +78,22 @@
                     <button class="submit">소개 변경</button>
                 </div>
             </li>
+            <li class="item delete-member">
+                <div class="top">
+                    <label>회원 탈퇴</label>
+                    <button class="delete-btn">회원 탈퇴</button>
+                </div>
+                <div class="bottom">
+                    <label>
+                        비밀번호를 입력해 주세요
+                        <input type="password" class="password"/>
+                    </label>
+                    <div class="delete-btn-group">
+                        <button class="delete-cancel" onclick="onClickDeleteCancelBtn(event)">취소</button>
+                        <button class="delete-submit" onclick="onClickDeleteSubmitBtn(event)">회원 탈퇴</button>
+                    </div>
+                </div>
+            </li>
         </ul>
     </form>
 </div>
@@ -84,6 +101,52 @@
 <script src="${pageContext.request.contextPath}/js/util.js"></script>
 <script src="${pageContext.request.contextPath}/js/common.js"></script>
 <script>
+    function onClickDeleteCancelBtn(event) {
+        document.querySelector(".item.delete-member").classList.toggle("active");
+    }
+
+    function onClickDeleteSubmitBtn(event) {
+        if (!confirm("삭제하시겠습니까?")) return;
+        const password = document.querySelector('.item.delete-member input[type=password]').value;
+        const bodyObject = {};
+        bodyObject["password"] = password;
+        fetch("/member/delete", {
+            method: "POST",
+            body: JSON.stringify(bodyObject),
+        }).then(response => response.json())
+            .then((result) => {
+                if (result.success === "ok") {
+                    window.alert(result.message);
+                    window.location.href = "/signin";
+                } else {
+                    window.alert(result.message);
+                }
+            return result.json();
+        });
+    }
+
+    function softDeleteMember() {
+        const deleteMemberLiEl = document.querySelector(".item.delete-member");
+        deleteMemberLiEl.classList.toggle("active");
+        // if (!confirm("삭제하시겠습니까?")) return;
+        // const password = document.querySelector('.password').value;
+        // const bodyObject = {};
+        // bodyObject["password"] = password;
+        // fetch("/member/delete", {
+        //     method: "POST",
+        //     body: JSON.stringify(bodyObject),
+        // }).then(response => response.json())
+        //     .then((result) => {
+        //         if (result.success === "ok") {
+        //             window.alert(result.message);
+        //             window.location.href = "/signin";
+        //         } else {
+        //             window.alert(result.message);
+        //         }
+        //     return result.json();
+        // });
+    }
+
     function genOnChangeInput(className) {
         const item = document.querySelector('.item.' + className);
         const inputMsgLabel = item.querySelector('label.message');
@@ -130,14 +193,14 @@
     function onClickUpdate(className) {
         return (event) => {
             const item = document.querySelector(".mypage-form .item." + className);
-            if(!item.classList.contains("valid")) {
+            if (!item.classList.contains("valid")) {
                 window.alert("변경할 수 없습니다");
             } else {
                 const input = item.querySelector("input");
                 const bodyObject = {};
                 bodyObject[className] = input.value;
                 fetch("/update/" + className, {
-                    method : "POST",
+                    method: "POST",
                     body: JSON.stringify(bodyObject)
                 })
                     .then(result => result.json())
@@ -148,25 +211,28 @@
         }
     }
 
-    document.querySelector(".item.nickname input").addEventListener("keyup",genOnChangeInput("nickname"));
-    document.querySelector(".item.email input").addEventListener("keyup",genOnChangeInput("email"));
+    document.querySelector(".item.delete-member .delete-btn").addEventListener("click", softDeleteMember);
 
-    document.querySelector(".item.nickname .edit-btn").addEventListener("click",onClickUpdate("nickname"));
-    document.querySelector(".item.email .edit-btn").addEventListener("click",onClickUpdate("email"));
+
+    document.querySelector(".item.nickname input").addEventListener("keyup", genOnChangeInput("nickname"));
+    document.querySelector(".item.email input").addEventListener("keyup", genOnChangeInput("email"));
+
+    document.querySelector(".item.nickname .edit-btn").addEventListener("click", onClickUpdate("nickname"));
+    document.querySelector(".item.email .edit-btn").addEventListener("click", onClickUpdate("email"));
 
     document.querySelector(".item.introduction button.submit").addEventListener("click", (event) => {
-       const textarea = document.querySelector(".item.introduction textarea.introduction");
-       const value = textarea.value;
-       fetch("/update/introduction", {
-           method : "POST",
-           body : JSON.stringify({
-               introduction : value,
-           })
-       })
-           .then(result => result.json())
-           .then(data => {
+        const textarea = document.querySelector(".item.introduction textarea.introduction");
+        const value = textarea.value;
+        fetch("/update/introduction", {
+            method: "POST",
+            body: JSON.stringify({
+                introduction: value,
+            })
+        })
+            .then(result => result.json())
+            .then(data => {
                 window.alert("변경되었습니다");
-           });
+            });
     });
 
     function storeProfileImgSrc(data) {

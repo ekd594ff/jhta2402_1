@@ -1,0 +1,20 @@
+.hidden-item-btn-group {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 32px;
+    /*background: none;*/
+    /*border: none;*/
+    /*color: inherit;*/
+    /*font: inherit;*/
+    /*cursor: pointer;*/
+    /*outline: inherit;*/
+}
+
+
+.hidden-item-btn-group > .hidden {
+    display: none;
+}
+
+.groupSearch-container > .btn{
+    display: flex;
+}

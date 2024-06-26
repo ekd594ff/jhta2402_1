@@ -1,33 +1,258 @@
 @import "variables.css";
 
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+
+body {
+    position: relative;
+}
+
+body *{
+    font-family: 'Pretendard-Regular';
+}
+
+.jalendar {
+    --color-invalid: #f44336;
+    --color-valid: #66bb6a;
+    --color-warning: #ffa726;
+    --color-primary: #0d6efd;
+    --color-default: #909090;
+}
+
 .jalendar a {
     text-decoration: none;
+    color: rgb(51, 51, 51);
+}
+
+.jalendar .fc-day-sun a {
+    color: red;
 }
 
 .jalendar .fc-daygrid-day-top {
-    flex-direction: row !important;
+    /* 날짜부분 정렬 왼쪽으로*/
+    flex-direction: row;
 }
 
-.jalendar .fc-col-header {
-    border-right: 0;
+.jalendar * {
+    border: 0 !important;
 }
 
-.jalendar th[role=presentation] {
-    border: 0;
+.jalendar td[role=gridcell] {
+    border: 1px solid rgb(221, 221, 221) !important;
 }
 
-.jalendar .fc-col-header * {
-    border-left-color: transparent;
-    border-right-color: transparent;
-    border-top-color: transparent;
+.jalendar .fc-daygrid-day-top > a {
+    /* 날짜부분 */
+    font-size: 12px;
 }
 
-.jalendar .fc-scrollgrid.fc-scrollgrid-liquid {
-    border-top: 0;
+.jalendar a.fc-event {
+    /* 이벤트 */
+    padding: 2px 4px !important;
+    font-size: 12px !important;
+    z-index: 7;
+}
+
+.jalendar .fc-scrollgrid-sync-inner {
+    text-align: left;
+}
+
+.jalendar .fc-scrollgrid-sync-inner > a {
+    font-size: 12px;
+}
+
+.jalendar .fc-toolbar-chunk > div {
+    /* 달력 및 이전 달, 다음 달 표시*/
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.jalendar .fc-toolbar-chunk > div > .fc-prev-button, .jalendar .fc-toolbar-chunk > div > .fc-next-button {
+    background-color: #fff;
+    color: var(--color-default);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    user-select: none;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.jalendar .fc-toolbar-chunk > div > .fc-prev-button:active,
+.jalendar .fc-toolbar-chunk > div > .fc-next-button:active {
+    background-color: #ffffff;
+    color: #000;
+    outline: none;
+}
+
+.jalendar .fc-toolbar-chunk > div > .fc-prev-button:focus,
+.jalendar .fc-toolbar-chunk > div > .fc-next-button:focus {
+    outline: none;
+}
+
+.jalendar .fc-toolbar-title {
+    font-weight: bold;
+}
+
+.jalendar thead[role="rowgroup"] * {
+    position: relative !important;
+    z-index: 0 !important;
+}
+
+.jalendar .fc-scroller {
+    height: auto !important;
+}
+
+.jalendar .fc-head .fc-widget-header {
+    margin-right: 0 !important;
+}
+
+.jalendar * {
+    overflow: visible !important;
+}
+
+#event-popover {
+    width: 250px;
+    background-color: #ffffff;
+    z-index: 1992;
+    position: absolute;
+    display: none;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    border-radius: 5px;
+    border: 1px solid gray;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+#event-popover:before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -6px;
+    left: 10%;
+    background-color: white;
+    border: 1px solid gray;
+    box-sizing: border-box;
+    transform: rotate(45deg);
     border-bottom: 0;
     border-right: 0;
 }
 
-.jalendar th.fc-col-header-cell.fc-day.fc-day-sun {
-    border-left: 0;
+#event-popover.tail-center:before {
+    left: calc(50% - 7px);
+}
+
+#event-popover.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popover-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.popover-list label {
+    font-size: 14px;
+}
+
+.popover-list input {
+    border: 0;
+    user-select: none;
+}
+
+.popover-list input:focus {
+    outline: none;
+}
+
+.popover-list #event-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.popover-list #event-title:focus {
+    outline: none;
+}
+
+.popover-list > .event-term {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.popover-list > .event-term > label {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popover-list #event-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.popover-list .event-content > label{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.popover-list #event-content,  .popover-list #add-event-content{
+    padding: 4px;
+    box-sizing: border-box;
+    resize: none;
+    border: 1px solid #a5a5a5;
+    border-radius: 5px;
+    color: #000000;
+}
+
+.popover-list #event-content:focus, .popover-list #add-event-content:focus{
+    outline: none;
+}
+
+.popover-list .popover-btn-group {
+    display: flex;
+    gap: 12px;
+    padding-top: 8px;
+}
+
+.popover-list .popover-btn {
+    flex-grow: 1;
+    padding: 4px 0;
+    border: 0;
+    margin: 0;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.popover-list .popover-btn > svg {
+    fill: #000;
+    width: 18px;
+    height: 18px;
+}
+
+.popover-list .event-id {
+    display: none;
+}
+
+.jalendar .fc-popover {
+    z-index: 100;
 }

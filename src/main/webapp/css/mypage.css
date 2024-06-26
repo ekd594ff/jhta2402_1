@@ -1,5 +1,13 @@
 @import "variables.css";
 
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+}
+
+
 .mypage-container {
     display: flex;
     justify-content: center;
@@ -10,6 +18,10 @@
     --color-default: #909090;
     --border-radius: 4px;
     --panel-size: 700px;
+}
+
+.mypage-container * {
+    font-family: "Pretendard-Regular";
 }
 
 .mypage-container > .mypage-form {
@@ -211,4 +223,89 @@ li.item.nickname, li.item.email {
 
 .profile-info-list > li.item.introduction textarea.introduction:focus {
     outline: none;
+}
+
+
+.item.delete-member {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item.delete-member > .top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.item.delete-member > .bottom {
+    display: none;
+}
+
+.item.delete-member > .bottom > .delete-btn-group {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.item.delete-member > .bottom > .delete-btn-group > button {
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.item.delete-member > .bottom > label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #f44336;
+}
+
+.item.delete-member > .bottom > label > input {
+    border: 1px solid var(--color-default);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    padding: 8px;
+}
+
+.item.delete-member.active > .bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item.delete-member.active > .top > .delete-btn {
+    display: none;
+}
+
+.item.delete-member .delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    /*align-self: flex-end;*/
+    min-width: 120px;
+}
+
+.item.delete-member .delete-btn-group > .delete-cancel {
+    background-color: transparent;
+    box-sizing: border-box;
+    border: 1px solid #909090;
+    color: #000;
+}
+
+.item.delete-member .delete-btn-group > .delete-submit {
+    background-color: #c0392b;
+    color: #fff;
+}
+
+.item.delete-member .delete-btn:hover {
+    background-color: #c0392b;
 }

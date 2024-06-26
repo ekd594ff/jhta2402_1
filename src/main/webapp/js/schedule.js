@@ -14,8 +14,8 @@ const divInputGroup = $('#div-input-group');
 
 let username;
 
-const colorArray = ['yellow', 'blue', 'green', 'purple', 'orange', 'red', 'skyblue', 'gray'];
-const textColorArray = ['black', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
+const colorArray = ['#1a8fe3', '#dc0073', '#8f00ff', '#ff600a', '#04e762', '#f00c18', '#00d37b', '#1fd224'];
+const textColorArray = ['#ffffff', 'white', 'white', 'white', 'black', 'white', 'black', 'black'];
 
 let followGroupInfo = [];
 let followGroupIdArray = [];
@@ -23,30 +23,52 @@ let followGroupIdArray = [];
 let inputGroupIdArray = [];
 let hiddenGroupIdArray = [];
 
+let activePopoverEvent = null;
+
+let calendarInstance = null;
+
+let groupCount = 0;
+
+function onClickPopover(event) {
+    event.stopPropagation();
+}
 
 document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
+    const calendarEl = document.getElementById('calendar');
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         themeSystem: 'bootstrap5',
-        locale: 'ko',
+        locale: 'en',
+        height: "auto",
         headerToolbar: {
-            left: 'today',
-            center: 'title',
-            right: 'prev,next',
+            left: 'title,prev,next',
+            center: '',
+            right: '',
         },
-
-        dayMaxEvents: true,
+        dayMaxEvents: false,
         editable: false,
         selectable: true,
-
         events: {
             url: '/schedule/list',
             method: 'POST',
             failure: function () {
                 alert('문제가 발생했습니다. 다시 시도해 주세요.');
             },
+            success: function (data) {
+                const groupIdSet = new Set();
+                groupCount = data.reduce((acc,cur) => {
+                    const {groupID} = cur;
+                    if(groupID !== undefined) {
+                        if(groupIdSet.has(groupID)) {
+                            return acc;
+                        } else {
+                            groupIdSet.add(groupID);
+                            return acc + 1;
+                        }
+                    }
+                }, -1);
+            }
         },
         eventSourceSuccess: function (content, response) {
             username = content.username;
@@ -76,31 +98,28 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (!followGroupIdArray.includes(id)) {
-                let colorIndex = (followGroupIdArray.length) % colorArray.length;
+
+                console.log(groupCount);
+
+                let colorIndex = (groupCount - followGroupIdArray.length) % colorArray.length;
+
                 followGroupIdArray.push(id);
 
-                divGroup.append(
-                    "<span id='span-group-" + id + "' " +
-                    "class='badge d-flex align-items-center px-5 py-2 m-2 text-primary-emphasis" +
-                    " border border-secondary-subtle rounded-pill' " +
-                    "style='" +
-                    "font-size: 14px; " +
-                    "color: " + textColorArray[colorIndex] + " !important; " +
-                    "background-color: " + colorArray[colorIndex] + ";" +
-                    "'>" + groupname + "</span>");
+                const item = groupToggleItem({id, bgColor : colorArray[colorIndex], name: groupname});
+
+                divGroup.append(item);
 
                 $('#span-group-' + id).on('click', function () {
                     if ($(this).hasClass('hidden')) {
                         $(this).removeClass('hidden');
                         $(this).css({
-                            'background-color' : colorArray[colorIndex]
+                            'background-color': colorArray[colorIndex]
                         });
-
                         hiddenGroupIdArray.splice(hiddenGroupIdArray.indexOf(id), 1);
                     } else {
                         $(this).addClass('hidden');
                         $(this).css({
-                            'background-color' : '#D3D3D3'
+                            'background-color': '#D3D3D3'
                         });
 
                         hiddenGroupIdArray.push(id);
@@ -111,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
-            colorIndex = followGroupIdArray.indexOf(id) % colorArray.length;
+            colorIndex = (groupCount - followGroupIdArray.indexOf(id)) % colorArray.length;
 
             return {
                 id: eventData.id,
@@ -126,52 +145,76 @@ document.addEventListener('DOMContentLoaded', function () {
                     editor: eventData.editor
                 },
                 backgroundColor: colorArray[colorIndex],
-                textColor: textColorArray[colorIndex]
+                textColor: textColorArray[colorIndex],
             };
         },
         // trigger when group toggle
         eventDidMount: function (info) {
+            const {el} = info;
+
             if (hiddenGroupIdArray.includes(info.event.extendedProps.groupId)) {
-                $(info.el).hide();
+                $(el).hide();
             } else {
-                $(info.el).show();
+                $(el).show();
             }
         },
         select: function (selectionInfo) {
-            divInputGroup.show();
-            buttonEventDelete.hide();
+            //when select multiple cells
+            const { startStr ,endStr , jsEvent } = selectionInfo;
+            jsEvent.stopImmediatePropagation();
+            const popover = document.querySelector("#event-popover");
 
-            setModal(
-                '일정 추가',
-                '추가',
-                0,
-                null,
-                stringToDate(selectionInfo.start),
-                stringToDate(selectionInfo.end),
-                '',
-                ''
-            );
+            setAddEventPopover({startDate : startStr, endDate : endStr});
 
-            modalEventAdd.modal('toggle');
+            popover.querySelector(".popover-list").style.display = "none";
+            popover.querySelector(".popover-list.add").style.display = "flex";
+
+            setTimeout(() => {
+                popover.classList.add("show");
+                popover.classList.add("tail-center");
+            }, 10);
+
+            const scroll = document.body.scrollTop;
+
+            const startPoint = document.querySelector(`td.fc-day[data-date="${startStr}"]`);
+            const {top, left, width, height} = startPoint.getBoundingClientRect();
+
+            popover.style.top = scroll + top + height/2 + "px";
+            popover.style.left
+                = (left + width/2 > window.innerWidth ? window.innerWidth - width/2 - 40 : left - width/2) + "px";
+
         },
         eventClick: function (info) {
             if (username !== info.event.extendedProps.editor) return;
 
-            divInputGroup.hide();
-            buttonEventDelete.show();
+            info.jsEvent.stopPropagation();
 
-            setModal(
-                '일정 변경',
-                '변경',
-                info.event.id,
-                info.event.extendedProps.groupId,
-                stringToDate(info.event.start),
-                stringToDate(info.event.end),
-                info.event.title,
-                info.event.extendedProps.content
-            );
+            const {el} = info;
+            const popover = document.querySelector("#event-popover");
+            const rect = el.getBoundingClientRect();
 
-            modalEventAdd.modal('toggle');
+            popover.querySelector(".popover-list").style.display = "flex";
+            popover.querySelector(".popover-list.add").style.display = "none";
+
+            if(el === activePopoverEvent) {
+                popover.classList.toggle("show");
+                setEventPopoverPosition(popover, rect);
+                return;
+            }
+
+            popover.classList.add("show");
+            activePopoverEvent = el;
+            setEventPopoverPosition(popover, rect);
+
+            const data = {
+                title : info.event.title,
+                content : info.event.extendedProps.content,
+                startDate: stringToDate(info.event.start),
+                endDate : stringToDate(info.event.end),
+                id: info.event.id
+            };
+
+            setPopOver(data);
         },
 
         eventChange: function (info) {
@@ -213,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     calendar.render();
 
+    calendarInstance = calendar;
 
     //
     buttonEventAdd.on('click', function () {
@@ -288,7 +332,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 });
         }
-
         modalEventAdd.modal('toggle');
     });
 
@@ -317,10 +360,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 });
         }
-
         modalEventAdd.modal('toggle');
     });
-
 });
 
 function stringToDate(dateStr) {
@@ -343,6 +384,83 @@ function setModal(title, buttonText, eventId, groupId, start, end, eventTitle, e
     inputContent.val(eventContent);
 }
 
+document.addEventListener("click", () => {
+    const popoverEl =  document.querySelector("#event-popover");
+    popoverEl.classList.remove("show");
+    popoverEl.classList.remove("tail-center");
+});
+
+
+document.querySelector("#event-popover").addEventListener("click", onClickPopover);
+
+function setPopOver(data) {
+    const {title, content, startDate, endDate, id} = data;
+    document.querySelector("#event-title").value = title;
+    document.querySelector("#event-content").value = content;
+    document.querySelector("#event-start-date").value = startDate;
+    document.querySelector("#event-end-date").value = endDate;
+    document.querySelector("#event-id").value = id;
+}
+
+function onClickEventEditBtn(event) {
+    const choice = window.confirm("일정을 변경하시겠습니까?");
+    if(choice) {
+        const editedEvent = {
+            title : document.querySelector("#event-title").value,
+            content : document.querySelector("#event-content").value,
+            startDate : document.querySelector("#event-start-date").value,
+            endDate : document.querySelector("#event-end-date").value,
+            id : document.querySelector("#event-id").value
+        };
+        fetch('/schedule/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(editedEvent)
+        })
+            .then(response => {
+                if(response.ok) {
+                    return response.json();
+                }
+                throw new Error("");
+            })
+            .then(data => {
+                calendarInstance?.removeAllEvents();
+                calendarInstance?.refetchEvents();
+                alert('수정되었습니다');
+                const popover = document.querySelector("#event-popover");
+                popover.classList.toggle("show");
+            })
+            .catch(error => {
+                alert('문제가 발생했습니다. 다시 시도해 주세요');
+            });
+    }
+}
+
+function onClickEventDeleteBtn(event) {
+    const choice = window.confirm("일정을 삭제하시겠습니까?");
+    if(choice) {
+        const eventId = document.querySelector("#event-id").value;
+        fetch(`/schedule/delete?id=${eventId}`, {
+            method : "DELETE"
+        }).then((result) => {
+            if(!result.ok) {
+                throw new Error("");
+            }
+            return result.json();
+        }).then(data => {
+            alert("삭제되었습니다");
+            calendarInstance?.removeAllEvents();
+            calendarInstance?.refetchEvents();
+            const popover = document.querySelector("#event-popover");
+            popover.classList.toggle("show");
+        }).catch(err => {
+            alert('문제가 발생했습니다. 다시 시도해 주세요.');
+        });
+    }
+}
+
 function checkIsEmpty(title, content, groupId, start) {
     if (!title) {
         alert('제목을 입력해주세요.');
@@ -357,4 +475,64 @@ function checkIsEmpty(title, content, groupId, start) {
     }
 
     return true;
+}
+
+function setEventPopoverPosition(popover, rect) {
+    const scroll = document.body.scrollTop;
+    const popoverWidth = popover.getBoundingClientRect().width;
+    popover.style.top = scroll + rect.top + 28 + "px";
+    // when popover over window, optimize popover x position
+    popover.style.left
+        = (rect.left + popoverWidth > window.innerWidth ? window.innerWidth - popoverWidth - 40 : rect.left) + "px";
+}
+
+function setAddEventPopover(data) {
+    const {startDate, endDate} = data;
+    document.querySelector("#add-event-start-date").value = startDate;
+    document.querySelector("#add-event-end-date").value = endDate;
+}
+
+function onClickCreateEvent(event) {
+    const newEvent = {
+        groupID: 0,
+        title: document.querySelector("#add-event-title").value,
+        content: document.querySelector("#add-event-content").value,
+        startDate: document.querySelector("#add-event-start-date").value,
+        endDate: document.querySelector("#add-event-end-date").value
+    };
+
+    fetch('/schedule/create', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newEvent)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw response;
+            }
+            return response.json();
+        })
+        .then(res => {
+            calendarInstance?.removeAllEvents();
+            calendarInstance?.refetchEvents();
+            alert('생성되었습니다');
+            const popover = document.querySelector("#event-popover");
+            popover.classList.toggle("show");
+            emptyCreateEventForm();
+        })
+        .catch(error => {
+            error.json().then(err => {
+                event.revert();
+                alert('문제가 발생했습니다 다시 시도해 주세요');
+            });
+        });
+}
+
+function emptyCreateEventForm() {
+    document.querySelector("#add-event-title").value = "";
+    document.querySelector("#add-event-content").value = "";
+    document.querySelector("#add-event-start-date").value = "";
+    document.querySelector("#add-event-end-date").value = "";
 }
