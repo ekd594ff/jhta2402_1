@@ -3,6 +3,7 @@ package com.desk8432.project.dto.member;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,6 +18,6 @@ public class LoginMemberDTO {
     private String email;
     private String imageUrl;
     private String introduction;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
