@@ -43,6 +43,12 @@
     width: 640px;
 }
 
+@media (max-width: 575px) {
+    .groupSearch-container ul.list{
+        width: 350px;
+    }
+}
+
 
 /* styles.css 파일에 다음 내용을 추가하세요 */
 

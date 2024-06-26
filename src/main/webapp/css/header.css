@@ -105,8 +105,14 @@ button {
     width: 100%;
 }
 
-.header .search > search-box {
+.header .search > .search-box {
     margin: 0;
+}
+
+@media (max-width: 575px) {
+    .header .search > .search-box {
+        display: none;
+    }
 }
 
 .header .search > search-btn {

@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             center: '',
             right: '',
         },
-        dayMaxEvents: true,
+        dayMaxEvents: false,
         editable: false,
         selectable: true,
         events: {
