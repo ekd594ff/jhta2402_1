@@ -29,7 +29,7 @@
                     <div class="login">
                         <li><a class="dropdown-item" href="/mypage">마이페이지</a></li>
                         <li><a class="dropdown-item" href="/schedule/my">내 일정</a></li>
-                        <li><a class="dropdown-item" href="/mygroups">그룹 목록</a></li>
+                        <li><a class="dropdown-item" href="/group/my">그룹 목록</a></li>
                         <li><a class="dropdown-item" href="/group/create">그룹 생성</a></li>
                         <li><a class="dropdown-item" onclick="logoutHandler(event)">로그아웃</a></li>
                     </div>
