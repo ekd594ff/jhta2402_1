@@ -15,6 +15,7 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.js"></script>
     <script src="${pageContext.request.contextPath}/js/group-schedule.js" defer></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
 <div id="event-popover">
