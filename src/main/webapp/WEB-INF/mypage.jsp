@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css">
     <link rel="icon" href="${pageContext.request.contextPath}/public/favicon/favicon.ico" type="image/x-icon">
     <title>${infoMemberDTO.nickname}</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
 <jsp:include page="../components/header.jsp"/>
