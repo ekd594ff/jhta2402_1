@@ -46,18 +46,18 @@ public class LoginController extends HttpServlet {
         Map<String,String> resultMap = new HashMap<>();
 
         if (hashPW != null) {
-            LoginMemberDTO myPageDTO = loginDAO.loginMember(
+            LoginMemberDTO loginMemberDTO = loginDAO.loginMember(
                     LoginDTO.builder()
                             .username(username)
                             .password(hashPW)
                             .build());
 
-            boolean checkLogin = ((myPageDTO != null) && BCrypt.checkpw(password, hashPW));
+            boolean checkLogin = ((loginMemberDTO != null) && BCrypt.checkpw(password, hashPW));
 
             if (checkLogin) {
                 // myPageDTO를 쿠키 저장 / 세션에 저장
                 HttpSession session = req.getSession();
-                session.setAttribute("member", myPageDTO);
+                session.setAttribute("member", loginMemberDTO);
 
                 CookieManager.createCookie(resp, "username", username, 60 * 60 * 24 * 7);
 
