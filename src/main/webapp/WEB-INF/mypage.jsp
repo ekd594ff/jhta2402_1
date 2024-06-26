@@ -81,9 +81,23 @@
             <li class="item delete-member">
                 <label>
                     비밀번호
-                    <input type="password" class="password"/>
                 </label>
                 <button class="delete-btn">회원 탈퇴</button>
+                <div class="top">
+                    <label>회원 탈퇴</label>
+                    <button class="delete-btn">회원 탈퇴</button>
+                </div>
+                <div class="bottom">
+                    <label>
+                        비밀번호를 입력해 주세요
+                        <input type="password" class="password"/>
+                    </label>
+                    <div class="delete-btn-group">
+                        <button class="delete-cancel" onclick="onClickDeleteCancelBtn(event)">
+                            취소</button>
+                        <button class="delete-submit">회원 탈퇴</button>
+                    </div>
+                </div>
             </li>
         </ul>
     </form>
@@ -92,25 +106,31 @@
 <script src="${pageContext.request.contextPath}/js/util.js"></script>
 <script src="${pageContext.request.contextPath}/js/common.js"></script>
 <script>
+function onClickDeleteCancelBtn(event) {
+    document.querySelector(".item.delete-member").classList.toggle("active");
+}
+
 
     function softDeleteMember() {
-        if (!confirm("삭제하시겠습니까?")) return;
-        const password = document.querySelector('.password').value;
-        const bodyObject = {};
-        bodyObject["password"] = password;
-        fetch("/member/delete", {
-            method: "POST",
-            body: JSON.stringify(bodyObject),
-        }).then(response => response.json())
-            .then((result) => {
-                if (result.success === "ok") {
-                    window.alert(result.message);
-                    window.location.href = "/signin";
-                } else {
-                    window.alert(result.message);
-                }
-            return result.json();
-        });
+        const deleteMemberLiEl = document.querySelector(".item.delete-member");
+        deleteMemberLiEl.classList.toggle("active");
+        // if (!confirm("삭제하시겠습니까?")) return;
+        // const password = document.querySelector('.password').value;
+        // const bodyObject = {};
+        // bodyObject["password"] = password;
+        // fetch("/member/delete", {
+        //     method: "POST",
+        //     body: JSON.stringify(bodyObject),
+        // }).then(response => response.json())
+        //     .then((result) => {
+        //         if (result.success === "ok") {
+        //             window.alert(result.message);
+        //             window.location.href = "/signin";
+        //         } else {
+        //             window.alert(result.message);
+        //         }
+        //     return result.json();
+        // });
     }
 
     function genOnChangeInput(className) {
