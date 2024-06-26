@@ -5,7 +5,7 @@
 <mapper namespace="com.desk8432.project">
     <select id="loginMember" resultType="LoginMemberDTO" parameterType="LoginDTO">
         SELECT USERNAME,NICKNAME,EMAIL,IMAGE_URL ,INTRODUCTION ,CREATED_AT ,UPDATED_AT
-            FROM JHTA01_MEMBER WHERE USERNAME = #{username} AND PASSWORD = #{password}
+            FROM JHTA01_MEMBER WHERE USERNAME = #{username} AND PASSWORD = #{password} and is_delete = 'N'
     </select>
 
     <select id="getPassword" resultType="String" parameterType="String">
