@@ -14,6 +14,7 @@
             crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.js"></script>
     <script src="${pageContext.request.contextPath}/js/components/groupToggleItem.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>내 일정</title>
 </head>
 <body>
