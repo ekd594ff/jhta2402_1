@@ -185,26 +185,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         },
         eventClick: function (info) {
+            console.log('eventClick');
             if (username !== info.event.extendedProps.editor) return;
 
             info.jsEvent.stopPropagation();
 
             const {el} = info;
+            console.log(el);
             const popover = document.querySelector("#event-popover");
             const rect = el.getBoundingClientRect();
 
             popover.querySelector(".popover-list").style.display = "flex";
             popover.querySelector(".popover-list.add").style.display = "none";
-
-            if(el === activePopoverEvent) {
-                popover.classList.toggle("show");
-                setEventPopoverPosition(popover, rect);
-                return;
-            }
-
-            popover.classList.add("show");
-            activePopoverEvent = el;
-            setEventPopoverPosition(popover, rect);
 
             const data = {
                 title : info.event.title,
@@ -215,9 +207,20 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             setPopOver(data);
+            
+            if(el === activePopoverEvent) {
+                popover.classList.toggle("show");
+                setEventPopoverPosition(popover, rect);
+                return;
+            }
+
+            popover.classList.add("show");
+            activePopoverEvent = el;
+            setEventPopoverPosition(popover, rect);
         },
 
         eventChange: function (info) {
+            console.log('eventChange');
             info.event.extendedProps.groupId = info.oldEvent.groupId;
             info.event.groupId = info.event.id;
 
@@ -293,7 +296,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .catch(error => {
                     error.json().then(err => {
-                        event.revert();
                         alert('문제가 발생했습니다. 다시 시도해 주세요.');
                     });
                 });
@@ -352,7 +354,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(res => {
-                    calendar.getEventById(eventID).remove();
+                    calendar.removeAllEvents();
+                    calendar.refetchEvents();
                 })
                 .catch(error => {
                     error.json().then(err => {
@@ -394,6 +397,7 @@ document.addEventListener("click", () => {
 document.querySelector("#event-popover").addEventListener("click", onClickPopover);
 
 function setPopOver(data) {
+    console.log('setPopover : ' + data);
     const {title, content, startDate, endDate, id} = data;
     document.querySelector("#event-title").value = title;
     document.querySelector("#event-content").value = content;
