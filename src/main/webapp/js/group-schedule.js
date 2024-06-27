@@ -135,16 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
             popover.querySelector(".popover-list").style.display = "flex";
             popover.querySelector(".popover-list.add").style.display = "none";
 
-            if(el === activePopoverEvent) {
-                popover.classList.toggle("show");
-                setEventPopoverPosition(popover, rect);
-                return;
-            }
-
-            popover.classList.add("show");
-            activePopoverEvent = el;
-            setEventPopoverPosition(popover, rect);
-
             const data = {
                 title : info.event.title,
                 content : info.event.extendedProps.content,
@@ -154,6 +144,16 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             setPopOver(data);
+
+            if(el === activePopoverEvent) {
+                popover.classList.toggle("show");
+                setEventPopoverPosition(popover, rect);
+                return;
+            }
+
+            popover.classList.add("show");
+            activePopoverEvent = el;
+            setEventPopoverPosition(popover, rect);
         },
 
         eventChange: function (info) {

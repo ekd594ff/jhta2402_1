@@ -196,16 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
             popover.querySelector(".popover-list").style.display = "flex";
             popover.querySelector(".popover-list.add").style.display = "none";
 
-            if(el === activePopoverEvent) {
-                popover.classList.toggle("show");
-                setEventPopoverPosition(popover, rect);
-                return;
-            }
-
-            popover.classList.add("show");
-            activePopoverEvent = el;
-            setEventPopoverPosition(popover, rect);
-
             const data = {
                 title : info.event.title,
                 content : info.event.extendedProps.content,
@@ -215,6 +205,16 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             setPopOver(data);
+
+            if(el === activePopoverEvent) {
+                popover.classList.toggle("show");
+                setEventPopoverPosition(popover, rect);
+                return;
+            }
+
+            popover.classList.add("show");
+            activePopoverEvent = el;
+            setEventPopoverPosition(popover, rect);
         },
 
         eventChange: function (info) {
@@ -293,7 +293,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .catch(error => {
                     error.json().then(err => {
-                        event.revert();
                         alert('문제가 발생했습니다. 다시 시도해 주세요.');
                     });
                 });
@@ -352,7 +351,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     return response.json();
                 })
                 .then(res => {
-                    calendar.getEventById(eventID).remove();
+                    calendar.removeAllEvents();
+                    calendar.refetchEvents();
                 })
                 .catch(error => {
                     error.json().then(err => {
