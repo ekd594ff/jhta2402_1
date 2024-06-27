@@ -185,13 +185,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         },
         eventClick: function (info) {
-            console.log('eventClick');
             if (username !== info.event.extendedProps.editor) return;
 
             info.jsEvent.stopPropagation();
 
             const {el} = info;
-            console.log(el);
             const popover = document.querySelector("#event-popover");
             const rect = el.getBoundingClientRect();
 
@@ -207,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             setPopOver(data);
-            
+
             if(el === activePopoverEvent) {
                 popover.classList.toggle("show");
                 setEventPopoverPosition(popover, rect);
@@ -220,7 +218,6 @@ document.addEventListener('DOMContentLoaded', function () {
         },
 
         eventChange: function (info) {
-            console.log('eventChange');
             info.event.extendedProps.groupId = info.oldEvent.groupId;
             info.event.groupId = info.event.id;
 
@@ -397,7 +394,6 @@ document.addEventListener("click", () => {
 document.querySelector("#event-popover").addEventListener("click", onClickPopover);
 
 function setPopOver(data) {
-    console.log('setPopover : ' + data);
     const {title, content, startDate, endDate, id} = data;
     document.querySelector("#event-title").value = title;
     document.querySelector("#event-content").value = content;
