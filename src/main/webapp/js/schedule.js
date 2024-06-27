@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
 
         eventChange: function (info) {
+            console.log("change");
             info.event.extendedProps.groupId = info.oldEvent.groupId;
             info.event.groupId = info.event.id;
 
